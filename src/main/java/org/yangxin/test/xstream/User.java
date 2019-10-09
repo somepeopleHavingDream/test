@@ -11,7 +11,7 @@ import lombok.ToString;
 @XStreamAlias("User")
 @AllArgsConstructor
 @ToString
-public class User {
+class User {
     @XStreamAlias("name")
     private String name;
 
