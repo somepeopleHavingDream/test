@@ -8,8 +8,8 @@ package org.yangxin.test.string;
  */
 public class StringTest {
     public static void main(String[] args) {
-        int num = 12;
-        String result = String.format("%04d", num);
+        String serialNum = "f0004";
+        String result = serialNum.toUpperCase();
         System.out.println(result);
     }
 }
