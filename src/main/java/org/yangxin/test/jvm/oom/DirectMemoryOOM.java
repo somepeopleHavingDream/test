@@ -1,4 +1,4 @@
-package org.yangxin.test.jvm;
+package org.yangxin.test.jvm.oom;
 
 import sun.misc.Unsafe;
 

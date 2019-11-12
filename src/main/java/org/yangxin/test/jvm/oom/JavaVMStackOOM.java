@@ -1,4 +1,4 @@
-package org.yangxin.test.jvm;
+package org.yangxin.test.jvm.oom;
 
 /**
  * 不断创建线程，让栈区域抛出OOM异常。

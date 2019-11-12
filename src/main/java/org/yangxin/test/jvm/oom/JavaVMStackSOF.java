@@ -1,4 +1,4 @@
-package org.yangxin.test.jvm;
+package org.yangxin.test.jvm.oom;
 
 /**
  * 虚拟机和本机方法栈StackOverflowError异常
