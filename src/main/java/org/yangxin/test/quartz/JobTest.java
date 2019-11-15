@@ -1,7 +1,6 @@
 package org.yangxin.test.quartz;
 
-import org.quartz.Job;
-import org.quartz.JobExecutionContext;
+import org.quartz.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +19,26 @@ public class JobTest implements Job {
         System.out.println("Current Exec Time Is: " + simpleDateFormat.format(new Date()));
 
         // 编写具体的业务逻辑
-        System.out.println("Hello World!");
+//        System.out.println("Hello World!");
+        // Job
+        JobKey jobKey = jobExecutionContext.getJobDetail().getKey();
+        System.out.println(jobKey.getName() + ":" + jobKey.getGroup());
+
+        // Trigger
+        TriggerKey triggerKey = jobExecutionContext.getTrigger().getKey();
+        System.out.println(triggerKey.getName() + ":" + triggerKey.getGroup());
+
+        // JobDataMap(JobDetail)
+        JobDataMap jobDetailJobDataMap = jobExecutionContext.getJobDetail().getJobDataMap();
+        JobDataMap triggerJobDataMap = jobExecutionContext.getTrigger().getJobDataMap();
+        String jobDetailMessage = jobDetailJobDataMap.getString("message");
+        float floatJobValue = jobDetailJobDataMap.getFloat("FloatJobValue");
+        String triggerMessage = triggerJobDataMap.getString("message");
+        double doubleTriggerValue = triggerJobDataMap.getDouble("DoubleTriggerValue");
+
+        System.out.println(jobDetailMessage);
+        System.out.println(floatJobValue);
+        System.out.println(triggerMessage);
+        System.out.println(doubleTriggerValue);
     }
 }

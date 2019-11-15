@@ -17,6 +17,8 @@ public class SchedulerTest {
         // 创建一个JobDetail实例，将该实例与JobTest.class绑定
         JobDetail jobDetail = JobBuilder.newJob(JobTest.class)
                 .withIdentity("job1", "group1")
+                .usingJobData("message", "job1")
+                .usingJobData("FloatJobValue", 3.14F)
                 .build();
 
         System.out.println("jobDetail's name: " + jobDetail.getKey().getName());
@@ -30,6 +32,8 @@ public class SchedulerTest {
                 .withSchedule(SimpleScheduleBuilder.simpleSchedule()
                         .withIntervalInSeconds(2)
                         .repeatForever())
+                .usingJobData("message", "trigger1")
+                .usingJobData("DoubleTriggerValue", 2.0D)
                 .build();
 
         // 创建Scheduler实例
