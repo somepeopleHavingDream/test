@@ -19,6 +19,10 @@ public class SchedulerTest {
                 .withIdentity("job1", "group1")
                 .build();
 
+        System.out.println("jobDetail's name: " + jobDetail.getKey().getName());
+        System.out.println("jobDetail's group: " + jobDetail.getKey().getGroup());
+        System.out.println("jobDetail's jobClass: " + jobDetail.getJobClass().getName());
+
         // 创建一个Trigger实例，定义该job立即执行，并且每隔两秒钟重复执行一次，知道程序手动终止
         Trigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("trigger1", "group1")
