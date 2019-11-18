@@ -27,7 +27,7 @@ public class SchedulerTest {
 
         // 距离当前时间4秒钟之后首次执行任务，之后每隔两秒钟重复执行一次任务
         // 直到距离当前时间6秒钟之后为止
-        CronTrigger trigger = (CronTrigger) TriggerBuilder.newTrigger()
+        CronTrigger trigger = TriggerBuilder.newTrigger()
                 .withIdentity("trigger1", "group1")
                 .withSchedule(CronScheduleBuilder.cronSchedule("* * * * * ? *"))
                 .build();
