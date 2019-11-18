@@ -24,22 +24,12 @@ public class SchedulerTest {
                 .withIdentity("job1", "group1")
                 .build();
 
-        // 获取距离当前时间4秒钟之后的具体时间
-        currentTime.setTime(currentTime.getTime() + 4000L);
-
-        // 获取距离当前时间6秒钟之后的具体时间
-        Date endTime = new Date();
-        endTime.setTime(endTime.getTime() + 6000L);
 
         // 距离当前时间4秒钟之后首次执行任务，之后每隔两秒钟重复执行一次任务
         // 直到距离当前时间6秒钟之后为止
-        SimpleTrigger trigger = (SimpleTrigger) TriggerBuilder.newTrigger()
+        CronTrigger trigger = (CronTrigger) TriggerBuilder.newTrigger()
                 .withIdentity("trigger1", "group1")
-                .startAt(currentTime)
-                .endAt(endTime)
-                .withSchedule(SimpleScheduleBuilder.simpleSchedule()
-                        .withIntervalInSeconds(2)
-                        .withRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY))
+                .withSchedule(CronScheduleBuilder.cronSchedule("* * * * * ? *"))
                 .build();
 
         // 创建Scheduler实例
