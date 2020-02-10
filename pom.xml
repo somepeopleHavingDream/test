@@ -8,7 +8,8 @@
         <version>2.1.8.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>org.yangxin</groupId>
+    <groupId>org.yangxin.test</groupId>
+<!--    <groupId>org.yangxin</groupId>-->
     <artifactId>test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>test</name>
@@ -90,10 +91,22 @@
     </dependencies>
 
     <build>
+        <finalName>test</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- 配置主类 -->
+                <configuration>
+                    <mainClass>org.yangxin.test.TestApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -124,7 +137,29 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+
+            <!-- 如果该项目是springboot的项目，则此插件会与springboot本身自带的插件起冲突报错 -->
+            <!-- 为了生成可执行的jar文件，需要借助maven-shade-plugin -->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-shade-plugin</artifactId>-->
+<!--                <version>3.2.1</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>shade</goal>-->
+<!--                        </goals>-->
+<!--                        <configuration>-->
+<!--                            <transformers>-->
+<!--                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">-->
+<!--                                    <mainClass>org.yangxin.test.TestApplication</mainClass>-->
+<!--                                </transformer>-->
+<!--                            </transformers>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
-
 </project>
