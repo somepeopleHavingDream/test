@@ -11,7 +11,6 @@ import java.util.Calendar;
 public class CalendarTest {
     public static void main(String[] args) {
         Calendar instance = Calendar.getInstance();
-
         System.out.println(instance.toString());
     }
 }
