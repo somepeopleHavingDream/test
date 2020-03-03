@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
  * @author yangxin
  * 2019/10/23 15:57
  */
-public class JSONUtil {
+public class GSONUtil {
     /**
      * 将对象转换成json
      */
