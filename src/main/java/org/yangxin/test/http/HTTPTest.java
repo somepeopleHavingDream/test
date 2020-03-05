@@ -1,4 +1,4 @@
-package org.yangxin.test.web;
+package org.yangxin.test.http;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
