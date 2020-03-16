@@ -10,8 +10,14 @@ import java.util.Map;
 public class HashMapTest {
     public static void main(String[] args) {
         Map<String, String> map = new HashMap<>();
-        String put1 = map.put("aa", "bb");
-        String put2 = map.put("aa", "cc");
-        System.out.println(put1 + " " + put2);
+        map.put("a", "bb");
+        map.put("b", "cc");
+        System.out.println(map);
+
+        map.clear();
+        System.out.println(map);
+
+        map.put("c", "dd");
+        System.out.println(map);
     }
 }
