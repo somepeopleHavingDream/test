@@ -11,5 +11,8 @@ public class StringTest {
         String serialNum = "f0004";
         String result = serialNum.toUpperCase();
         System.out.println(result);
+
+        String s = "";
+        System.out.println(Integer.parseInt(s));
     }
 }
