@@ -1,6 +1,7 @@
 package org.yangxin.test.leetcode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -10,48 +11,65 @@ import java.util.List;
  * 2020/01/15
  */
 public class BinaryTreePaths {
+
     static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
+
         TreeNode(int x) {
             val = x;
         }
     }
 
     public static List<String> binaryTreePaths(TreeNode root) {
-        // 找到所有的路径，把路径放入到集合中
-        List<String> list = new ArrayList<>();
-        StringBuilder builder = new StringBuilder();
-        findPaths(list, root, builder);
-        return list;
+        // 如果根节点为null，则直接返回
+        if (root == null) {
+            return Collections.emptyList();
+        }
+
+        List<String> resultList = new ArrayList<>();
+        getResultList(root, "", resultList);
+        return resultList;
     }
 
-    private static void findPaths(List<String> list, TreeNode root, StringBuilder builder) {
-        // 将自己本身加入到路径中
-        builder.append(root.val).append("->");
-
-        if (root.left == null && root.right == null) {
-            // 到底了，添加这一条路径
-            int length = builder.length();
-            list.add(builder.delete(length - 2, length).toString());
-
-            // 清除builder
+    private static void getResultList(TreeNode root, String line, List<String> resultList) {
+        // 如果当前节点为null，则直接返回
+        if (root == null) {
             return;
         }
 
+        // 当前节点的值不为null，则将当前节点的值添加进来
+        line += root.val;
+
+        // 如果当前节点是叶子节点
+        if (root.left == null && root.right == null) {
+            resultList.add(line);
+            return;
+        }
+
+        // 当前节点是非叶子节点，对于非叶子来说，肯定有一条路径通过更深层的非叶子节点
         if (root.left != null) {
-            findPaths(list, root.left, builder);
+            getResultList(root.left, line + "->", resultList);
         }
         if (root.right != null) {
-            findPaths(list, root.right, builder);
+            getResultList(root.right, line + "->", resultList);
         }
     }
 
-    /**
-     * 深度优先搜索
-     */
-    private static void dps(TreeNode node1) {
+
+    private static void solve(TreeNode root, String cur, List<String> ret) {
+        if (root == null) {
+            return;
+        }
+
+        cur += root.val;
+        if (root.left == null && root.right == null) {
+            ret.add(cur);
+        } else {
+            solve(root.left, cur + "->", ret);
+            solve(root.right, cur + "->", ret);
+        }
     }
 
     public static void main(String[] args) {
