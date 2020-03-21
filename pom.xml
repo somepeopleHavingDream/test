@@ -9,7 +9,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.yangxin.test</groupId>
-<!--    <groupId>org.yangxin</groupId>-->
     <artifactId>test</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>test</name>
