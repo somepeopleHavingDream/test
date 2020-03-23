@@ -14,7 +14,8 @@ public class HelloWorld1 {
 
     public static void main(String[] args) {
 //        Logger logger = LoggerFactory.getLogger("org.yangxin.test.logback.HelloWorld1");
-        log.debug("hello world");
+        log.debug("debug hello world");
+        log.info("info hello world");
 
         // 打印内部的状态
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
