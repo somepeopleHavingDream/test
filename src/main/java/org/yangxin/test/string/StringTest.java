@@ -12,7 +12,7 @@ public class StringTest {
         String result = serialNum.toUpperCase();
         System.out.println(result);
 
-        String s = "";
-        System.out.println(Integer.parseInt(s));
+//        String s = "";
+//        System.out.println(Integer.parseInt(s));
     }
 }
