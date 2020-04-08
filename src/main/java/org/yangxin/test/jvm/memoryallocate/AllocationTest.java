@@ -4,6 +4,7 @@ package org.yangxin.test.jvm.memoryallocate;
  * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:SurvivorRatio=8 -XX:+PrintGCDetails
  */
 public class AllocationTest {
+
     private static final int _1MB = 1024 * 1024;
 
     private static void testAllocation() {
