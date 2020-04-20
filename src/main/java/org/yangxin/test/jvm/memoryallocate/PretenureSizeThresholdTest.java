@@ -11,7 +11,7 @@ public class PretenureSizeThresholdTest {
     private static final Integer _1MB = 1024 * 1024;
 
     /**
-     * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:SurvivorRatio=8
+     * VM参数： -XX:+PrintGCDetails -verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:SurvivorRatio=8 -XX:+UseParNewGC
      * -XX:PretenureSizeThreshold=3145728
      */
     public static void main(String[] args) {
