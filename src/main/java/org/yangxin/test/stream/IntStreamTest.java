@@ -7,6 +7,7 @@ import java.util.stream.IntStream;
  * 2020/02/15 21:20
  */
 public class IntStreamTest {
+
     public static void main(String[] args) {
         IntStream.range(1, 10).forEach(System.out::println);
 

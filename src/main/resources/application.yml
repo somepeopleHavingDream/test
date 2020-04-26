@@ -7,3 +7,12 @@
 
 server:
   port: 8082
+
+jasypt:
+  encryptor:
+    password: P@dc#%eve!DaDf4n
+
+spring:
+  datasource:
+    password: ENC(c/3cfPr8qlb69hAhaYYBth26ltfJ/CnfsKX1aGDatafRHESSeIQch2vDaOVWgy3D)
+#    password: 123456

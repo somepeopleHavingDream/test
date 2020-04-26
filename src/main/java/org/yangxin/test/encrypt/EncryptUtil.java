@@ -10,6 +10,7 @@ import java.security.NoSuchAlgorithmException;
  * 2019/06/27 18:10
  */
 public final class EncryptUtil {
+
     /**
      * MD5加密
      */
