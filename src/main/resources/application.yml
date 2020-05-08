@@ -15,4 +15,3 @@ jasypt:
 spring:
   datasource:
     password: ENC(c/3cfPr8qlb69hAhaYYBth26ltfJ/CnfsKX1aGDatafRHESSeIQch2vDaOVWgy3D)
-#    password: 123456

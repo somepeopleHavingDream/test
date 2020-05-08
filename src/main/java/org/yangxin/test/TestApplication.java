@@ -9,6 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.env.Environment;
 
+/**
+ * @author yangxin
+ * 2020/04/29 10:24
+ */
 @SpringBootApplication
 @Slf4j
 public class TestApplication implements CommandLineRunner {

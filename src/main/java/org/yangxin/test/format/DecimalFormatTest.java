@@ -9,6 +9,7 @@ import java.text.DecimalFormat;
  * 2020/03/05 17:49
  */
 public class DecimalFormatTest {
+
     public static void main(String[] args) {
         double d1 = 123456.36987, d2 = 12.3698;
         DecimalFormat decimalFormat = new DecimalFormat("0000.000");

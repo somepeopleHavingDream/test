@@ -27,7 +27,7 @@ public class MyLock {
         }
     }
 
-    private Sync sync = new Sync();
+    private final Sync sync = new Sync();
 
     public void lock() {
         sync.acquire(1);
