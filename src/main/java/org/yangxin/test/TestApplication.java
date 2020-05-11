@@ -39,12 +39,13 @@ public class TestApplication implements CommandLineRunner {
 
         // 加密
         String mysqlEncryptedPassword1 = encrypt(mysqlOriginPassword);
-        String mysqlEncryptedPassword2 = encrypt(mysqlOriginPassword);
+        String mysqlEncryptedPassword2 = encrypt("root");
 
         // 打印加密前后的结果对比
         log.info("MySQL原始明文密码： [{}]", mysqlOriginPassword);
         log.info("MySQL加密后密码： [{}]", mysqlEncryptedPassword1);
         log.info("MySQL加密后密码： [{}]", mysqlEncryptedPassword2);
+        log.info("MySQL解密后密码： [{}]", decrypt("BQGsohp2tGtdi/wU5ck8wDyLGWQinHIZVV4DwG6sfV4aQMnsuYQUMvXvy0LieYzV"));
     }
 
     /**
