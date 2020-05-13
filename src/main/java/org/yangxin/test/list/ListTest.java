@@ -10,6 +10,12 @@ import java.util.List;
 public class ListTest {
 
     public static void main(String[] args) {
+//        batch();
+        Object[] objects = new Object[0];
+        System.out.println(objects.length);
+    }
+
+    private static void batch() {
         // 构建有4万多条数据的集合
         List<Simple> simpleList = new ArrayList<>();
         for (int i = 0; i < 45180; i++) {
