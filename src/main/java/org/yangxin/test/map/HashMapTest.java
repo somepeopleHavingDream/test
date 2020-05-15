@@ -8,6 +8,7 @@ import java.util.Map;
  * 2019/12/25 11:58
  */
 public class HashMapTest {
+
     public static void main(String[] args) {
         Map<String, String> map = new HashMap<>();
         map.put("a", "bb");
