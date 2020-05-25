@@ -15,7 +15,8 @@ public class RetryTest {
             for (int j = 0; j < 5; j++) {
                 count++;
                 if (count == 3) {
-                    break retry;
+                    continue retry;
+//                    break retry;
                 }
                 System.out.print(count + " ");
             }
