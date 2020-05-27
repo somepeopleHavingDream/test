@@ -1,4 +1,4 @@
-package org.yangxin.test.nio;
+package org.yangxin.test.io.nio;
 
 import java.io.IOException;
 

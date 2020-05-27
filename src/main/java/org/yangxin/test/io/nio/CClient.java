@@ -1,4 +1,4 @@
-package org.yangxin.test.nio;
+package org.yangxin.test.io.nio;
 
 import java.io.IOException;
 
@@ -6,9 +6,9 @@ import java.io.IOException;
  * @author yangxin
  * 2020/05/25 15:18
  */
-public class BClient {
+public class CClient {
 
     public static void main(String[] args) throws IOException {
-        new NioClient().start("BClient");
+        new NioClient().start("CClient");
     }
 }
