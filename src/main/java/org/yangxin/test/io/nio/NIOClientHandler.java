@@ -15,11 +15,11 @@ import java.util.Set;
  * @author yangxin
  * 2020/05/25 14:59
  */
-public class NioClientHandler implements Runnable {
+public class NIOClientHandler implements Runnable {
 
-    private Selector selector;
+    private final Selector selector;
 
-    public NioClientHandler(Selector selector) {
+    public NIOClientHandler(Selector selector) {
         this.selector = selector;
     }
 
