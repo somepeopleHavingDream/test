@@ -14,7 +14,7 @@ import java.util.Set;
  * @author yangxin
  * 2020/05/25 15:19
  */
-public class NioServer {
+public class NIOServer {
 
     /**
      * 启动
@@ -143,6 +143,6 @@ public class NioServer {
      * 主方法
      */
     public static void main(String[] args) throws IOException {
-        new NioServer().start();
+        new NIOServer().start();
     }
 }

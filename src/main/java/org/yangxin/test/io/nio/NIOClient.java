@@ -14,7 +14,7 @@ import java.util.Scanner;
  * @author yangxin
  * 2020/05/25 14:55
  */
-public class NioClient {
+public class NIOClient {
 
     /**
      * 启动
@@ -29,7 +29,7 @@ public class NioClient {
         Selector selector = Selector.open();
         socketChannel.configureBlocking(false);
         socketChannel.register(selector, SelectionKey.OP_READ);
-        new Thread(new NioClientHandler(selector)).start();
+        new Thread(new NIOClientHandler(selector)).start();
 
         // 向服务器端发送数据
         Scanner scanner = new Scanner(System.in);
@@ -42,6 +42,6 @@ public class NioClient {
     }
 
     public static void main(String[] args) {
-
+//        new NIOClient().start("Alice");
     }
 }
