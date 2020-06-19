@@ -16,5 +16,9 @@ public class MathTest {
         double d = 114.145;
         d = (double) Math.round(d * 100) / 100;
         System.out.println(d);
+
+        double b = (double) 400 / 1165;
+        b = (double) Math.round(b * 100) / 100;
+        System.out.println(b);
     }
 }
