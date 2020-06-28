@@ -12,17 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 使用zxing进行二维码解析
+ * 读取条形码
  *
  * @author yangxin
- * 2020/06/27 20:06
+ * 2020/06/28 10:25
  */
-public class ReadQRCode {
+public class ReadBarcode {
 
     @SuppressWarnings("all")
     public static void main(String[] args) {
         MultiFormatReader multiFormatReader = new MultiFormatReader();
-        File file = new File("img.png");
+        File file = new File("barcode.png");
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
             BinaryBitmap binaryBitmap = new BinaryBitmap(
