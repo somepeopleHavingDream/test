@@ -22,7 +22,7 @@ public class ReflectTarget {
         // 第三种方式来获取Class对象
         try {
             Class<?> reflectTargetClass3 = Class.forName("org.yangxin.test.reflect.ReflectTarget");
-            System.out.println("reflectTargetClass3: [{}]" + reflectTargetClass3.getName());
+            System.out.println("reflectTargetClass3: " + reflectTargetClass3.getName());
             System.out.println(reflectTargetClass2 == reflectTargetClass3);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
