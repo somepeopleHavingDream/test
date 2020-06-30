@@ -38,7 +38,7 @@ public class CreateQRCode {
         try {
             BitMatrix bitMatrix = new MultiFormatWriter()
                     .encode(content, BarcodeFormat.QR_CODE, width, height, hintMap);
-            Path path = new File("img.png").toPath();
+            Path path = new File("qrcode.png").toPath();
             MatrixToImageWriter.writeToPath(bitMatrix, format, path);
         } catch (WriterException | IOException e) {
             e.printStackTrace();

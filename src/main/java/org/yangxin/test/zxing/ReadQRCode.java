@@ -22,7 +22,7 @@ public class ReadQRCode {
     @SuppressWarnings("all")
     public static void main(String[] args) {
         MultiFormatReader multiFormatReader = new MultiFormatReader();
-        File file = new File("img.png");
+        File file = new File("qrcode.png");
         try {
             BufferedImage bufferedImage = ImageIO.read(file);
             BinaryBitmap binaryBitmap = new BinaryBitmap(
