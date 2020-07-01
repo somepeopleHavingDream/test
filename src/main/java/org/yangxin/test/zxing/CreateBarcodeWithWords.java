@@ -57,7 +57,7 @@ public class CreateBarcodeWithWords {
             outImageGraphics.fillRect(0, 0, 270, 60);
             outImageGraphics.setColor(Color.BLACK);
 
-            // 画二维码到新的面板
+            // 画条形码到新的面板
             outImageGraphics.drawImage(bufferedImage, 5, 5, 264, 48, null);
 
             // 画文字到新的面板
