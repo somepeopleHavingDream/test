@@ -2,6 +2,7 @@ package org.yangxin.test.jvm.memoryallocate;
 
 /**
  * 动态对象年龄判定
+ * 如果在Survivor空间中相同年龄所有对象大小的总和大于Survivor空间的一半，年龄大于或等于该年龄的对象就可以直接进入老年代
  *
  * @author yangxin
  * 2020/04/21 15:35

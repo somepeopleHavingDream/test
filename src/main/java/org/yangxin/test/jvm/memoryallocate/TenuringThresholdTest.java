@@ -12,6 +12,8 @@ public class TenuringThresholdTest {
 
     /**
      * VM参数：-verbose:gc -Xms20M -Xmx20M -Xmn10M -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=1 -XX:+PrintTenuringDistribution -XX:+PrintGCDetails -XX:+UseParNewGC
+     *
+     * 这个例子也证明了，gc的时机并不一定等gc失败的时候再发生，而是有gc线程决定什么时候进行gc
      */
     public static void main(String[] args) {
         byte[] allocation1, allocation2, allocation3;
