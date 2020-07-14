@@ -12,8 +12,10 @@ import java.lang.reflect.Field;
  * 2019/11/12 17:01
  */
 public class DirectMemoryOOM {
+
     private static final int _1MB = 1024 * 1024;
 
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) throws IllegalAccessException {
         Field unsafeField = Unsafe.class.getDeclaredFields()[0];
         unsafeField.setAccessible(true);

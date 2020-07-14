@@ -8,8 +8,10 @@ package org.yangxin.test.jvm.oom;
  * 2019/11/12 16:04
  */
 public class JavaVMStackSOF {
+
     private int stackLength = 1;
 
+    @SuppressWarnings("InfiniteRecursion")
     public void stackLeak() {
         stackLength++;
         stackLeak();

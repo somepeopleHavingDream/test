@@ -11,6 +11,8 @@ import net.sf.cglib.proxy.MethodInterceptor;
  * 2019/11/12 16:54
  */
 public class JavaMethodAreaOOM {
+
+    @SuppressWarnings("InfiniteLoopStatement")
     public static void main(String[] args) {
         while (true) {
             Enhancer enhancer = new Enhancer();

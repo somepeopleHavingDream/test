@@ -11,6 +11,8 @@ import java.util.List;
  * 2019/11/12 16:47
  */
 public class RuntimeConstantPoolOOM {
+
+    @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "InfiniteLoopStatement"})
     public static void main(String[] args) {
         // 使用List保持着常量池引用，避免Full GC回收常量池行为
         List<String> list = new ArrayList<>();

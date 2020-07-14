@@ -17,6 +17,7 @@ public class HeapOOM {
 
     }
 
+    @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "InfiniteLoopStatement"})
     public static void main(String[] args) {
         List<OOMObject> list = new ArrayList<>();
         while (true) {
