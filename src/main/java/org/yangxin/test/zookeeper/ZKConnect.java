@@ -1,6 +1,5 @@
 package org.yangxin.test.zookeeper;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooKeeper;
@@ -13,11 +12,11 @@ import java.io.IOException;
  * @author yangxin
  * 2020/07/10 11:17
  */
-@Slf4j
+//@Slf4j
 public class ZKConnect implements Watcher {
 
-    public static final String ZK_SERVER_PATH = "localhost:2888";
-//    public static final String ZK_SERVER_PATH = "localhost:2181";
+//    public static final String ZK_SERVER_PATH = "localhost:2888";
+    public static final String ZK_SERVER_PATH = "localhost:2181";
 
     public static final Integer timeout = 5000;
 
@@ -34,16 +33,18 @@ public class ZKConnect implements Watcher {
         // sessionPasswd：会话密码，当会话丢失后，可以依据sessionId和sessionPasswd重新获取会话
         ZooKeeper zooKeeper = new ZooKeeper(ZK_SERVER_PATH, timeout, new ZKConnect());
 
-        log.warn("客户端开始连接zookeeper服务器……");
-        log.warn("连接状态：[{}]", zooKeeper.getState());
+        System.out.println("客户端开始连接zookeeper服务器……");
+//        System.out.println("客户端开始连接zookeeper服务器……");
+        System.out.println("连接状态：" + zooKeeper.getState());
 
-        Thread.sleep(2000);
+        Thread.sleep(10000);
 
-        log.warn("连接状态：[{}]", zooKeeper.getState());
+        System.out.println("连接状态：" + zooKeeper.getState());
     }
 
     @Override
     public void process(WatchedEvent event) {
-        log.warn("接收到watcher通知：[{}]", event);
+        System.out.println("接收到watcher通知：" + event);
+//        System.out.println("接收到watcher通知：[{}]" + event);
     }
 }
