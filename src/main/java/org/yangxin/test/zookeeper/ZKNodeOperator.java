@@ -59,17 +59,19 @@ public class ZKNodeOperator implements Watcher {
                    EPHEMERAL：临时节点
                    EPHEMERAL_SEQUENTIAL：临时顺序节点
              */
-            result = zooKeeper.create(path, data, aclList, CreateMode.PERSISTENT);
+            String ctx = "{'create':'success'}";
+            zooKeeper.create(path, data, aclList, CreateMode.PERSISTENT, new CreateCallBack(), ctx);
+//            result = zooKeeper.create(path, data, aclList, CreateMode.PERSISTENT);
             System.out.println("创建节点：\t" + result + "\t成功……");
             Thread.sleep(2000);
-        } catch (KeeperException | InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public void process(WatchedEvent event) {
-
+        System.out.println("接收到watcher通知：" + event);
     }
 
     public ZooKeeper getZooKeeper() {
@@ -84,8 +86,8 @@ public class ZKNodeOperator implements Watcher {
         ZKNodeOperator zkNodeOperator = new ZKNodeOperator(zkServerPath);
         zkNodeOperator.createZKNode("/test-delete-node", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
 
-        String ctx = "{'delete':'success'}";
-        zkNodeOperator.getZooKeeper().delete("/test-delete-node", 0, new DeleteCallBack(), ctx);
-        Thread.sleep(2000);
+//        String ctx = "{'delete':'success'}";
+//        zkNodeOperator.getZooKeeper().delete("/test-delete-node", 0, new DeleteCallBack(), ctx);
+//        Thread.sleep(2000);
     }
 }
