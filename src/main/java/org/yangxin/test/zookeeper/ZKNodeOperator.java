@@ -2,6 +2,7 @@ package org.yangxin.test.zookeeper;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Stat;
 
 import java.io.IOException;
 import java.util.List;
@@ -82,10 +83,23 @@ public class ZKNodeOperator implements Watcher {
         this.zooKeeper = zooKeeper;
     }
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, KeeperException {
         ZKNodeOperator zkNodeOperator = new ZKNodeOperator(zkServerPath);
-        zkNodeOperator.createZKNode("/test-delete-node", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
 
+        // 创建节点
+        //        zkNodeOperator.createZKNode("/test-delete-node", "123".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
+
+        // 修改节点
+        /*
+            参数：
+            path：节点路径
+            data：数据
+            version：数据状态
+         */
+        Stat stat = zkNodeOperator.getZooKeeper().setData("/test-delete-node", "modify".getBytes(), 0);
+        System.out.println(stat.getVersion());
+
+        // 删除节点
 //        String ctx = "{'delete':'success'}";
 //        zkNodeOperator.getZooKeeper().delete("/test-delete-node", 0, new DeleteCallBack(), ctx);
 //        Thread.sleep(2000);
