@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper;
+package org.yangxin.test.zookeeper.demo;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;

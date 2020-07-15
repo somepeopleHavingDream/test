@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper;
+package org.yangxin.test.zookeeper.demo;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
