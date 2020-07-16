@@ -4,8 +4,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
+import org.apache.zookeeper.data.Id;
+import org.yangxin.test.zookeeper.util.AclUtils;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -68,10 +72,21 @@ public class ZKNodeAcl implements Watcher {
 
     }
 
-    public static void main(String[] args) throws KeeperException, InterruptedException {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
         ZKNodeAcl zkNodeAcl = new ZKNodeAcl(ZK_SERVER_PATH);
 
-        zkNodeAcl.createZKNode("/aclmooc", "test".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
+        // acl 任何人都可以访问
+//        zkNodeAcl.createZKNode("/aclmooc", "test".getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE);
+
+        // 自定义用户认证访问
+        List<ACL> aclList = new ArrayList<>();
+        Id test1 = new Id("digest", AclUtils.getDigestUserPassword("test1:123456"));
+        Id test2 = new Id("digest", AclUtils.getDigestUserPassword("test2:123456"));
+        aclList.add(new ACL(ZooDefs.Perms.ALL, test1));
+        aclList.add(new ACL(ZooDefs.Perms.READ, test2));
+        aclList.add(new ACL(ZooDefs.Perms.DELETE | ZooDefs.Perms.CREATE, test2));
+        zkNodeAcl.createZKNode("/aclmooc/testdigest", "testdigest".getBytes(), aclList);
+
         // 验证ip是否有权限
 //        zkNodeAcl.getZooKeeper().setData("/iptest-2018", "now".getBytes(), 1);
 //        Stat stat = new Stat();
