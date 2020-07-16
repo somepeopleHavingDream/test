@@ -22,6 +22,6 @@ public class StationShandongChangchuan extends DangerCenter {
             e.printStackTrace();
         }
 
-        System.out.println("检查【" + this.getStation() + "】完毕，可以发车……");
+        System.out.println("检查【" + this.getStation() + "】完毕，可以发车。");
     }
 }

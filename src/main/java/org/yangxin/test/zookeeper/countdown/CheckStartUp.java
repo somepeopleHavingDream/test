@@ -30,6 +30,7 @@ public class CheckStartUp {
 
         // 等待线程执行完毕
         countDownLatch.await();
+        executorService.shutdown();
 
         for (DangerCenter dangerCenter : stationList) {
             if (!dangerCenter.isOk()) {
