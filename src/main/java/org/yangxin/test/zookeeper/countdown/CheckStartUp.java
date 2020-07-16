@@ -36,7 +36,7 @@ public class CheckStartUp {
                 return false;
             }
         }
-        long count = countDownLatch.getCount();
+//        long count = countDownLatch.getCount();
 
         return true;
     }
