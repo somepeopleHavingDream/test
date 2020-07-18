@@ -8,6 +8,7 @@ package org.yangxin.test.jvm.classrunningpractise;
  * @author yangxin
  * 2020/07/17 16:20
  */
+@Deprecated
 public class HotSwapClassLoader extends ClassLoader {
 
     public HotSwapClassLoader() {

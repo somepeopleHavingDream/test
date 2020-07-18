@@ -6,6 +6,7 @@ package org.yangxin.test.jvm.classrunningpractise;
  * @author yangxin
  * 2020/07/17 16:25
  */
+@Deprecated
 public class ClassModifier {
 
     /**

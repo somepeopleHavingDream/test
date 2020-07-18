@@ -6,6 +6,7 @@ package org.yangxin.test.jvm.classrunningpractise;
  * @author yangxin
  * 2020/07/17 16:37
  */
+@Deprecated
 public class ByteUtils {
 
     public static int bytes2Int(byte[] b, int start, int len) {

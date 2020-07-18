@@ -11,6 +11,7 @@ import java.io.PrintStream;
  * @author yangxin
  * 2020/07/17 17:15
  */
+@Deprecated
 public class HackSystem {
 
     public static final InputStream in = System.in;

@@ -9,6 +9,7 @@ import java.lang.reflect.Method;
  * @author yangxin
  * 2020/07/17 17:35
  */
+@Deprecated
 public class JavaClassExecuter {
 
     /**
