@@ -2,6 +2,7 @@ package org.yangxin.test;
 
 import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -15,6 +16,7 @@ import org.springframework.core.env.Environment;
  */
 @SpringBootApplication
 @Slf4j
+@MapperScan("org.yangxin.test.mybatisplus")
 public class TestApplication implements CommandLineRunner {
 
     private final ApplicationContext applicationContext;
@@ -58,6 +60,7 @@ public class TestApplication implements CommandLineRunner {
     /**
      * 解密
      */
+    @SuppressWarnings("SameParameterValue")
     private String decrypt(String encryptedPassword) {
         return stringEncryptor.decrypt(encryptedPassword);
     }

@@ -12,6 +12,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * 2019/09/29 14:36
  */
 class RedisTest {
+
     @Test
     void testRedis() {
         // 1. 设置IP地址和端口

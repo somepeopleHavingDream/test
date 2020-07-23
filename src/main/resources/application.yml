@@ -15,3 +15,6 @@ jasypt:
 spring:
   datasource:
     password: ENC(c/3cfPr8qlb69hAhaYYBth26ltfJ/CnfsKX1aGDatafRHESSeIQch2vDaOVWgy3D)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    url: jdbc:mysql://localhost:3306/dianping?characterEncoding=utf-8&useSSL=false
