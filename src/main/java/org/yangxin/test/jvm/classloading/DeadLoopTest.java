@@ -13,6 +13,7 @@ public class DeadLoopTest {
      * @author yangxin
      * 2020/06/23 17:04
      */
+    @SuppressWarnings({"ConstantConditions", "InfiniteLoopStatement", "StatementWithEmptyBody"})
     static class DeadLoopClass {
 
         // 虚拟机会保证一个类的<clinit>()方法在多线程环境中被正确地加锁和同步，如果多个线程同时去初始化一个类，
