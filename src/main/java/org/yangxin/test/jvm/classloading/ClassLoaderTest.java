@@ -10,6 +10,8 @@ import java.net.URL;
  * 不同的类加载器对instanceof关键字运算结果的影响
  * 类加载器与instanceof关键字演示
  *
+ * defineClass1 native方法会再次回调到loadClass方法……，这就是为什么在这个测试用例中自定义loadClass方法被加载了3次。
+ *
  * @author yangxin
  * 2020/06/23 17:24
  */
@@ -25,6 +27,9 @@ public class ClassLoaderTest {
                 String fileName = name.substring(name.lastIndexOf(".") + 1) + ".class";
                 System.out.println("fileName: " + fileName);
 
+//                Class<? extends ClassLoader> aClass = getClass();
+//                System.out.println("aClass: " + aClass);
+//                InputStream inputStream = aClass.getResourceAsStream(fileName);
                 InputStream inputStream = getClass().getResourceAsStream(fileName);
                 if (inputStream == null) {
                     return super.loadClass(name);
@@ -41,7 +46,12 @@ public class ClassLoaderTest {
             }
         };
 
+        System.out.println("loadClass之前");
+        System.out.println();
+
         Object object = myLoader.loadClass("org.yangxin.test.jvm.classloading.ClassLoaderTest").newInstance();
+
+        System.out.println();
         System.out.println(object.getClass());
         System.out.println(object instanceof org.yangxin.test.jvm.classloading.ClassLoaderTest);
     }
