@@ -2,6 +2,8 @@ package org.yangxin.test.jvm.classloading;
 
 import sun.misc.Launcher;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 /**
@@ -14,33 +16,34 @@ import java.net.URL;
 public class ClassLoaderTest {
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        printJDKJar();
-//        ClassLoader myLoader = new ClassLoader() {
-//
-//            @SuppressWarnings("ResultOfMethodCallIgnored")
-//            @Override
-//            public Class<?> loadClass(String name) throws ClassNotFoundException {
-//                String fileName = name.substring(name.lastIndexOf(".") + 1) + ".class";
-//                System.out.println("fileName: " + fileName);
-//                InputStream inputStream = getClass().getResourceAsStream(fileName);
-//                if (inputStream == null) {
-//                    return super.loadClass(name);
-//                }
-//
-//                try {
-//                    byte[] b = new byte[inputStream.available()];
-//                    inputStream.read(b);
-//                    return defineClass(name, b, 0, b.length);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                    throw new ClassNotFoundException(name);
-//                }
-//            }
-//        };
-//
-//        Object object = myLoader.loadClass("org.yangxin.test.jvm.classloading.ClassLoaderTest").newInstance();
-//        System.out.println(object.getClass());
-//        System.out.println(object instanceof org.yangxin.test.jvm.classloading.ClassLoaderTest);
+//        printJDKJar();
+        ClassLoader myLoader = new ClassLoader() {
+
+            @SuppressWarnings("ResultOfMethodCallIgnored")
+            @Override
+            public Class<?> loadClass(String name) throws ClassNotFoundException {
+                String fileName = name.substring(name.lastIndexOf(".") + 1) + ".class";
+                System.out.println("fileName: " + fileName);
+
+                InputStream inputStream = getClass().getResourceAsStream(fileName);
+                if (inputStream == null) {
+                    return super.loadClass(name);
+                }
+
+                try {
+                    byte[] b = new byte[inputStream.available()];
+                    inputStream.read(b);
+                    return defineClass(name, b, 0, b.length);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new ClassNotFoundException(name);
+                }
+            }
+        };
+
+        Object object = myLoader.loadClass("org.yangxin.test.jvm.classloading.ClassLoaderTest").newInstance();
+        System.out.println(object.getClass());
+        System.out.println(object instanceof org.yangxin.test.jvm.classloading.ClassLoaderTest);
     }
 
     /**
