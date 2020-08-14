@@ -15,6 +15,7 @@ public class ListTest {
         System.out.println(objects.length);
     }
 
+    @SuppressWarnings("InstantiationOfUtilityClass")
     private static void batch() {
         // 构建有4万多条数据的集合
         List<Simple> simpleList = new ArrayList<>();
