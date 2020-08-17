@@ -1,4 +1,4 @@
-package org.yangxin.test.aboutclass;
+package org.yangxin.test.aboutclass.outclass;
 
 /**
  * @author yangxin
