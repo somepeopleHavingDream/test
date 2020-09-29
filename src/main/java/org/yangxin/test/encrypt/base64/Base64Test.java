@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt;
+package org.yangxin.test.encrypt.base64;
 
 import org.apache.commons.codec.binary.Base64;
 import sun.misc.BASE64Decoder;
