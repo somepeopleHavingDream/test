@@ -14,11 +14,13 @@ import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Arrays;
 
 /**
  * @author yangxin
  * 2020/10/08 17:00
  */
+@SuppressWarnings("DuplicatedCode")
 public class RSATest {
 
     private static final String SRC = "imooc security rsa";
@@ -86,7 +88,6 @@ public class RSATest {
      * @return 明文
      * @throws Exception 解密过程中的异常信息
      */
-    @SuppressWarnings("DuplicatedCode")
     public static String privateDecrypt(String str, String privateKey) throws Exception {
         // 先以Base64方式解码密码和密钥
         byte[] data = Base64.decodeBase64(str.getBytes(StandardCharsets.UTF_8));
@@ -122,5 +123,46 @@ public class RSATest {
         out.close();
         // 这个地方，如果不指定编码，在windows上最终出来的字符串可能会乱码
         return new String(decryptedData, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * RSA公钥加密
+     *
+     * @param str       加密字符串
+     * @param publicKey 公钥
+     * @return 密文
+     * @throws Exception 加密过程中的异常信息
+     */
+    public static String publicEncrypt(String str, String publicKey) throws Exception {
+        String result;
+        //base64编码的公钥
+        byte[] decoded = Base64.decodeBase64(publicKey);
+        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
+        //RSA加密
+        Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+
+        byte[] inputArray = str.getBytes();
+        int inputLength = inputArray.length;
+        // 最大加密字节数，超出最大字节数需要分组加密
+        int MAX_ENCRYPT_BLOCK = 117;
+
+        // 标识
+        int offSet = 0;
+        byte[] resultBytes = {};
+        byte[] cache;
+        while (inputLength - offSet > 0) {
+            if (inputLength - offSet > MAX_ENCRYPT_BLOCK) {
+                cache = cipher.doFinal(inputArray, offSet, MAX_ENCRYPT_BLOCK);
+                offSet += MAX_ENCRYPT_BLOCK;
+            } else {
+                cache = cipher.doFinal(inputArray, offSet, inputLength - offSet);
+                offSet = inputLength;
+            }
+            resultBytes = Arrays.copyOf(resultBytes, resultBytes.length + cache.length);
+            System.arraycopy(cache, 0, resultBytes, resultBytes.length - cache.length, cache.length);
+        }
+        result = Base64.encodeBase64String(resultBytes);
+        return result;
     }
 }
