@@ -6,6 +6,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.ByteArrayOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -74,5 +76,51 @@ public class RSATest {
         } catch (NoSuchAlgorithmException | InvalidKeySpecException | NoSuchPaddingException | InvalidKeyException | BadPaddingException | IllegalBlockSizeException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * RSA私钥解密
+     *
+     * @param str        加密字符串
+     * @param privateKey 私钥
+     * @return 明文
+     * @throws Exception 解密过程中的异常信息
+     */
+    @SuppressWarnings("DuplicatedCode")
+    public static String privateDecrypt(String str, String privateKey) throws Exception {
+        // 先以Base64方式解码密码和密钥
+        byte[] data = Base64.decodeBase64(str.getBytes(StandardCharsets.UTF_8));
+        byte[] keyBytes = Base64.decodeBase64(privateKey);
+
+        // 生成密钥对象
+        PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        Key privateK = keyFactory.generatePrivate(pkcs8KeySpec);
+
+        // 生成解码器
+        Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
+        cipher.init(Cipher.DECRYPT_MODE, privateK);
+
+        // 开始解密过程
+        int inputLen = data.length;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int offSet = 0;
+        byte[] cache;
+        int i = 0;
+        // 对数据分段解密
+        while (inputLen - offSet > 0) {
+            if (inputLen - offSet > 128) {
+                cache = cipher.doFinal(data, offSet, 128);
+            } else {
+                cache = cipher.doFinal(data, offSet, inputLen - offSet);
+            }
+            out.write(cache, 0, cache.length);
+            i++;
+            offSet = i * 128;
+        }
+        byte[] decryptedData = out.toByteArray();
+        out.close();
+        // 这个地方，如果不指定编码，在windows上最终出来的字符串可能会乱码
+        return new String(decryptedData, StandardCharsets.UTF_8);
     }
 }
