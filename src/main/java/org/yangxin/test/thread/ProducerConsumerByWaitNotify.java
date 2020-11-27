@@ -29,10 +29,11 @@ public class ProducerConsumerByWaitNotify {
  * 2020/01/31 18:32
  */
 class Producer implements Runnable {
+
     /**
      * 存储队列
      */
-    private StorageQueue storageQueue;
+    private final StorageQueue storageQueue;
 
     Producer(StorageQueue storageQueue) {
         this.storageQueue = storageQueue;
@@ -52,10 +53,11 @@ class Producer implements Runnable {
 }
 
 class Consumer implements Runnable {
+
     /**
      * 存储队列
      */
-    private StorageQueue storageQueue;
+    private final StorageQueue storageQueue;
 
     Consumer(StorageQueue storageQueue) {
         this.storageQueue = storageQueue;
@@ -81,15 +83,16 @@ class Consumer implements Runnable {
  * 2020/01/31 18:34
  */
 class StorageQueue {
+
     /**
      * 最大容量
      */
-    private int maxSize;
+    private final int maxSize;
 
     /**
      * 存储队列
      */
-    private Queue<Date> queue;
+    private final Queue<Date> queue;
 
     StorageQueue() {
         this.maxSize = 10;

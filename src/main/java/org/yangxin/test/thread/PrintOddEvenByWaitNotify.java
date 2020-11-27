@@ -7,6 +7,7 @@ package org.yangxin.test.thread;
  * 2020/02/01 19:20
  */
 public class PrintOddEvenByWaitNotify {
+
     /**
      * 打印次数
      */
