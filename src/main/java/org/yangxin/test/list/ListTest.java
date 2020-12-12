@@ -1,18 +1,36 @@
 package org.yangxin.test.list;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author yangxin
  * 2020/03/25 09:01
  */
+@SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
 public class ListTest {
 
     public static void main(String[] args) {
 //        batch();
-        Object[] objects = new Object[0];
-        System.out.println(objects.length);
+
+//        Object[] objects = new Object[0];
+//        System.out.println(objects.length);
+
+        List<Integer> list = new ArrayList<>();
+//        list.add(2);
+//        list.add(1);
+//        list.add(-2);
+//        list.add(9);
+//        list.add(8);
+        Random random = new Random();
+//        for (int i = 0; i < 64; i++) {
+        for (int i = 0; i < 32; i++) {
+            list.add(random.nextInt() % 100 + 1);
+        }
+        System.out.println(list);
+        Collections.sort(list);
     }
 
     @SuppressWarnings("InstantiationOfUtilityClass")
