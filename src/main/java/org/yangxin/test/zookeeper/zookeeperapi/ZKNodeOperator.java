@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.demo;
+package org.yangxin.test.zookeeper.zookeeperapi;
 
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
@@ -82,7 +82,7 @@ public class ZKNodeOperator implements Watcher {
         this.zooKeeper = zooKeeper;
     }
 
-    public static void main(String[] args) throws InterruptedException, KeeperException {
+    public static void main(String[] args) throws InterruptedException {
         ZKNodeOperator zkNodeOperator = new ZKNodeOperator(zkServerPath);
 
         // 创建节点

@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.demo;
+package org.yangxin.test.zookeeper.zookeeperapi;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,7 +43,7 @@ public class ZKNodeAcl implements Watcher {
     }
 
     public void createZKNode(String path, byte[] data, List<ACL> aclList) {
-        String result = "";
+        String result;
 
         try {
             /*

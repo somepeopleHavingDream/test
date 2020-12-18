@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.demo;
+package org.yangxin.test.zookeeper.zookeeperapi;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

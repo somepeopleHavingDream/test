@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.demo;
+package org.yangxin.test.zookeeper.zookeeperapi;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -15,8 +15,8 @@ import java.io.IOException;
 //@Slf4j
 public class ZKConnect implements Watcher {
 
-//    public static final String ZK_SERVER_PATH = "localhost:2888";
-    public static final String ZK_SERVER_PATH = "localhost:2181";
+//    public static final String ZK_SERVER_PATH = "192.168.3.3:2181";
+    public static final String ZK_SERVER_PATH = "localhost:2181,localhost:2182,localhost:2183";
 
     public static final Integer timeout = 5000;
 
@@ -37,7 +37,8 @@ public class ZKConnect implements Watcher {
 //        System.out.println("客户端开始连接zookeeper服务器……");
         System.out.println("连接状态：" + zooKeeper.getState());
 
-        Thread.sleep(10000);
+        Thread.sleep(2000);
+//        Thread.sleep(10000);
 
         System.out.println("连接状态：" + zooKeeper.getState());
     }
