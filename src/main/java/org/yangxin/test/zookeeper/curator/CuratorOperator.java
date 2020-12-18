@@ -9,6 +9,9 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
+import org.apache.zookeeper.data.Stat;
+
+import java.util.List;
 
 /**
  * @author yangxin
@@ -56,7 +59,7 @@ public class CuratorOperator {
         boolean isZKCuratorStarted  = client.getState() == CuratorFrameworkState.STARTED;
         System.out.println("当前客户端状态：" + (isZKCuratorStarted ? "连接中" : "已关闭"));
 
-        // 创建节点
+        // 创建结点
         String nodePath = "/super/mooc";
 //        byte[] data = "super".getBytes();
 //        client.create()
@@ -65,20 +68,39 @@ public class CuratorOperator {
 //                .withACL(ZooDefs.Ids.OPEN_ACL_UNSAFE)
 //                .forPath(nodePath, data);
 
-        // 更新节点数据
+        // 更新结点数据
 //        byte[] newData = "mooc".getBytes();
 //        client.setData()
 //                .withVersion(0)
 //                .forPath(nodePath, newData);
 
-        // 删除节点
-        client.delete()
-                // 如果删除失败，那么在后端还是会继续删除，直到删除成功
-                .guaranteed()
-                // 如果有子节点，仍然删除
-                .deletingChildrenIfNeeded()
-                .withVersion(1)
+        // 删除结点
+//        client.delete()
+//                // 如果删除失败，那么在后端还是会继续删除，直到删除成功
+//                .guaranteed()
+//                // 如果有子结点，仍然删除
+//                .deletingChildrenIfNeeded()
+//                .withVersion(1)
+//                .forPath(nodePath);
+
+        // 读取结点数据
+//        Stat stat = new Stat();
+//        byte[] data = client.getData()
+//                .storingStatIn(stat)
+//                .forPath(nodePath);
+//        System.out.println("结点" + nodePath + "的数据为：" + new String(data));
+//        System.out.println("该结点的版本号为：" + stat.getVersion());
+
+        // 查询子节点
+//        List<String> childNodeList = client.getChildren()
+//                .forPath(nodePath);
+//        System.out.println("开始打印子结点……");
+//        childNodeList.forEach(System.out::println);
+
+        // 判断结点是否存在，如果不存在则为空
+        Stat stat = client.checkExists()
                 .forPath(nodePath);
+        System.out.println(stat);
 
         Thread.sleep(3000);
 
