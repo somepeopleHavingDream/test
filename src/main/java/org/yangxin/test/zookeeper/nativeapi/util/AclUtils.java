@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.util;
+package org.yangxin.test.zookeeper.nativeapi.util;
 
 import org.apache.zookeeper.server.auth.DigestAuthenticationProvider;
 

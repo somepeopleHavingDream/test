@@ -1,11 +1,11 @@
-package org.yangxin.test.zookeeper.zookeeperapi;
+package org.yangxin.test.zookeeper.nativeapi;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.zookeeper.*;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
-import org.yangxin.test.zookeeper.util.AclUtils;
+import org.yangxin.test.zookeeper.nativeapi.util.AclUtils;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;

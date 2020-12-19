@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.zookeeperapi;
+package org.yangxin.test.zookeeper.nativeapi;
 
 import org.apache.zookeeper.AsyncCallback;
 import org.apache.zookeeper.data.Stat;

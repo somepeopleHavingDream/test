@@ -5,10 +5,7 @@ import org.apache.curator.RetryPolicy;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
-import org.apache.curator.framework.recipes.cache.ChildData;
-import org.apache.curator.framework.recipes.cache.CuratorCache;
-import org.apache.curator.framework.recipes.cache.CuratorCacheListener;
-import org.apache.curator.framework.recipes.cache.NodeCache;
+import org.apache.curator.framework.recipes.cache.*;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
@@ -116,19 +113,21 @@ public class CuratorOperator {
 //                .forPath(nodePath);
 
         // 为结点添加watcher
-        // CuratorCache：监听数据结点的变更，会触发事件
+        // CuratorCache：监听数据结点的变更，会触发事件。（以当前结点为根节点，建立了树型结构监听树）
         CuratorCache curatorCache = CuratorCache.build(client, nodePath);
         curatorCache.start();
-        Optional<ChildData> childDataOptional = curatorCache.get(nodePath);
-        if (childDataOptional.isPresent()) {
-            System.out.println("结点初始化数据为：" + new String(childDataOptional.get().getData()));
-        } else {
-            System.out.println("结点初始化数据为空……");
-        }
+//        Optional<ChildData> childDataOptional = curatorCache.get(nodePath);
+//        if (childDataOptional.isPresent()) {
+//            System.out.println("结点初始化数据为：" + new String(childDataOptional.get().getData()));
+//        } else {
+//            System.out.println("结点初始化数据为空……");
+//        }
 
         curatorCache.listenable().addListener((type, oldData, data) -> {
             if (oldData != null && data != null) {
-                System.out.println("type: " + type + " oldData: " + new String(oldData.getData()) + " data: " + new String(data.getData()));
+                System.out.println("type: " + type
+                        + " oldData: " + new String(oldData.getData())
+                        + " data: " + new String(data.getData()));
             } else {
                 System.out.println("type: " + type + " oldData: " + oldData + " data: " + data);
             }

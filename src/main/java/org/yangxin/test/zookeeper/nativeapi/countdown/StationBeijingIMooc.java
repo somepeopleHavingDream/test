@@ -1,15 +1,15 @@
-package org.yangxin.test.zookeeper.countdown;
+package org.yangxin.test.zookeeper.nativeapi.countdown;
 
 import java.util.concurrent.CountDownLatch;
 
 /**
  * @author yangxin
- * 2020/07/17 13:49
+ * 2020/07/15 13:45
  */
-public class StationJiangsuSanling extends DangerCenter {
+public class StationBeijingIMooc extends DangerCenter {
 
-    public StationJiangsuSanling(CountDownLatch countDownLatch) {
-        super(countDownLatch, "江苏三林调度站");
+    public StationBeijingIMooc(CountDownLatch countDownLatch) {
+        super(countDownLatch, "北京慕课调度站");
     }
 
     @Override
@@ -17,7 +17,7 @@ public class StationJiangsuSanling extends DangerCenter {
         System.out.println("正在检查【" + this.getStation() + "】……");
 
         try {
-            Thread.sleep(1500);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
