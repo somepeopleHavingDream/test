@@ -1,14 +1,16 @@
-package org.yangxin.test.zookeeper.distributedlock;
+package org.yangxin.test.zookeeper.curator.distributedlock;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.framework.recipes.cache.PathChildrenCache;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
+import org.apache.curator.framework.CuratorFrameworkFactory;
+import org.apache.curator.framework.recipes.cache.*;
+import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.ZooDefs;
 
-import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 分布式锁的实现工具类
@@ -16,13 +18,14 @@ import java.util.concurrent.CountDownLatch;
  * @author yangxin
  * 2020/07/24 15:56
  */
+@SuppressWarnings("SameParameterValue")
 @Slf4j
-public class DistributedLock {
+public class DistributedLockUtil {
 
     /**
      * zk客户端
      */
-    private CuratorFramework client = null;
+    private CuratorFramework client;
 
     /**
      * 用于挂起当前请求，并且等待上一个分布式锁释放
@@ -39,7 +42,7 @@ public class DistributedLock {
      */
     private static final String DISTRIBUTED_LOCK = "distributed_lock";
 
-    public DistributedLock(CuratorFramework client) {
+    public DistributedLockUtil(CuratorFramework client) {
         this.client = client;
     }
 
@@ -54,6 +57,7 @@ public class DistributedLock {
                     - distributed_lock
          */
         try {
+            // 如果没有父级路径，则需要创建
             if (client.checkExists().forPath("/" + ZK_LOCK_PROJECT) == null) {
                 client.create()
                         .creatingParentsIfNeeded()
@@ -95,6 +99,7 @@ public class DistributedLock {
                 // 阻塞线程
                 try {
                     ZK_LOCK_LATCH.await();
+                    // 被通知后重新尝试获取锁
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
@@ -105,36 +110,77 @@ public class DistributedLock {
     /**
      * 释放分布式锁
      */
-    public boolean releaseLock() {
+    public void releaseLock() {
         try {
-            if (client.checkExists().forPath("/" + ZK_LOCK_PROJECT + "/" + DISTRIBUTED_LOCK) != null) {
+            if (client.checkExists()
+                    .forPath("/" + ZK_LOCK_PROJECT + "/" + DISTRIBUTED_LOCK) != null) {
                 client.delete().forPath("/" + ZK_LOCK_PROJECT + "/" + DISTRIBUTED_LOCK);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return;
         }
 
         log.info("分布式锁释放完毕！");
-        return true;
     }
 
     /**
      * 创建watcher监听
      */
-    @SuppressWarnings({"deprecation", "SameParameterValue"})
-    private void addWatcherToLock(String path) throws Exception {
-        final PathChildrenCache pathChildrenCache = new PathChildrenCache(client, path, true);
-        pathChildrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
-        pathChildrenCache.getListenable().addListener(((client1, event) -> {
-            if (Objects.equals(event.getType(), PathChildrenCacheEvent.Type.CHILD_REMOVED)) {
-                String path1 = event.getData().getPath();
-                log.info("上一个会话已释放锁或该会话已断开，节点路径为：[{}]", path1);
-                if (path1.contains(DISTRIBUTED_LOCK)) {
-                    log.info("释放计数器，让当前请求来获得分布式锁……");
-                    ZK_LOCK_LATCH.countDown();
-                }
-            }
-        }));
+//    @SuppressWarnings({"deprecation", "SameParameterValue"})
+    private void addWatcherToLock(String path) {
+//        final PathChildrenCache pathChildrenCache = new PathChildrenCache(client, path, true);
+//        pathChildrenCache.start(PathChildrenCache.StartMode.POST_INITIALIZED_EVENT);
+//        pathChildrenCache.getListenable().addListener(((client1, event) -> {
+//            if (Objects.equals(event.getType(), PathChildrenCacheEvent.Type.CHILD_REMOVED)) {
+//                String path1 = event.getData().getPath();
+//                log.info("上一个会话已释放锁或该会话已断开，节点路径为：[{}]", path1);
+//                if (path1.contains(DISTRIBUTED_LOCK)) {
+//                    log.info("释放计数器，让当前请求来获得分布式锁……");
+//                    ZK_LOCK_LATCH.countDown();
+//                }
+//            }
+//        }));
+
+        CuratorCache curatorCache = CuratorCache.build(client, path);
+        curatorCache.listenable()
+                .addListener((type, oldData, data) -> {
+                    if (type == CuratorCacheListener.Type.NODE_DELETED) {
+                        String oldPath = oldData.getPath();
+                        log.info("上一个会话已释放锁或上一个会话已断开，结点路径为：[{}]", oldPath);
+
+                        if (StringUtils.contains(oldPath, DISTRIBUTED_LOCK)) {
+                            log.info("释放计数器，让当前请求来获得分布式锁……");
+                            ZK_LOCK_LATCH.countDown();
+                        }
+                    }
+                });
+    }
+
+    /**
+     * 测试锁
+     */
+    public static void main(String[] args) throws InterruptedException {
+        // 先创建并启动客户端
+        CuratorFramework client = CuratorFrameworkFactory.builder()
+                .connectString("localhost:2181")
+                .sessionTimeoutMs(10000)
+                .retryPolicy(new RetryNTimes(3, 5000))
+                .namespace("lock-test")
+                .build();
+        client.start();
+
+        // 测试锁
+        DistributedLockUtil distributedLockUtil = new DistributedLockUtil(client);
+        distributedLockUtil.getLock();
+
+        // 主线程休眠半分钟
+        TimeUnit.SECONDS.sleep(30);
+
+        // 再次尝试获取锁
+//        distributedLockUtil.getLock();
+
+        // 释放锁
+        distributedLockUtil.releaseLock();
     }
 }

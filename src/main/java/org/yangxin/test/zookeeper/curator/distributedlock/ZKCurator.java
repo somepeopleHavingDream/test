@@ -1,4 +1,4 @@
-package org.yangxin.test.zookeeper.distributedlock;
+package org.yangxin.test.zookeeper.curator.distributedlock;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
