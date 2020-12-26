@@ -1,4 +1,4 @@
-package org.yangxin.test.thread;
+package org.yangxin.test.retry;
 
 /**
  * break retry
@@ -15,8 +15,8 @@ public class RetryTest {
             for (int j = 0; j < 5; j++) {
                 count++;
                 if (count == 3) {
-                    continue retry;
-//                    break retry;
+//                    continue retry;
+                    break retry;
                 }
                 System.out.print(count + " ");
             }
