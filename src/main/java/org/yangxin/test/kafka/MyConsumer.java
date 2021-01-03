@@ -1,5 +1,6 @@
 package org.yangxin.test.kafka;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.CommitFailedException;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -14,24 +15,26 @@ import java.util.Properties;
  * 2020/08/
  */
 @SuppressWarnings({"DuplicatedCode", "unused"})
+//@Slf4j
 public class MyConsumer {
 
     private static KafkaConsumer<String, String> consumer;
-    private static final Properties properties;
+    private static final Properties PROPERTIES;
 
     static {
-        properties = new Properties();
-        properties.put("bootstrap.servers", "127.0.0.1:9092");
-        properties.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        properties.put("group.id", "KafkaStudy");
+        PROPERTIES = new Properties();
+        PROPERTIES.put("bootstrap.servers", "192.168.3.3:9092");
+//        properties.put("bootstrap.servers", "127.0.0.1:9092");
+        PROPERTIES.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        PROPERTIES.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
+        PROPERTIES.put("group.id", "KafkaStudy");
     }
 
     private static void generalConsumeMessageAutoCommit() {
-        properties.put("enable.auto.commit", true);
-        consumer = new KafkaConsumer<>(properties);
+        PROPERTIES.put("enable.auto.commit", true);
+        consumer = new KafkaConsumer<>(PROPERTIES);
         // 消费者订阅主题
-        consumer.subscribe(Collections.singleton("imooc-kafka-study-x"));
+        consumer.subscribe(Collections.singleton("mooc_kafka_study_x"));
 
         try {
             while (true) {
@@ -40,10 +43,9 @@ public class MyConsumer {
 
                 for (ConsumerRecord<String, String> record : records) {
                     System.out.printf("topic = %s, partition = %s, key = %s, value = %s%n",
-                            record.topic(),
-                            record.partition(),
-                            record.key(),
-                            record.value());
+                            record.topic(), record.partition(), record.key(), record.value());
+//                    log.info("topic: [{}], partition: [{}], key: [{}], value: [{}]",
+//                            record.topic(), record.partition(), record.key(), record.value());
 
                     if ("done".equals(record.value())) {
                         flag = false;
@@ -60,9 +62,9 @@ public class MyConsumer {
     }
 
     private static void generalConsumeMessageSyncCommit() {
-        properties.put("auto.commit.offset", false);
-        consumer = new KafkaConsumer<>(properties);
-        consumer.subscribe(Collections.singletonList("imooc-kafka-study-x"));
+        PROPERTIES.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(PROPERTIES);
+        consumer.subscribe(Collections.singletonList("mooc_kafka_study_x"));
 
         while (true) {
             boolean flag = true;
@@ -93,9 +95,9 @@ public class MyConsumer {
     }
 
     private static void generalConsumeMessageASyncCommit() {
-        properties.put("auto.commit.offset", false);
-        consumer = new KafkaConsumer<>(properties);
-        consumer.subscribe(Collections.singletonList("imooc-kafka-study-x"));
+        PROPERTIES.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(PROPERTIES);
+        consumer.subscribe(Collections.singletonList("mooc_kafka_study_x"));
 
         while (true) {
             boolean flag = true;
@@ -125,9 +127,9 @@ public class MyConsumer {
     }
 
     private static void generalConsumeMessageASyncCommitWithCallback() {
-        properties.put("auto.commit.offset", false);
-        consumer = new KafkaConsumer<>(properties);
-        consumer.subscribe(Collections.singletonList("imooc-kafka-study-x"));
+        PROPERTIES.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(PROPERTIES);
+        consumer.subscribe(Collections.singletonList("mooc_kafka_study_x"));
 
         while (true) {
             boolean flag = true;
@@ -161,9 +163,9 @@ public class MyConsumer {
     }
 
     private static void mixSyncAndAsyncCommit() {
-        properties.put("auto.commit.offset", false);
-        consumer = new KafkaConsumer<>(properties);
-        consumer.subscribe(Collections.singletonList("imooc-kafka-study-x"));
+        PROPERTIES.put("auto.commit.offset", false);
+        consumer = new KafkaConsumer<>(PROPERTIES);
+        consumer.subscribe(Collections.singletonList("mooc_kafka_study_x"));
 
         try {
             while (true) {
