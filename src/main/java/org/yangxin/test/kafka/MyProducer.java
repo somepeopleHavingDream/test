@@ -26,12 +26,13 @@ public class MyProducer {
         properties.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
         properties.put("partitioner.class", "org.yangxin.test.kafka.CustomPartitioner");
-//        properties.put("partitioner.class", "org.yangxin.kafkastudy.CustomPartitioner");
+
         PRODUCER = new KafkaProducer<>(properties);
     }
 
     private static void sendMessageForgetResult() {
-        ProducerRecord<String, String> record = new ProducerRecord<>("mooc_kafka_study", "name", "ForgetResult");
+        ProducerRecord<String, String> record = new ProducerRecord<>("mooc_kafka_study",
+                "name", "ForgetResult");
         PRODUCER.send(record);
         PRODUCER.close();
     }
