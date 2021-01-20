@@ -37,8 +37,9 @@ public class MyProducer {
         PRODUCER.close();
     }
 
-    private static void sendMessageSync() throws ExecutionException, InterruptedException {
-        ProducerRecord<String, String> record = new ProducerRecord<>("mooc_kafka_study", "name", "sync");
+    private static void sendMessageBlocked() throws ExecutionException, InterruptedException {
+        ProducerRecord<String, String> record = new ProducerRecord<>("mooc_kafka_study",
+                "name", "blocked");
         RecordMetadata recordMetadata = PRODUCER.send(record).get();
 
 //        System.out.println("topic: " + recordMetadata.topic());
