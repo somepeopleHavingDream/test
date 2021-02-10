@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 2/6/21 11:30 PM
  */
-@SuppressWarnings({"SpellCheckingInspection", "InfiniteLoopStatement"})
+@SuppressWarnings({"SpellCheckingInspection", "InfiniteLoopStatement", "DuplicatedCode"})
 @Slf4j
 public class RedisSentinelFailoverTest {
 
