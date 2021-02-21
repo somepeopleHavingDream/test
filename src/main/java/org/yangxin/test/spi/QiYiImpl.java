@@ -6,7 +6,7 @@ package org.yangxin.test.spi;
  * @author yangxin
  * 2020/10/27 17:22
  */
-public class QiyiImpl implements UploadCDN {
+public class QiYiImpl implements UploadCdn {
 
     @Override
     public void upload(String url) {

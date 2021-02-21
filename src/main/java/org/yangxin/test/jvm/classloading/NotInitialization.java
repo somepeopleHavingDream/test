@@ -10,6 +10,7 @@ package org.yangxin.test.jvm.classloading;
  * @author yangxin
  * 2020/06/18 17:53
  */
+@SuppressWarnings({"AlibabaRemoveCommentedCode", "CommentedOutCode"})
 public class NotInitialization {
 
     public static void main(String[] args) {

@@ -15,6 +15,7 @@ import java.net.URL;
  * @author yangxin
  * 2020/06/23 17:24
  */
+@SuppressWarnings({"AlibabaRemoveCommentedCode", "CommentedOutCode"})
 public class ClassLoaderTest {
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
@@ -46,12 +47,8 @@ public class ClassLoaderTest {
             }
         };
 
-        System.out.println("loadClass之前");
-        System.out.println();
-
         Object object = myLoader.loadClass("org.yangxin.test.jvm.classloading.ClassLoaderTest").newInstance();
 
-        System.out.println();
         System.out.println(object.getClass());
         System.out.println(object instanceof org.yangxin.test.jvm.classloading.ClassLoaderTest);
     }

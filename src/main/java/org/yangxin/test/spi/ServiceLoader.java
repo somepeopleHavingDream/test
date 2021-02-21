@@ -7,9 +7,9 @@ package org.yangxin.test.spi;
 public class ServiceLoader {
 
     public static void main(String[] args) {
-        java.util.ServiceLoader<UploadCDN> uploadCDNServiceLoader = java.util.ServiceLoader.load(UploadCDN.class);
-        for (UploadCDN uploadCDN : uploadCDNServiceLoader) {
-            uploadCDN.upload("filePath");
+        java.util.ServiceLoader<UploadCdn> uploadCdnServiceLoader = java.util.ServiceLoader.load(UploadCdn.class);
+        for (UploadCdn uploadCdn : uploadCdnServiceLoader) {
+            uploadCdn.upload("filePath");
         }
     }
 }
