@@ -12,11 +12,11 @@ import java.io.IOException;
  */
 public class Base64Test {
 
-    private static final String src = "imooc security base64";
+    private static final String SRC = "imooc security base64";
 
     private static void jdkBase64() {
         BASE64Encoder encoder = new BASE64Encoder();
-        String encode = encoder.encode(src.getBytes());
+        String encode = encoder.encode(SRC.getBytes());
         System.out.println("encode: " + encode);
 
         BASE64Decoder decoder = new BASE64Decoder();
@@ -28,7 +28,7 @@ public class Base64Test {
     }
 
     private static void commonsCodesBase64() {
-        byte[] encodeBytes = Base64.encodeBase64(src.getBytes());
+        byte[] encodeBytes = Base64.encodeBase64(SRC.getBytes());
         System.out.println("encode: " + new String(encodeBytes));
 
         byte[] decodeBytes = Base64.decodeBase64(encodeBytes);
@@ -36,7 +36,7 @@ public class Base64Test {
     }
 
     private static void bouncyCastleBase64() {
-        byte[] encodeBytes = org.bouncycastle.util.encoders.Base64.encode(src.getBytes());
+        byte[] encodeBytes = org.bouncycastle.util.encoders.Base64.encode(SRC.getBytes());
         System.out.println("encode: " + new String(encodeBytes));
 
         byte[] decodeBytes = org.bouncycastle.util.encoders.Base64.decode(encodeBytes);

@@ -13,11 +13,11 @@ import java.security.spec.InvalidKeySpecException;
  * 2020/09/29 17:02
  */
 @SuppressWarnings("DuplicatedCode")
-public class DESTest {
+public class DesTest {
 
-    private static final String src = "imooc security des";
+    private static final String SRC = "imooc security des";
 
-    private static void jdkDES() {
+    private static void jdkDes() {
         try {
             // 生成Key
             KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
@@ -33,7 +33,7 @@ public class DESTest {
             // 加密
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, convertSecretKey);
-            byte[] result = cipher.doFinal(src.getBytes());
+            byte[] result = cipher.doFinal(SRC.getBytes());
             System.out.println("jdk des encrypt: " + Hex.encodeHexString(result));
 
             // 解密
@@ -45,13 +45,12 @@ public class DESTest {
         }
     }
 
-    private static void bcDES() {
+    private static void bcDes() {
         try {
             Security.addProvider(new BouncyCastleProvider());
 
             // 生成Key
             KeyGenerator keyGenerator = KeyGenerator.getInstance("DES");
-//            keyGenerator.getProvider();
             keyGenerator.init(56);
             SecretKey secretKey = keyGenerator.generateKey();
             byte[] bytesKey = secretKey.getEncoded();
@@ -64,7 +63,7 @@ public class DESTest {
             // 加密
             Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, convertSecretKey);
-            byte[] result = cipher.doFinal(src.getBytes());
+            byte[] result = cipher.doFinal(SRC.getBytes());
             System.out.println("bc des encrypt: " + Hex.encodeHexString(result));
 
             // 解密
@@ -108,8 +107,9 @@ public class DESTest {
             int high = Character.digit(hex[i * 2], 16);
             int low = Character.digit(hex[i * 2 + 1], 16);
             int value = (high << 4) | low;
-            if (value > 127)
+            if (value > 127) {
                 value -= 256;
+            }
             raw[i] = (byte) value;
         }
         return raw;
@@ -165,30 +165,5 @@ public class DESTest {
     }
 
     public static void main(String[] args) {
-//        jdkDES();
-//        bcDES();
-
-//        String rdid = "test001";
-        String key = "a1061dfaf0192b7f";
-//        String key = "203961a7a5f21194";
-//        String key = "cd4a26851bfca90c";
-        String encryptStr = "B98749E406784B6AF452FF958073BC686474DDEB321EC33E6D9862DD9E34FD8A";
-//        String encryptStr = "84E37E7DAEA51CDB250FA9D0B8941847FFAA46A77CD9AC35F3BF5B8CDE1AD32C";
-//        String encryptStr = "A132E44C2A3AFDA2";
-
-//        System.out.println("原文：" + rdid);
-        System.out.println("加密：" + encryptStr);
-
-        String Str1 = null;
-        String Str2 = null;
-        try {
-//            Str1 = encrypt(key, rdid);
-            Str2 = decrypt(key, encryptStr);
-
-        } catch (Exception e) {
-            System.out.println("解密失败");
-        }
-//        System.out.println("加密结果：" + Str1);
-        System.out.println("解密结果：" + Str2);
     }
 }

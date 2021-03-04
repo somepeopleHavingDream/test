@@ -13,45 +13,45 @@ import java.security.NoSuchAlgorithmException;
  * @author yangxin
  * 2020/09/29 16:23
  */
-public class SHATest {
+public class ShaTest {
 
-    private static final String src = "imooc security sha";
+    private static final String SRC = "imooc security sha";
 
-    private static void jdkSHA1() {
+    private static void jdkSha1() {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("SHA");
-            messageDigest.update(src.getBytes());
+            messageDigest.update(SRC.getBytes());
             System.out.println("jdk sha-1: " + Hex.encodeHexString(messageDigest.digest()));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
 
-    private static void bcSHA1() {
+    private static void bcSha1() {
         Digest digest = new SHA1Digest();
-        digest.update(src.getBytes(), 0, src.getBytes().length);
+        digest.update(SRC.getBytes(), 0, SRC.getBytes().length);
         byte[] sha1Bytes = new byte[digest.getDigestSize()];
         digest.doFinal(sha1Bytes, 0);
         System.out.println("bc sha-1: " + org.bouncycastle.util.encoders.Hex.toHexString(sha1Bytes));
     }
 
-    private static void bcSHA224() {
+    private static void bcSha224() {
         Digest digest = new SHA224Digest();
-        digest.update(src.getBytes(), 0, src.getBytes().length);
+        digest.update(SRC.getBytes(), 0, SRC.getBytes().length);
         byte[] sha224Bytes = new byte[digest.getDigestSize()];
         digest.doFinal(sha224Bytes, 0);
         System.out.println("bc sha-224: " + org.bouncycastle.util.encoders.Hex.toHexString(sha224Bytes));
     }
 
-    private static void ccSHA1() {
-        System.out.println("cc sha1-1: " + DigestUtils.sha1Hex(src.getBytes()));
-        System.out.println("cc sha1-2: " + DigestUtils.sha1Hex(src));
+    private static void ccSha1() {
+        System.out.println("cc sha1-1: " + DigestUtils.sha1Hex(SRC.getBytes()));
+        System.out.println("cc sha1-2: " + DigestUtils.sha1Hex(SRC));
     }
 
     public static void main(String[] args) {
-        jdkSHA1();
-        bcSHA1();
-        bcSHA224();
-        ccSHA1();
+        jdkSha1();
+        bcSha1();
+        bcSha224();
+        ccSha1();
     }
 }

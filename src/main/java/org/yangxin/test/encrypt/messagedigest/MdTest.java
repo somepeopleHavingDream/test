@@ -13,60 +13,60 @@ import java.security.NoSuchAlgorithmException;
  * @author yangxin
  * 2020/09/29 15:47
  */
-public class MDTest {
+public class MdTest {
 
-    private static final String src = "imooc security md";
+    private static final String SRC = "imooc security md";
 
-    private static void jdkMD5() {
+    private static void jdkMd5() {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-            byte[] md5Bytes = messageDigest.digest(src.getBytes());
+            byte[] md5Bytes = messageDigest.digest(SRC.getBytes());
             System.out.println("jdkMD5: " + Hex.encodeHexString(md5Bytes));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
 
-    private static void jdkMD2() {
+    private static void jdkMd2() {
         try {
             MessageDigest messageDigest = MessageDigest.getInstance("MD2");
-            byte[] md2Bytes = messageDigest.digest(src.getBytes());
+            byte[] md2Bytes = messageDigest.digest(SRC.getBytes());
             System.out.println("jdkMD2: " + Hex.encodeHexString(md2Bytes));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
     }
 
-    private static void bcMD4() {
+    private static void bcMd4() {
         Digest digest = new MD4Digest();
-        digest.update(src.getBytes(), 0, src.getBytes().length);
+        digest.update(SRC.getBytes(), 0, SRC.getBytes().length);
         byte[] md4Bytes = new byte[digest.getDigestSize()];
         digest.doFinal(md4Bytes, 0);
         System.out.println("BC MD4: " + org.bouncycastle.util.encoders.Hex.toHexString(md4Bytes));
     }
 
-    private static void bcMD5() {
+    private static void bcMd5() {
         Digest digest = new MD5Digest();
-        digest.update(src.getBytes(), 0, src.getBytes().length);
+        digest.update(SRC.getBytes(), 0, SRC.getBytes().length);
         byte[] md5Bytes = new byte[digest.getDigestSize()];
         digest.doFinal(md5Bytes, 0);
         System.out.println("BC MD5: " + org.bouncycastle.util.encoders.Hex.toHexString(md5Bytes));
     }
 
-    public static void ccMD5() {
-        System.out.println("CC MD5: " + DigestUtils.md5Hex(src.getBytes()));
+    public static void ccMd5() {
+        System.out.println("CC MD5: " + DigestUtils.md5Hex(SRC.getBytes()));
     }
 
-    public static void ccMD2() {
-        System.out.println("CC MD2: " + DigestUtils.md2Hex(src.getBytes()));
+    public static void ccMd2() {
+        System.out.println("CC MD2: " + DigestUtils.md2Hex(SRC.getBytes()));
     }
 
     public static void main(String[] args) {
-        jdkMD5();
-        jdkMD2();
-        bcMD4();
-        bcMD5();
-        ccMD5();
-        ccMD2();
+        jdkMd5();
+        jdkMd2();
+        bcMd4();
+        bcMd5();
+        ccMd5();
+        ccMd2();
     }
 }
