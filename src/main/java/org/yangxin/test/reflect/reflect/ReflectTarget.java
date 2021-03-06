@@ -1,9 +1,10 @@
-package org.yangxin.test.reflect;
+package org.yangxin.test.reflect.reflect;
 
 /**
  * @author yangxin
  * 2020/06/28 11:23
  */
+@SuppressWarnings({"ConstantConditions", "InstantiationOfUtilityClass"})
 public class ReflectTarget {
 
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class ReflectTarget {
 
         // 第三种方式来获取Class对象
         try {
-            Class<?> reflectTargetClass3 = Class.forName("org.yangxin.test.reflect.ReflectTarget");
+            Class<?> reflectTargetClass3 = Class.forName("org.yangxin.test.reflect.reflect.ReflectTarget");
             System.out.println("reflectTargetClass3: " + reflectTargetClass3.getName());
             System.out.println(reflectTargetClass2 == reflectTargetClass3);
         } catch (ClassNotFoundException e) {
