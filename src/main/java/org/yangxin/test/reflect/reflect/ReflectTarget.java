@@ -7,7 +7,23 @@ package org.yangxin.test.reflect.reflect;
 @SuppressWarnings({"ConstantConditions", "InstantiationOfUtilityClass"})
 public class ReflectTarget {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+//        equalsClass();
+        ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+        Class<?> reflectTargetClass = contextClassLoader.loadClass("org.yangxin.test.reflect.reflect.ReflectTarget");
+
+        /*
+         说明线程上下文类加载器实例出来的对象并没有破坏双亲委派模型，
+         因为通过线程上下文类加载器实例化的实例仍然是ReflectTarget类的实例（o instanceof ReflectTarget返回真）。
+         但线程上下文类加载器加载类这个行为本身是破坏了双亲委派模型，因为按照双亲委派模型来说，加载一个类的动作是由父类加载器来执行的，
+         但是现在父类加载器把加载类的动作交给了子类加载器，因此这破坏了双亲委派模型，
+         但正如上面所述，这并不影响线程上下文类加载器实例化出来的对象的使用。
+        */
+        Object o = reflectTargetClass.newInstance();
+        System.out.println(o instanceof ReflectTarget);
+    }
+
+    private static void equalsClass() {
         // 第一种方式获取Class对象
         ReflectTarget reflectTarget = new ReflectTarget();
         Class<? extends ReflectTarget> reflectTargetClass1 = reflectTarget.getClass();
