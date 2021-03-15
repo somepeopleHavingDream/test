@@ -12,6 +12,9 @@ package org.yangxin.test.id;
  *
  * SnowFlake算法的缺点：
  *  依赖与系统时间的一致性，如果系统时间被回调，或者改变，可能会造成id冲突或者重复
+ *
+ * @author yangxin
+ * 2021/03/12 10:58
  */
 @SuppressWarnings("unused")
 public class SnowFlake {

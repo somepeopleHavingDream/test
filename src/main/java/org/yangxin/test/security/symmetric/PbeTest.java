@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.symmetric;
+package org.yangxin.test.security.symmetric;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -12,11 +12,11 @@ import java.security.spec.InvalidKeySpecException;
  * @author yangxin
  * 2020/09/29 17:38
  */
-public class PBETest {
+public class PbeTest {
 
-    private static final String src = "imooc security pbe";
+    private static final String SRC = "imooc security pbe";
 
-    private static void jdkPBE() {
+    private static void jdkPbe() {
         // 初始化盐
         SecureRandom secureRandom = new SecureRandom();
         byte[] salt = secureRandom.generateSeed(8);
@@ -32,7 +32,7 @@ public class PBETest {
             PBEParameterSpec pbeParameterSpec = new PBEParameterSpec(salt, 100);
             Cipher cipher = Cipher.getInstance("PBEWITHMD5andDES");
             cipher.init(Cipher.ENCRYPT_MODE, key, pbeParameterSpec);
-            byte[] result = cipher.doFinal(src.getBytes());
+            byte[] result = cipher.doFinal(SRC.getBytes());
             System.out.println("jdk pbe encrypt: " + Base64.encodeBase64String(result));
 
             // 解密
@@ -45,6 +45,6 @@ public class PBETest {
     }
 
     public static void main(String[] args) {
-        jdkPBE();
+        jdkPbe();
     }
 }

@@ -1,4 +1,4 @@
-package org.yangxin.test.path;
+package org.yangxin.test.io.path;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

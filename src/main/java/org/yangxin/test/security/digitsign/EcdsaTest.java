@@ -1,7 +1,6 @@
-package org.yangxin.test.encrypt.digitsign;
+package org.yangxin.test.security.digitsign;
 
 import org.apache.commons.codec.binary.Hex;
-import org.bouncycastle.jcajce.provider.asymmetric.X509;
 
 import java.security.*;
 import java.security.interfaces.ECPrivateKey;
@@ -14,15 +13,15 @@ import java.security.spec.X509EncodedKeySpec;
  * @author yangxin
  * 2020/10/08 18:20
  */
-public class ECDSATest {
+public class EcdsaTest {
 
     private static final String SRC = "imooc security ecdsa";
 
     public static void main(String[] args) {
-        jdkECDSA();
+        jdkEcdsa();
     }
 
-    private static void jdkECDSA() {
+    private static void jdkEcdsa() {
         try {
             // 1. 初始化密钥
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("EC");

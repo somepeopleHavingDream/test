@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.digitsign;
+package org.yangxin.test.security.digitsign;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -13,15 +13,15 @@ import java.security.spec.X509EncodedKeySpec;
  * @author yangxin
  * 2020/10/08 17:56
  */
-public class RSATest {
+public class RsaTest {
 
     private static final String SRC = "imooc security rsa";
 
     public static void main(String[] args) {
-        jdkRSA();
+        jdkRsa();
     }
 
-    private static void jdkRSA() {
+    private static void jdkRsa() {
         try {
             // 1. 初始化密钥
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");

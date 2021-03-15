@@ -16,7 +16,10 @@ public class BigDecimalTest {
     public static void main(String[] args) {
 //        construct();
 //        format();
-        equalsAndCompareTo();
+//        equalsAndCompareTo();
+
+        long a = 43949990;
+        System.out.println(a);
     }
 
     private static void construct() {

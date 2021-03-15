@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.nonsymmetric;
+package org.yangxin.test.security.nonsymmetric;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -21,15 +21,15 @@ import java.util.Arrays;
  * 2020/10/08 17:00
  */
 @SuppressWarnings("DuplicatedCode")
-public class RSATest {
+public class RsaTest {
 
     private static final String SRC = "imooc security rsa";
 
     public static void main(String[] args) {
-        jdkRSA();
+        jdkRsa();
     }
 
-    private static void jdkRSA() {
+    private static void jdkRsa() {
         try {
             // 1. 初始化密钥
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");

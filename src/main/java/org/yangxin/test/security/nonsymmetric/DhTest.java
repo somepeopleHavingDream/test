@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.nonsymmetric;
+package org.yangxin.test.security.nonsymmetric;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -16,15 +16,15 @@ import java.util.Objects;
  * @author yangxin
  * 2020/10/08 16:25
  */
-public class DHTest {
+public class DhTest {
 
     private static final String SRC = "imooc security dh";
 
     public static void main(String[] args) {
-        jdkDH();
+        jdkDh();
     }
 
-    private static void jdkDH() {
+    private static void jdkDh() {
         try {
             // 1. 初始化发送方密钥
             KeyPairGenerator senderKeyPairGenerator = KeyPairGenerator.getInstance("DH");

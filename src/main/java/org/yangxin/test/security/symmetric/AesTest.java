@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.symmetric;
+package org.yangxin.test.security.symmetric;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.StringUtils;

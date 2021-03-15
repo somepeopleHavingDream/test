@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.messagedigest;
+package org.yangxin.test.security.messagedigest;
 
 import org.apache.commons.codec.binary.Hex;
 

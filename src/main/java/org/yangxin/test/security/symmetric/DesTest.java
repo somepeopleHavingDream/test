@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.symmetric;
+package org.yangxin.test.security.symmetric;
 
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;

@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.yangxin.test.encrypt.symmetric.AesTest;
+import org.yangxin.test.security.symmetric.AesTest;
 
 import java.io.Serializable;
 import java.net.URLDecoder;

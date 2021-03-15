@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.messagedigest;
+package org.yangxin.test.security.messagedigest;
 
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -62,11 +62,16 @@ public class MdTest {
     }
 
     public static void main(String[] args) {
-        jdkMd5();
-        jdkMd2();
-        bcMd4();
-        bcMd5();
-        ccMd5();
-        ccMd2();
+//        jdkMd5();
+//        jdkMd2();
+//        bcMd4();
+//        bcMd5();
+//        ccMd5();
+//        ccMd2();
+
+        final String clientId = "openapi_test";
+        final String timestamp = "20150610103030120";
+        final String key = "openapi_test";
+        System.out.println(DigestUtils.md5Hex(timestamp + clientId + key));
     }
 }

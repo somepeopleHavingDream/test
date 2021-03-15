@@ -1,4 +1,4 @@
-package org.yangxin.test.encrypt.digitsign;
+package org.yangxin.test.security.digitsign;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -13,15 +13,15 @@ import java.security.spec.X509EncodedKeySpec;
  * @author yangxin
  * 2020/10/08 18:10
  */
-public class DSATest {
+public class DsaTest {
 
     private static final String SRC = "imooc security dsa";
 
     public static void main(String[] args) {
-        jdkDSA();
+        jdkDsa();
     }
 
-    private static void jdkDSA() {
+    private static void jdkDsa() {
         try {
             // 1. 初始化密钥
             KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("DSA");
