@@ -12,11 +12,20 @@ import java.time.temporal.ChronoUnit;
  * @author yangxin
  * 2019/11/29 14:14
  */
+@SuppressWarnings({"CommentedOutCode", "AlibabaUndefineMagicConstant"})
 public class LocalDateTest {
 
     public static void main(String[] args) {
 //        testDateTimeFormatter();
+//        testTimeBetween();
 
+        LocalDate localDate = LocalDate.now();
+        for (int i = 1; i <= 21; i++) {
+            System.out.println(localDate.plusDays(i));
+        }
+    }
+
+    private static void testTimeBetween() {
         // 时间范围
         LocalDate startLocalDate = LocalDate.parse("2016-02-23");
         LocalDate endLocalDate = LocalDate.parse("2020-03-03");
