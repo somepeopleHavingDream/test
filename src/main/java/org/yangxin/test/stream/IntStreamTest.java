@@ -6,6 +6,7 @@ import java.util.stream.IntStream;
  * @author yangxin
  * 2020/02/15 21:20
  */
+@SuppressWarnings("AlibabaUndefineMagicConstant")
 public class IntStreamTest {
 
     public static void main(String[] args) {
