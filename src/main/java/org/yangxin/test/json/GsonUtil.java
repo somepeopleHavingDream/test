@@ -9,12 +9,12 @@ import com.google.gson.GsonBuilder;
  * @author yangxin
  * 2019/10/23 15:57
  */
-public class GSONUtil {
+public class GsonUtil {
 
     /**
      * 将对象转换成json（不推荐，强推阿里的fastjson）
      */
-    public static String toJSON(Object object) {
+    public static String toJson(Object object) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setPrettyPrinting();
         Gson gson = gsonBuilder.create();

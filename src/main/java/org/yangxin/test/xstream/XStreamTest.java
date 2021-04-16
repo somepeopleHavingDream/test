@@ -8,7 +8,9 @@ import com.thoughtworks.xstream.XStream;
  * @author yangxin
  * 2019/10/09 14:13
  */
+@SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 public class XStreamTest {
+
     public static void main(String[] args) {
         // xml转对象
         String xml = "<User>\n"

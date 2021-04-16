@@ -13,7 +13,7 @@ import java.io.IOException;
  * @author yangxin
  * 2020/03/03 17:25
  */
-public class CBORTest {
+public class CborTest {
 
     public static void main(String[] args) {
         test1();

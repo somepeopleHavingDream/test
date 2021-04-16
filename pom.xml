@@ -141,7 +141,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>29.0-jre</version>
+            <version>30.1.1-jre</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
         <dependency>
@@ -203,7 +203,6 @@
             <version>3.27.0-GA</version>
         </dependency>
     </dependencies>
-
     <build>
         <finalName>test</finalName>
         <plugins>
@@ -222,7 +221,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -238,7 +236,6 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
                 <!-- 如果该插件是Maven的官方插件（即如果其groupId为org.apache.maven.plugins），就可以省略groupId的配置 -->
                 <groupId>org.apache.maven.plugins</groupId>
