@@ -1,4 +1,4 @@
-package org.yangxin.test.guava;
+package org.yangxin.test.ratelimit;
 
 import com.google.common.util.concurrent.RateLimiter;
 
