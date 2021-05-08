@@ -22,6 +22,7 @@ public class LocalDateTest {
         LocalDate localDate = LocalDate.now();
         for (int i = 1; i <= 21; i++) {
             System.out.println(localDate.plusDays(i));
+            System.out.println(localDate);
         }
     }
 

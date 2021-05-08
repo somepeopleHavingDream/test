@@ -15,9 +15,9 @@ import java.security.NoSuchAlgorithmException;
  */
 public class HmacTest {
 
-    private static final String src = "imooc security hmac";
+    private static final String SRC = "imooc security hmac";
 
-    private static void jdkHmacMD5() {
+    private static void jdkHmacMd5() {
         try {
             // 初始化KeyGenerator
             KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacMD5");
@@ -33,7 +33,7 @@ public class HmacTest {
             // 初始化Mac
             mac.init(restoreSecretKey);
             // 执行摘要
-            byte[] hmacMD5Bytes = mac.doFinal(src.getBytes());
+            byte[] hmacMD5Bytes = mac.doFinal(SRC.getBytes());
             System.out.println("jdk hmacMD5: " + Hex.encodeHexString(hmacMD5Bytes));
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {
             e.printStackTrace();
@@ -53,7 +53,7 @@ public class HmacTest {
 //    }
 
     public static void main(String[] args) {
-        jdkHmacMD5();
+        jdkHmacMd5();
 //        bcHmacMD5();
     }
 }
