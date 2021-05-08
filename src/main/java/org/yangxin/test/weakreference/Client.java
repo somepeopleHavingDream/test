@@ -28,8 +28,6 @@ public class Client {
             System.out.println(reference1);
         }
 
-//        System.out.println(appleWeakReference1);
-//        System.out.println(appleWeakReference2);
         System.out.println(appleWeakReference1.get());
         System.out.println(appleWeakReference2.get());
 
