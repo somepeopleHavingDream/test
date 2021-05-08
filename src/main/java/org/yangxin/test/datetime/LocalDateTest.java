@@ -22,9 +22,13 @@ public class LocalDateTest {
         LocalDate localDate = LocalDate.now();
         for (int i = 1; i <= 21; i++) {
             System.out.println(localDate.plusDays(i));
+            System.out.println(localDate);
         }
     }
 
+    /**
+     * 两个时间点间相差多少个时间单位
+     */
     private static void testTimeBetween() {
         // 时间范围
         LocalDate startLocalDate = LocalDate.parse("2016-02-23");
@@ -34,6 +38,9 @@ public class LocalDateTest {
         System.out.println(ChronoUnit.MONTHS.between(startLocalDate, endLocalDate));
     }
 
+    /**
+     * 格式化LocalDateTime
+     */
     private static void testDateTimeFormatter() {
         LocalDateTime localDateTime = LocalDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

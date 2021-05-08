@@ -17,6 +17,13 @@ public class TimeStampTest {
     public static void main(String[] args) {
 //        getTimeStamp();
 
+        test2();
+    }
+
+    /**
+     * 时间戳字符串转LocalDateTime
+     */
+    private static void test2() {
         String timestamp = "1618780339154";
         System.out.println(timestamp);
         long currentTimeMillis = System.currentTimeMillis();
@@ -34,6 +41,9 @@ public class TimeStampTest {
         System.out.println(dateTimeFormatter.format(localDateTime));
     }
 
+    /**
+     * 获得当前时间戳
+     */
     private static void getTimeStamp() {
         Date date = new Date();
         System.out.println(date.getTime());
