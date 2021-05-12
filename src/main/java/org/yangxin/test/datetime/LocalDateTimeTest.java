@@ -59,4 +59,13 @@ public class LocalDateTimeTest {
         LocalDateTime localDateTime = LocalDateTime.parse(stuTime, dateTimeFormatter);
         System.out.println(localDateTime.plusHours(8));
     }
+
+    /**
+     * 格式化LocalDateTime
+     */
+    private static void testDateTimeFormatter() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dateTimeFormatter.format(localDateTime));
+    }
 }
