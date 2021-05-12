@@ -10,11 +10,12 @@ import java.util.Date;
  * @author yangxin
  * 2020/02/12 11:39
  */
+@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat"})
 public class DateTest {
 
     public static void main(String[] args) {
-//        test1();
-        test2();
+        test1();
+//        test2();
     }
 
     /**
@@ -30,8 +31,13 @@ public class DateTest {
      */
     private static void test1() {
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println(simpleDateFormat.format(date));
+
         System.out.println(date);
+
+        SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(simpleDateFormat1.format(date));
+
+        SimpleDateFormat simpleDateFormat2 = new SimpleDateFormat("YYYYMMDDHHMMSS");
+        System.out.println(simpleDateFormat2.format(date));
     }
 }
