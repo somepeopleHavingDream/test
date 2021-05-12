@@ -1,10 +1,9 @@
 package org.yangxin.test.datetime;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 
 /**
  * LocalDate
@@ -19,11 +18,18 @@ public class LocalDateTest {
 //        testDateTimeFormatter();
 //        testTimeBetween();
 
+        test3();
+    }
+
+    /**
+     * LocalDate转Date
+     */
+    private static void test3() {
         LocalDate localDate = LocalDate.now();
-        for (int i = 1; i <= 21; i++) {
-            System.out.println(localDate.plusDays(i));
-            System.out.println(localDate);
-        }
+        System.out.println(localDate);
+
+        ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
+        System.out.println(Date.from(zonedDateTime.toInstant()));
     }
 
     /**
@@ -36,14 +42,5 @@ public class LocalDateTest {
         System.out.println(startLocalDate + "-" + endLocalDate);
         System.out.println(Period.between(startLocalDate, endLocalDate).getMonths());
         System.out.println(ChronoUnit.MONTHS.between(startLocalDate, endLocalDate));
-    }
-
-    /**
-     * 格式化LocalDateTime
-     */
-    private static void testDateTimeFormatter() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        System.out.println(dateTimeFormatter.format(localDateTime));
     }
 }
