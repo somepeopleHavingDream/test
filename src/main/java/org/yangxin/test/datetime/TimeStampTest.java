@@ -16,29 +16,6 @@ public class TimeStampTest {
 
     public static void main(String[] args) {
 //        getTimeStamp();
-
-        test2();
-    }
-
-    /**
-     * 时间戳字符串转LocalDateTime
-     */
-    private static void test2() {
-        String timestamp = "1618780339154";
-        System.out.println(timestamp);
-        long currentTimeMillis = System.currentTimeMillis();
-        System.out.println(currentTimeMillis);
-
-        Date date = new Date(Long.parseLong(timestamp));
-        System.out.println(date);
-
-        LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(Long.parseLong(timestamp) / 1000,
-                0, ZoneOffset.ofHours(8));
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyMMddHHmmss");
-        System.out.println(localDateTime.getYear());
-        System.out.println(localDateTime.getMonth());
-        System.out.println(localDateTime.getDayOfMonth());
-        System.out.println(dateTimeFormatter.format(localDateTime));
     }
 
     /**
