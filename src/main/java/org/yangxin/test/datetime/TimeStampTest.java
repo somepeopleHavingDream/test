@@ -1,5 +1,6 @@
 package org.yangxin.test.datetime;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -16,6 +17,7 @@ public class TimeStampTest {
 
     public static void main(String[] args) {
 //        getTimeStamp();
+        test1();
     }
 
     /**
@@ -25,5 +27,17 @@ public class TimeStampTest {
         Date date = new Date();
         System.out.println(date.getTime());
         System.out.println(System.currentTimeMillis());
+    }
+
+    /**
+     * 时间戳转日期字符串
+     */
+    private static void test1() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        LocalDateTime localDateTime = timestamp.toLocalDateTime();
+        System.out.println(localDateTime);
+
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
+        System.out.println(dateTimeFormatter.format(localDateTime));
     }
 }
