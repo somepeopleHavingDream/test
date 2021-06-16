@@ -33,8 +33,7 @@ public class EncryptTest {
     /**
      * 服务商信息界面的key值（需要替换为自己的key）
      */
-    private static final String ACCESS_KEY = "32af29d2-f037-4de9-8415-6a293654ef24";
-//    private static final String ACCESS_KEY = "xxxxxxx";
+    private static final String ACCESS_KEY = "xxxxxxx";
 
     public static void main(String[] args) throws Exception {
 
