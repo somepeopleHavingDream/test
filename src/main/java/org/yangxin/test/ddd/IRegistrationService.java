@@ -2,8 +2,7 @@ package org.yangxin.test.ddd;
 
 /**
  * @author yangxin
- * 2021/6/11 17:37
+ * 2021/6/18 11:43
  */
-public class LotteryService {
-
+public interface IRegistrationService {
 }
