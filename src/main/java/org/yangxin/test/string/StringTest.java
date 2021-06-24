@@ -1,11 +1,10 @@
 package org.yangxin.test.string;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.util.StringUtils;
 
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * 字符串测试类
@@ -18,8 +17,17 @@ public class StringTest {
     public static void main(String[] args) throws JsonProcessingException {
 //        testCodePointAt();
 
-        String location = "D:\\IdeaProjects\\spring-framework-5.2.9.RELEASE\\spring-demo\\src\\main\\resources\\spring\\spring-config.xml";
-        System.out.println(determineRootDir(location));
+//        String location = "D:\\IdeaProjects\\spring-framework-5.2.9.RELEASE\\spring-demo\\src\\main\\resources\\spring\\spring-config.xml";
+//        System.out.println(determineRootDir(location));
+
+        testTokenizeToStringArray();
+    }
+
+    private static void testTokenizeToStringArray() {
+        String nameAttr = "made,in:china";
+        String flag = ",:";
+        String[] nameArray = StringUtils.tokenizeToStringArray(nameAttr, flag);
+        System.out.println(Arrays.toString(nameArray));
     }
 
     private static void testCodePointAt() {
