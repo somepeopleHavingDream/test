@@ -21149,7 +21149,7 @@ public interface NetSDKLib extends Library {
 		public int							 dwSize;								// 结构体大小
 		public byte[]						 szCard = new byte[33];					// 需要加密的字符串
 		public byte[]                        byReserved1 = new byte[3];             // 字节对齐
-		public byte[]                        szKey = new byte[33];                  // 秘钥
+		public byte[]                        szKey = new byte[33];                  // 密钥
 		public byte[]                        byReserved2 = new byte[3];             // 字节对齐
 
 		public NET_IN_ENCRYPT_STRING() {
@@ -21173,7 +21173,7 @@ public interface NetSDKLib extends Library {
 	{
 		public int                       	dwSize;
 		public int      					emCipher;                                // 加密方式, 参考枚举 NET_ENUM_QRCODE_CIPHER
-		public byte[]                       szKey = new byte[33];                    // 秘钥
+		public byte[]                       szKey = new byte[33];                    // 密钥
 		public byte[]                       byReserved = new byte[3];                // 字节对齐
 
 		public NET_IN_SET_QRCODE_DECODE_INFO() {
@@ -24096,7 +24096,7 @@ public interface NetSDKLib extends Library {
 		public int                      nCount;                                  // 升级包个数
 		public Pointer      			pstuUpgradeReport;                      // 升级结果信息 , 大小 nCount * sizeof(NET_UPGRADE_REPORT)
 	    public byte[]                   szAccessKeyId = new byte[NET_COMMON_STRING_128];     //访问ID
-	    public byte[]                   szSecretAccessKey = new byte[NET_COMMON_STRING_128]; //访问秘钥
+	    public byte[]                   szSecretAccessKey = new byte[NET_COMMON_STRING_128]; //访问密钥
 	    public byte[]                   szUrl = new byte[NET_COMMON_STRING_1024];            // 云URL
 
 	    public NET_IN_UPGRADE_REPORT() {

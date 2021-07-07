@@ -1,4 +1,4 @@
-package org.yangxin.test.security.nonsymmetric;
+package org.yangxin.test.security.mooc.nonsymmetric;
 
 import org.apache.commons.codec.binary.Base64;
 
@@ -26,7 +26,7 @@ public class RsaTest {
     private static final String SRC = "imooc security rsa";
 
     public static void main(String[] args) {
-        jdkRsa();
+//        jdkRsa();
     }
 
     private static void jdkRsa() {
@@ -145,16 +145,16 @@ public class RsaTest {
         byte[] inputArray = str.getBytes();
         int inputLength = inputArray.length;
         // 最大加密字节数，超出最大字节数需要分组加密
-        int MAX_ENCRYPT_BLOCK = 117;
+        int maxEncryptBlock = 117;
 
         // 标识
         int offSet = 0;
         byte[] resultBytes = {};
         byte[] cache;
         while (inputLength - offSet > 0) {
-            if (inputLength - offSet > MAX_ENCRYPT_BLOCK) {
-                cache = cipher.doFinal(inputArray, offSet, MAX_ENCRYPT_BLOCK);
-                offSet += MAX_ENCRYPT_BLOCK;
+            if (inputLength - offSet > maxEncryptBlock) {
+                cache = cipher.doFinal(inputArray, offSet, maxEncryptBlock);
+                offSet += maxEncryptBlock;
             } else {
                 cache = cipher.doFinal(inputArray, offSet, inputLength - offSet);
                 offSet = inputLength;

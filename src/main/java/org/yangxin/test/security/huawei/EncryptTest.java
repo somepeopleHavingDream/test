@@ -1,4 +1,4 @@
-package org.yangxin.test.security.abounthuawei;
+package org.yangxin.test.security.huawei;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang.StringUtils;
@@ -248,7 +248,7 @@ public class EncryptTest {
      * AES CBC 256位加密
      *
      * @param content 加密内容
-     * @param key     加密秘钥
+     * @param key     加密密钥
      * @param iv      加密盐值
      * @return 加密结果
      */

@@ -1,4 +1,4 @@
-package org.yangxin.test.security.app;
+package org.yangxin.test.security.baidu;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
