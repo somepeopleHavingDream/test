@@ -41,7 +41,7 @@ public class TestApplication implements CommandLineRunner {
 
         // 加密
         String mysqlEncryptedPassword1 = encrypt(mysqlOriginPassword);
-        String mysqlEncryptedPassword2 = encrypt("root");
+        String mysqlEncryptedPassword2 = encrypt("");
 
         // 打印加密前后的结果对比
         log.info("MySQL原始明文密码： [{}]", mysqlOriginPassword);

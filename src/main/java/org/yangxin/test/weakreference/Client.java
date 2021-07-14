@@ -20,7 +20,7 @@ public class Client {
         WeakReference<Apple> appleWeakReference1 = new WeakReference<>(new Apple("青苹果"), appleReferenceQueue);
         WeakReference<Apple> appleWeakReference2 = new WeakReference<>(new Apple("红苹果"), appleReferenceQueue);
 
-        System.out.println("----gc调用前");
+        System.out.println("gc调用前");
 
         Reference<? extends Apple> reference1;
         while ((reference1 = appleReferenceQueue.poll()) != null) {
@@ -31,7 +31,7 @@ public class Client {
         System.out.println(appleWeakReference1.get());
         System.out.println(appleWeakReference2.get());
 
-        System.out.println("----调用gc");
+        System.out.println("调用gc");
         System.gc();
 
         try {
@@ -40,7 +40,7 @@ public class Client {
             e.printStackTrace();
         }
 
-        System.out.println("----调用gc后");
+        System.out.println("调用gc后");
 
         // 下面两个输出为null，表示对象被回收了
         System.out.println(appleWeakReference1.get());
