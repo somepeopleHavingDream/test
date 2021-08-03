@@ -15,12 +15,15 @@ import java.util.Arrays;
 public class StringTest {
 
     public static void main(String[] args) throws JsonProcessingException {
-//        testCodePointAt();
+//        testTokenizeToStringArray();
+        test1();
+    }
 
-//        String location = "D:\\IdeaProjects\\spring-framework-5.2.9.RELEASE\\spring-demo\\src\\main\\resources\\spring\\spring-config.xml";
-//        System.out.println(determineRootDir(location));
-
-        testTokenizeToStringArray();
+    private static void test1() {
+        // 字节数组作为参数，解码字节数组，把字节数组转换成字符串
+        byte[] arr1 = {97, 98, 99};
+        String s2 = new String(arr1);
+        System.out.println(s2);
     }
 
     private static void testTokenizeToStringArray() {
