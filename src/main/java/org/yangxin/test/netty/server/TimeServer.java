@@ -8,17 +8,17 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import org.yangxin.test.netty.TimeEncoder;
+import org.yangxin.test.netty.encoder.TimeEncoder;
 
 /**
  * @author yangxin
  * 2021/8/3 14:18
  */
-public class DiscardServer {
+public class TimeServer {
 
     private final Integer port;
 
-    public DiscardServer(int port) {
+    public TimeServer(int port) {
         this.port = port;
     }
 
@@ -58,6 +58,6 @@ public class DiscardServer {
             port = Integer.parseInt(args[0]);
         }
 
-        new DiscardServer(port).run();
+        new TimeServer(port).run();
     }
 }

@@ -1,8 +1,9 @@
-package org.yangxin.test.netty;
+package org.yangxin.test.netty.decoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
+import org.yangxin.test.netty.UnixTime;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * 2021/8/3 16:48
  */
 @SuppressWarnings("AlibabaUndefineMagicConstant")
-public class TimeDecoder extends ByteToMessageDecoder {
+public class TimeByteToMessageDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {

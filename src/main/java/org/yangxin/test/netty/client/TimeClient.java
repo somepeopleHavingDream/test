@@ -8,7 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.yangxin.test.netty.TimeDecoder;
+import org.yangxin.test.netty.decoder.TimeReplayingDecoder;
 
 /**
  * @author yangxin
@@ -29,7 +29,7 @@ public class TimeClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast(new TimeDecoder(), new TimeClientHandler());
+                            ch.pipeline().addLast(new TimeReplayingDecoder(), new TimeClientHandler());
                         }
                     });
 
