@@ -1,4 +1,4 @@
-package org.yangxin.test.math;
+package org.yangxin.test.datatype;
 
 /**
  * 数学运算使用用例
@@ -6,9 +6,13 @@ package org.yangxin.test.math;
  * @author yangxin
  * 2020/05/08 14:59
  */
-public class MathTest {
+public class DoubleTest {
 
     public static void main(String[] args) {
+//        test1();
+    }
+
+    private static void test1() {
         // 保留后3位小数
         double a = 0.26666666666666666;
         System.out.println((double) Math.round(a * 1000) / 1000);

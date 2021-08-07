@@ -1,4 +1,4 @@
-package org.yangxin.test.defaultcharset;
+package org.yangxin.test.system;
 
 import java.nio.charset.Charset;
 
@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
  * @author yangxin
  * 2020/09/29 09:17
  */
-public class DefaultCharsetTest {
+public class SystemTest {
 
     public static void main(String[] args) {
         // 获取系统默认编码

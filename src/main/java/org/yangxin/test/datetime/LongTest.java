@@ -12,8 +12,8 @@ import java.time.format.DateTimeFormatter;
 public class LongTest {
 
     public static void main(String[] args) {
-//        test1();
-        test2();
+        test1();
+//        test2();
     }
 
     /**
@@ -28,7 +28,7 @@ public class LongTest {
      * 整型时间戳转日期字符串
      */
     public static void test2() {
-        long timestamp = 1623035797428L;
+        long timestamp = 0x0000017B153FFL;
         LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(timestamp / 1000,
                 0, ZoneOffset.ofHours(8));
 

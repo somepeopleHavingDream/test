@@ -12,7 +12,7 @@ public class LocalDateTimeTest {
 
     public static void main(String[] args) {
 //        test1();
-        test3();
+        test2();
     }
 
     /**
@@ -39,7 +39,7 @@ public class LocalDateTimeTest {
      */
     private static void test2() {
         LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         System.out.println(dateTimeFormatter.format(localDateTime));
     }
 
