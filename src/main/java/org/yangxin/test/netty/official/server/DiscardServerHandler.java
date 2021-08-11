@@ -1,4 +1,4 @@
-package org.yangxin.test.netty.server;
+package org.yangxin.test.netty.official.server;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

@@ -1,9 +1,9 @@
-package org.yangxin.test.netty.encoder;
+package org.yangxin.test.netty.official.encoder;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
-import org.yangxin.test.netty.UnixTime;
+import org.yangxin.test.netty.official.UnixTime;
 
 /**
  * @author yangxin

@@ -1,4 +1,4 @@
-package org.yangxin.test.netty.client;
+package org.yangxin.test.netty.official.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -8,7 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import org.yangxin.test.netty.decoder.TimeReplayingDecoder;
+import org.yangxin.test.netty.official.decoder.TimeReplayingDecoder;
 
 /**
  * @author yangxin

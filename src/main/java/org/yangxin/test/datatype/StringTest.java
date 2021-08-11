@@ -14,14 +14,22 @@ import java.util.Arrays;
  * @author yangxin
  * 2019/10/31 11:36
  */
-@SuppressWarnings("CommentedOutCode")
 public class StringTest {
 
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
-//        testTokenizeToStringArray();
-//        test1();
-//        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        /*
+            0：补0
+            4：宽度为4位
+            d：向左对齐
+         */
+        System.out.printf("%04d%n", 123);
+
+        System.out.printf("%-10s%n", "123");
     }
 
     private static void test3() throws UnsupportedEncodingException {
@@ -36,11 +44,6 @@ public class StringTest {
         System.out.println(Hex.encodeHex(newBytes));
     }
 
-    private static void test2() {
-        byte[] bytes = new byte[]{0x38, 0x36, 0x39, 0x35, 0x32, 0x33, 0x30, 0x35, 0x30, 0x34 ,0x35, 0x37, 0x35, 0x35, 0x36, 0x20, 0x20, 0x20, 0x20};
-        String s = new String(bytes);
-        System.out.println(s);
-    }
 
     private static void test1() {
         // 字节数组作为参数，解码字节数组，把字节数组转换成字符串

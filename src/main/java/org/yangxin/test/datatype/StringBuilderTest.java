@@ -1,4 +1,4 @@
-package org.yangxin.test.stringbuilder;
+package org.yangxin.test.datatype;
 
 /**
  * 用StringBuilder前补0
@@ -6,8 +6,14 @@ package org.yangxin.test.stringbuilder;
  * @author yangxin
  * 2019/10/28 11:55
  */
+@SuppressWarnings("AlibabaUndefineMagicConstant")
 public class StringBuilderTest {
+
     public static void main(String[] args) {
+        test1();
+    }
+
+    private static void test1() {
         String s = "110";
         StringBuilder builder = new StringBuilder(s);
 
@@ -15,6 +21,6 @@ public class StringBuilderTest {
         for (int i = 0; i < 4; i++) {
             builder.insert(0, '0');
         }
-        System.out.println(builder.toString());
+        System.out.println(builder);
     }
 }
