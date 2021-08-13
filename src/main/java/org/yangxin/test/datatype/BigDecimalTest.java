@@ -1,9 +1,7 @@
-package org.yangxin.test.bigdecimal;
+package org.yangxin.test.datatype;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-
-import static javax.swing.text.html.HTML.Tag.I;
 
 /**
  * 大数用例

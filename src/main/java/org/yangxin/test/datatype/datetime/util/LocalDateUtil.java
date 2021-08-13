@@ -1,4 +1,4 @@
-package org.yangxin.test.datetime.util;
+package org.yangxin.test.datatype.datetime.util;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

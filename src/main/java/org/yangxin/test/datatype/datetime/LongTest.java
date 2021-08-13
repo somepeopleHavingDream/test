@@ -1,4 +1,4 @@
-package org.yangxin.test.datetime;
+package org.yangxin.test.datatype.datetime;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

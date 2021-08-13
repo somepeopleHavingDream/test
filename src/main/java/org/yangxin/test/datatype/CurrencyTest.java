@@ -1,4 +1,4 @@
-package org.yangxin.test.currency;
+package org.yangxin.test.datatype;
 
 import java.util.Currency;
 import java.util.Locale;

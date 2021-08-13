@@ -1,4 +1,4 @@
-package org.yangxin.test.character;
+package org.yangxin.test.datatype;
 
 /**
  * @author yangxin

@@ -28,8 +28,8 @@ public class StringTest {
             d：向左对齐
          */
         System.out.printf("%04d%n", 123);
-
         System.out.printf("%-10s%n", "123");
+        System.out.printf("%4s%n", "123");
     }
 
     private static void test3() throws UnsupportedEncodingException {

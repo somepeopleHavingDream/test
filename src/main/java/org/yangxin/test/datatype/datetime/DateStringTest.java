@@ -1,6 +1,4 @@
-package org.yangxin.test.datetime;
-
-import org.yangxin.test.list.Simple;
+package org.yangxin.test.datatype.datetime;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
