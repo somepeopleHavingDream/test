@@ -1,4 +1,4 @@
-package org.yangxin.test.io.path;
+package org.yangxin.test.classinjdk.io.path;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -16,7 +16,7 @@ public class PathTest {
         Path path = Paths.get(".");
 
         // 对应的路径
-        System.out.println("path对象的对应路径：" + path.toString());
+        System.out.println("path对象的对应路径：" + path);
 
         // 路径数量是以路径名的数量作为标准
         System.out.println("path路径数量：" + path.getNameCount());
