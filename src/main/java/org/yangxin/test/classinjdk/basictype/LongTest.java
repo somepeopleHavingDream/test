@@ -7,5 +7,11 @@ package org.yangxin.test.classinjdk.basictype;
 public class LongTest {
 
     public static void main(String[] args) {
+        test1();
+    }
+
+    private static void test1() {
+        System.out.println(0xFFL);
+        System.out.println(0xFF);
     }
 }
