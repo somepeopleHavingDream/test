@@ -1,7 +1,9 @@
 package org.yangxin.test.classinjdk.datetime;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -14,8 +16,8 @@ import java.util.Date;
 public class DateTest {
 
     public static void main(String[] args) {
-        test1();
-//        test2();
+//        test1();
+        test2();
     }
 
     /**
@@ -23,7 +25,10 @@ public class DateTest {
      */
     private static void test2() {
         Date date = new Date();
-        System.out.println(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        System.out.println(date);
+        LocalDateTime localDateTime = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+        System.out.println(localDateTime);
+        System.out.println(DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(localDateTime));
     }
 
     /**
