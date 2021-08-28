@@ -1,4 +1,4 @@
-package org.yangxin.test.classinjdk.collection.list;
+package org.yangxin.test.classinjdk.collection.set;
 
 import java.util.Set;
 import java.util.stream.Collectors;
