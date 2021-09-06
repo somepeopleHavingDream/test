@@ -2,9 +2,6 @@ package org.yangxin.test.dahua;
 
 import com.sun.jna.Memory;
 import com.sun.jna.Pointer;
-import lombok.extern.slf4j.Slf4j;
-import org.yangxin.test.aboutclass.innerclass.A;
-import org.yangxin.test.dahua.demo.module.GateModule;
 import org.yangxin.test.dahua.demo.module.LoginModule;
 import org.yangxin.test.dahua.lib.NetSDKLib;
 import org.yangxin.test.dahua.lib.ToolKits;
@@ -16,10 +13,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 

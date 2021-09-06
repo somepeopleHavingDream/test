@@ -7,6 +7,7 @@ package org.yangxin.test.jvm.classloading;
  * @author yangxin
  * 2020/06/23 17:03
  */
+@SuppressWarnings("AlibabaAvoidManuallyCreateThread")
 public class DeadLoopTest {
 
     /**
