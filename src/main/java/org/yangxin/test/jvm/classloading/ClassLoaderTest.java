@@ -56,7 +56,7 @@ public class ClassLoaderTest {
     /**
      * 获取根类加载器所加载的核心类库，并会看到本机安装的Java环境变量指定的JDK中提供的核心jar包路径
      */
-    private static void printJDKJar() {
+    private static void printJdkJar() {
         URL[] urLs = Launcher.getBootstrapClassPath().getURLs();
         for (URL urL : urLs) {
             System.out.println(urL.toExternalForm());

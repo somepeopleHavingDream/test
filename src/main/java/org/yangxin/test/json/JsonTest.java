@@ -3,7 +3,6 @@ package org.yangxin.test.json;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -81,6 +80,8 @@ public class JsonTest {
 @AllArgsConstructor
 class DeviceStreamBO implements Serializable {
 
+    private static final long serialVersionUID = -5739676644351841517L;
+
     private Integer deviceId;
 
     private String name;
@@ -92,6 +93,8 @@ class DeviceStreamBO implements Serializable {
 
 @Data
 class StreamsDTO implements Serializable {
+
+    private static final long serialVersionUID = 5555281882323132023L;
 
     private String flv;
 
