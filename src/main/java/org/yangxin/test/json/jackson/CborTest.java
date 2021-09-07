@@ -1,4 +1,4 @@
-package org.yangxin.test.json;
+package org.yangxin.test.json.jackson;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

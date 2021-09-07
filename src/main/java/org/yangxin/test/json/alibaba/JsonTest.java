@@ -1,4 +1,4 @@
-package org.yangxin.test.json;
+package org.yangxin.test.json.alibaba;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -16,7 +16,7 @@ import java.util.List;
  * @author yangxin
  * 2021/7/6 14:50
  */
-public class JsonTest {
+class JsonTest {
 
     public static void main(String[] args) {
         test1();

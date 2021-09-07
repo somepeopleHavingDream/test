@@ -1,4 +1,4 @@
-package org.yangxin.test.json;
+package org.yangxin.test.json.google;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -9,7 +9,7 @@ import com.google.gson.GsonBuilder;
  * @author yangxin
  * 2019/10/23 15:57
  */
-public class GsonUtil {
+public class GsonTest {
 
     /**
      * 将对象转换成json（不推荐，强推阿里的fastjson）
