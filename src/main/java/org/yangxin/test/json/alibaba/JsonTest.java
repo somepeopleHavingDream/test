@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +20,17 @@ import java.util.List;
 class JsonTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        StreamsDTO dto = new StreamsDTO();
+        dto.setDate(new Date());
+
+        String s = JSON.toJSONString(dto);
+        System.out.println(s);
+        System.out.println(JSON.parseObject(s, StreamsDTO.class));
     }
 
     /**
@@ -107,4 +118,6 @@ class StreamsDTO implements Serializable {
     private String rtmp;
 
     private String url;
+
+    private Date date;
 }
