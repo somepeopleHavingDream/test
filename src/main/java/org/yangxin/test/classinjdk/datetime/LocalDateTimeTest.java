@@ -2,17 +2,21 @@ package org.yangxin.test.classinjdk.datetime;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  * @author yangxin
  * 2021/4/30 9:45
  */
+@SuppressWarnings("CommentedOutCode")
 public class LocalDateTimeTest {
 
     public static void main(String[] args) {
 //        test1();
-        test2();
+//        test2();
+        test4();
     }
 
     /**
@@ -43,7 +47,15 @@ public class LocalDateTimeTest {
         System.out.println(dateTimeFormatter.format(localDateTime));
     }
 
+    /**
+     * LocalDateTime转Timestamp
+     */
     private static void test3() {
         System.out.println(Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    private static void test4() {
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
     }
 }
