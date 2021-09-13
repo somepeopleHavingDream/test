@@ -24,6 +24,6 @@ public class SystemTest {
         // 获取系统属性列表
         System.getProperties().list(System.out);
         // 设置编码
-//        System.getProperties().put("file.encoding", "GBK");
+        System.out.println(System.getProperty("user.dir"));
     }
 }
