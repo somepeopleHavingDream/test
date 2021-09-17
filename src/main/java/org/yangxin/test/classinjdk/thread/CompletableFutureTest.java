@@ -1,4 +1,4 @@
-package org.yangxin.test.thread;
+package org.yangxin.test.classinjdk.thread;
 
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;

@@ -1,4 +1,4 @@
-package org.yangxin.test.thread;
+package org.yangxin.test.classinjdk.thread;
 
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
