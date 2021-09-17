@@ -20,7 +20,13 @@ public class StringTest {
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
 //        test3();
 //        test4();
-        test7();
+//        test7();
+        test8();
+    }
+
+    private static void test8() {
+        String s = "esi1111111111111111111";
+        System.out.println(org.apache.commons.lang.StringUtils.substring(s, 0, 3));
     }
 
     private static void test7() {
