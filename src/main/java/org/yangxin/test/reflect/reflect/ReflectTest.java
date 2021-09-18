@@ -5,12 +5,16 @@ package org.yangxin.test.reflect.reflect;
  * 2020/06/28 11:23
  */
 @SuppressWarnings({"ConstantConditions", "InstantiationOfUtilityClass"})
-public class ReflectTarget {
+public class ReflectTest {
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-//        equalsClass();
+        test1();
+//        test2();
+    }
+
+    private static void test2() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        Class<?> reflectTargetClass = contextClassLoader.loadClass("org.yangxin.test.reflect.reflect.ReflectTarget");
+        Class<?> reflectTargetClass = contextClassLoader.loadClass("org.yangxin.test.reflect.reflect.ReflectTest");
 
         /*
          说明线程上下文类加载器实例出来的对象并没有破坏双亲委派模型，
@@ -20,17 +24,17 @@ public class ReflectTarget {
          但正如上面所述，这并不影响线程上下文类加载器实例化出来的对象的使用。
         */
         Object o = reflectTargetClass.newInstance();
-        System.out.println(o instanceof ReflectTarget);
+        System.out.println(o instanceof ReflectTest);
     }
 
-    private static void equalsClass() {
+    private static void test1() {
         // 第一种方式获取Class对象
-        ReflectTarget reflectTarget = new ReflectTarget();
-        Class<? extends ReflectTarget> reflectTargetClass1 = reflectTarget.getClass();
+        ReflectTest reflectTest = new ReflectTest();
+        Class<? extends ReflectTest> reflectTargetClass1 = reflectTest.getClass();
         System.out.println("aClass: " + reflectTargetClass1.getName());
 
         // 第二种方式获取Class对象
-        Class<ReflectTarget> reflectTargetClass2 = ReflectTarget.class;
+        Class<ReflectTest> reflectTargetClass2 = ReflectTest.class;
         System.out.println("reflectTargetClass2: " + reflectTargetClass2.getName());
 
         // 判断第一种方式获取的class对象和第二种方式获取的是否是同一个
@@ -38,7 +42,7 @@ public class ReflectTarget {
 
         // 第三种方式来获取Class对象
         try {
-            Class<?> reflectTargetClass3 = Class.forName("org.yangxin.test.reflect.reflect.ReflectTarget");
+            Class<?> reflectTargetClass3 = Class.forName("org.yangxin.test.reflect.reflect.ReflectTest");
             System.out.println("reflectTargetClass3: " + reflectTargetClass3.getName());
             System.out.println(reflectTargetClass2 == reflectTargetClass3);
         } catch (ClassNotFoundException e) {
