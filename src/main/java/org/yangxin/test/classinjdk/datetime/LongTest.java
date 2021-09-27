@@ -19,7 +19,7 @@ public class LongTest {
     /**
      * 整型时间戳转时间戳类型
      */
-    public static void test1() {
+    private static void test1() {
         long currentTimeMillis = System.currentTimeMillis();
         System.out.println(new Timestamp(currentTimeMillis));
     }
@@ -27,7 +27,7 @@ public class LongTest {
     /**
      * 整型时间戳转日期字符串
      */
-    public static void test2() {
+    private static void test2() {
         long timestamp = 0x0000017B153FFL;
         LocalDateTime localDateTime = LocalDateTime.ofEpochSecond(timestamp / 1000,
                 0, ZoneOffset.ofHours(8));
