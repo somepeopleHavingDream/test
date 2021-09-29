@@ -21,7 +21,13 @@ public class StringTest {
 //        test3();
 //        test4();
 //        test7();
-        test8();
+//        test8();
+        test9();
+    }
+
+    private static void test9() {
+        String s = "147dba2630d74228af63c97bbaf9eacd";
+        System.out.println(s.replaceAll("(.{2})", ":$1").substring(1));
     }
 
     private static void test8() {
