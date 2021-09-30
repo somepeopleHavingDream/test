@@ -11,8 +11,8 @@ import java.lang.ref.WeakReference;
 public class Client {
 
     public static void main(String[] args) {
-//        client1Main();
-        client2Main();
+        client1Main();
+//        client2Main();
     }
 
     private static void client2Main() {
