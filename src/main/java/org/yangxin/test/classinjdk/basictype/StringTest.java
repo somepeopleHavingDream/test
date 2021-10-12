@@ -15,14 +15,15 @@ import java.util.List;
  * @author yangxin
  * 2019/10/31 11:36
  */
+@SuppressWarnings("CommentedOutCode")
 public class StringTest {
 
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
 //        test3();
 //        test4();
-//        test7();
+        test7();
 //        test8();
-        test9();
+//        test9();
     }
 
     private static void test9() {
@@ -38,6 +39,14 @@ public class StringTest {
     private static void test7() {
         List<String> list = Arrays.asList("篮球", "足球");
         System.out.println(org.apache.commons.lang.StringUtils.join(list, "-"));
+
+        List<String> messageList = Arrays.asList("爸爸：周六打球周六打球周六打球周六打球。",
+                "妈妈：给你带了汤。",
+                "爷爷：早点回家。",
+                "老师：下午来一下。");
+        for (String message : messageList) {
+            System.out.println(message.trim().getBytes().length);
+        }
     }
 
     protected static String test6(String location) {

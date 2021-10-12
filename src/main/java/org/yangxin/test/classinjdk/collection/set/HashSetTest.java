@@ -4,6 +4,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+
 /**
  * @author yangxin
  * 2021/8/27 17:50
@@ -12,7 +13,13 @@ import java.util.stream.Stream;
 public class HashSetTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        Set<String> set = Stream.of("A", "B").collect(Collectors.toSet());
+        System.out.println(set.add("A"));
     }
 
     private static void test1() {

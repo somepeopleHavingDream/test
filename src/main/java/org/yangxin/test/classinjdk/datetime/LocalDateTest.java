@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -29,6 +30,9 @@ public class LocalDateTest {
     private static void test3() {
         LocalDate localDate = LocalDate.now();
         System.out.println(localDate);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        System.out.println(formatter.format(localDate));
 
         ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
         System.out.println(Date.from(zonedDateTime.toInstant()));
