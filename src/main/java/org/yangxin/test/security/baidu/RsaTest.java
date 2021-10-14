@@ -191,7 +191,8 @@ public class RsaTest {
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PrivateKey key = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
 
-        Signature signature = Signature.getInstance("MD5withRSA");
+        Signature signature = Signature.getInstance("SHA256withRSA");
+//        Signature signature = Signature.getInstance("MD5withRSA");
         signature.initSign(key);
         signature.update(data.getBytes());
 
