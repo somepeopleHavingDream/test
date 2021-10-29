@@ -17,6 +17,16 @@ public class TimeStampTest {
     public static void main(String[] args) {
 //        test1();
 //        test2();
+        test3();
+    }
+
+    /**
+     * 时间戳比较
+     */
+    private static void test3() {
+        Timestamp t1 = new Timestamp(System.currentTimeMillis());
+        Timestamp t2 = new Timestamp(System.currentTimeMillis() + 111111111);
+        System.out.println(t1.compareTo(t2));
     }
 
     /**
@@ -25,7 +35,6 @@ public class TimeStampTest {
     private static void test2() {
         Date date = new Date();
         System.out.println(date.getTime());
-        System.out.println(System.currentTimeMillis());
         System.out.println(System.currentTimeMillis());
     }
 
