@@ -1,4 +1,4 @@
-package org.yangxin.test.shift;
+package org.yangxin.test.bit;
 
 import java.nio.channels.SelectionKey;
 
@@ -9,7 +9,12 @@ import java.nio.channels.SelectionKey;
 public class ShiftTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        System.out.println(Integer.numberOfLeadingZeros(0x0000ffff));
     }
 
     private static void test1() {
