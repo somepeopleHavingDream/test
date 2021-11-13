@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * @author yangxin
  * 2019/09/29 14:36
  */
-class RedisTest {
+class SecKill {
 
     @Test
     void testRedis() {
