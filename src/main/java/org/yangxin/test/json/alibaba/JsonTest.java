@@ -21,7 +21,72 @@ class JsonTest {
 
     public static void main(String[] args) {
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    private static void test3() {
+        String json = "[\n" +
+                "    [\n" +
+                "        {\n" +
+                "            \"key\": \"fromUserId\",\n" +
+                "            \"value\": \"郭海玲老师\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"key\": \"time\",\n" +
+                "            \"value\": \"07-20\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"key\": \"title\",\n" +
+                "            \"value\": \"研讨会\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"key\": \"place\",\n" +
+                "            \"value\": \"（本部）会议室1\"\n" +
+                "        }\n" +
+                "    ],\n" +
+                "    [\n" +
+                "        {\n" +
+                "            \"key\": \"fromUserId\",\n" +
+                "            \"value\": \"陈专明老师\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"key\": \"time\",\n" +
+                "            \"value\": \"06-29\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"key\": \"title\",\n" +
+                "            \"value\": \"测试\"\n" +
+                "        },\n" +
+                "        {\n" +
+                "            \"key\": \"place\",\n" +
+                "            \"value\": \"（本部）纳斯达克\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "]";
+        List<Entry[]> entryList = JSON.parseArray(json, Entry[].class);
+        for (Entry[] entryArray : entryList) {
+            for (Entry entry : entryArray) {
+                System.out.println(entry);
+            }
+        }
+
+        List<List<Entry>> list = new ArrayList<>();
+        List<Entry> entryList1 = new ArrayList<>();
+        entryList1.add(new Entry("fromUserId", "郭海玲老师"));
+        entryList1.add(new Entry("time", "07-20"));
+        entryList1.add(new Entry("title", "研讨会"));
+        entryList1.add(new Entry("place", "（本部）会议室1"));
+
+        List<Entry> entryList2 = new ArrayList<>();
+        entryList2.add(new Entry("fromUserId", "陈专明老师"));
+        entryList2.add(new Entry("time", "06-29"));
+        entryList2.add(new Entry("title", "测试"));
+        entryList2.add(new Entry("place", "（本部）纳斯达克"));
+
+        list.add(entryList1);
+        list.add(entryList2);
+        System.out.println(JSON.toJSONString(list));
     }
 
     private static void test2() {
@@ -120,4 +185,16 @@ class StreamsDTO implements Serializable {
     private String url;
 
     private Date date;
+}
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Entry implements Serializable {
+
+    private static final long serialVersionUID = 3288756381935636515L;
+
+    private String key;
+
+    private String value;
 }
