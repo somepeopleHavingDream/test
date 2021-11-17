@@ -22,7 +22,38 @@ class JsonTest {
     public static void main(String[] args) {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        String json = "[\n" +
+                "    {\n" +
+                "        \"key\": \"title\",\n" +
+                "        \"value\": \"养成打卡\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"key\": \"fromUserName\",\n" +
+                "        \"value\": \"谢老师\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "        \"key\": \"content\",\n" +
+                "        \"value\": \"123\\n21天，每天\\n123\"\n" +
+                "    }\n" +
+                "]";
+        List<Entry> entryList = JSON.parseArray(json, Entry.class);
+        System.out.println(entryList);
+
+        JSONObject jsonObject = new JSONObject();
+        for (Entry entry : entryList) {
+            if (entry == null) {
+                continue;
+            }
+
+            jsonObject.put(entry.getKey(), entry.getValue());
+        }
+
+        System.out.println(jsonObject);
     }
 
     private static void test3() {
