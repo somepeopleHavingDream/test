@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,13 +18,35 @@ import java.util.List;
  * @author yangxin
  * 2021/7/6 14:50
  */
+@SuppressWarnings("CommentedOutCode")
 class JsonTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test5();
+    }
+
+    private static void test5() {
+        List<String> fieldList = new ArrayList<>();
+        fieldList.add("操作人");
+        fieldList.add("应用标题");
+        fieldList.add("应用内容");
+
+        JSONArray jsonArray = new JSONArray();
+        for (String field : fieldList) {
+            if (StringUtils.isBlank(field)) {
+                continue;
+            }
+
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(field, "固定值");
+            jsonArray.add((jsonObject));
+        }
+
+        System.out.println(jsonArray.toJSONString());
     }
 
     private static void test4() {
