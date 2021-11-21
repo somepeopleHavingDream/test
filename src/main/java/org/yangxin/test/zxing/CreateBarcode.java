@@ -33,7 +33,7 @@ public class CreateBarcode {
             Path path = new File("barcode.png").toPath();
             MatrixToImageWriter.writeToPath(bitMatrix, "png", path);
             //            return MatrixToImageWriter.toBufferedImage(bitMatrix);
-        } catch (WriterException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

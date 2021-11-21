@@ -33,12 +33,12 @@ public class StringTest {
 
     private static void test8() {
         String s = "esi1111111111111111111";
-        System.out.println(org.apache.commons.lang.StringUtils.substring(s, 0, 3));
+        System.out.println(org.apache.commons.lang3.StringUtils.substring(s, 0, 3));
     }
 
     private static void test7() {
         List<String> list = Arrays.asList("篮球", "足球");
-        System.out.println(org.apache.commons.lang.StringUtils.join(list, "-"));
+        System.out.println(org.apache.commons.lang3.StringUtils.join(list, "-"));
 
         List<String> messageList = Arrays.asList("爸爸：周六打球周六打球周六打球周六打球。",
                 "妈妈：给你带了汤。",

@@ -73,7 +73,7 @@ public class CreateBarcodeWithWords {
             outImage.flush();
 
             ImageIO.write(outImage, "PNG", new File("image/barcodeWithWords.png"));
-        } catch (WriterException | IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
