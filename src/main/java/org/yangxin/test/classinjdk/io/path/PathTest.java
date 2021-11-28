@@ -12,6 +12,16 @@ import java.nio.file.Paths;
 public class PathTest {
 
     public static void main(String[] args) {
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        Path path = Paths.get("/home/yangxin/IdeaProjects/test/file", "big-table.txt");
+        System.out.println(path);
+    }
+
+    private static void test1() {
         // 以当前路径作为Path对象
         Path path = Paths.get(".");
 
