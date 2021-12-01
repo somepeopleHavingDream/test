@@ -21,7 +21,16 @@ public class StreamTest {
 //        test4();
 //        test5();
 //        test6();
-        test7();
+//        test7();
+        test8();
+    }
+
+    /**
+     * 将流收集为数组
+     */
+    private static void test8() {
+        String[] array = Stream.of("张三", "李四", "王五").toArray(String[]::new);
+        System.out.println(Arrays.toString(array));
     }
 
     /**
