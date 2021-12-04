@@ -1,11 +1,13 @@
 package org.yangxin.test.classinjdk.datetime;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * 时期字符串案例
@@ -16,7 +18,24 @@ import java.util.Date;
 public class DateStringTest {
 
     public static void main(String[] args) throws ParseException {
-        test1();
+//        test1();
+        test5();
+    }
+
+    private static void test5() {
+        Date date = new Date();
+
+        // 创建“简体中文”的本地化
+        Locale localeCn = Locale.SIMPLIFIED_CHINESE;
+        // 创建“英文/美国”的本地化
+        Locale localeUs = new Locale("en", "US");
+
+        // 获取“简体中文”对应的date字符串
+        String cn = DateFormat.getDateInstance(DateFormat.MEDIUM, localeCn).format(date);
+        // 获取“英文/美国”对应的date字符串
+        String us = DateFormat.getDateInstance(DateFormat.MEDIUM, localeUs).format(date);
+
+        System.out.printf("cn=%s\nus=%s\n", cn, us);
     }
 
     /**

@@ -12,12 +12,12 @@ import java.util.Date;
  * @author yangxin
  * 2020/02/12 11:39
  */
-@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat"})
+@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode"})
 public class DateTest {
 
     public static void main(String[] args) {
 //        test1();
-        test2();
+//        test2();
     }
 
     /**
