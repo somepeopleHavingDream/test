@@ -21,9 +21,14 @@ public class StringTest {
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
 //        test3();
 //        test4();
-        test7();
+//        test7();
 //        test8();
 //        test9();
+        test10();
+    }
+
+    private static void test10() {
+        System.out.printf("%s${C00030}%s，${C00031}%n", "张三", "，请尽快查阅");
     }
 
     private static void test9() {
