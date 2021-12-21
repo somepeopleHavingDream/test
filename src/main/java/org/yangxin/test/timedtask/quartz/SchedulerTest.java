@@ -1,4 +1,4 @@
-package org.yangxin.test.quartz;
+package org.yangxin.test.timedtask.quartz;
 
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
@@ -13,6 +13,7 @@ import java.util.Date;
  * 2019/11/15 17:12
  */
 public class SchedulerTest {
+
     public static void main(String[] args) {
         // 打印当前的执行时间，格式为2017-01-01 00:00:00
         Date currentTime = new Date();

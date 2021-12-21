@@ -1,7 +1,8 @@
-package org.yangxin.test.quartz;
+package org.yangxin.test.timedtask.quartz;
 
 import lombok.Data;
-import org.quartz.*;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,9 +15,6 @@ import java.util.Date;
  */
 @Data
 public class JobTest implements Job {
-//    private String message;
-//    private Float floatJobValue;
-//    private Double doubleTriggerValue;
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) {
