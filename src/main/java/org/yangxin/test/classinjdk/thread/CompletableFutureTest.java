@@ -15,7 +15,7 @@ public class CompletableFutureTest {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
 //        runAsync();
 //        supplyAsync();
-//        whenComplete();
+        whenComplete();
 //        thenApply();
 //        handle();
 //        thenAccept();
@@ -26,7 +26,7 @@ public class CompletableFutureTest {
 //        acceptEither();
 //        runAfterEither();
 //        runAfterBoth();
-        thenCompose();
+//        thenCompose();
     }
 
     /*
@@ -87,10 +87,13 @@ public class CompletableFutureTest {
             System.out.println("run end ...");
         });
 
+//        future.whenComplete((unused, throwable) -> throwable.printStackTrace());
         future.whenComplete((unused, throwable) -> System.out.println("执行完成！"));
 
         future.exceptionally(throwable -> {
             System.out.println("执行失败！" + throwable.getMessage());
+            throwable.printStackTrace();
+//            System.out.println("执行失败！" + throwable.getMessage());
             return null;
         });
 
