@@ -1,4 +1,4 @@
-package org.yangxin.test.netty.srccode;
+package org.yangxin.test.netty.demo;
 
 /**
  * @author yangxin
