@@ -7,7 +7,12 @@ package org.yangxin.test.classinjdk.basictype;
 public class LongTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        System.out.println(10000000303L % 30);
     }
 
     private static void test1() {
