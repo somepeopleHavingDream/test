@@ -1,9 +1,11 @@
 package org.yangxin.test.disruptor.quickstart;
 
 import com.lmax.disruptor.BlockingWaitStrategy;
+import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
+import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -12,7 +14,7 @@ import java.util.concurrent.ThreadFactory;
  * @author yangxin
  * 2022/1/2 19:14
  */
-@SuppressWarnings({"AlibabaThreadPoolCreation", "AlibabaRemoveCommentedCode", "CommentedOutCode", "deprecation"})
+@SuppressWarnings({"AlibabaThreadPoolCreation", "AlibabaRemoveCommentedCode", "CommentedOutCode", "deprecation", "AlibabaUndefineMagicConstant"})
 public class Main {
 
     public static void main(String[] args) {
@@ -45,5 +47,18 @@ public class Main {
 
         // 3 启动disruptor
         disruptor.start();
+
+        // 4 获取实际存储数据的容器：RingBuffer
+        RingBuffer<OrderEvent> ringBuffer = disruptor.getRingBuffer();
+        OrderEventProducer producer = new OrderEventProducer(ringBuffer);
+
+        ByteBuffer byteBuffer = ByteBuffer.allocate(8);
+        for (int i = 0; i < 100; i++) {
+            byteBuffer.putLong(0, i);
+            producer.sendData(byteBuffer);
+        }
+
+        disruptor.shutdown();
+        executorService.shutdown();
     }
 }
