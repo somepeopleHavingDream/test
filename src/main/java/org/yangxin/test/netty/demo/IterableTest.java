@@ -5,6 +5,10 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.CompositeByteBuf;
 import io.netty.buffer.Unpooled;
 
+/**
+ * @author yangxin
+ * 2022/01/02 15:20
+ */
 public class IterableTest {
 
     public static void main(String[] args) {
