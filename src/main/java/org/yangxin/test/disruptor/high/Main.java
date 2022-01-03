@@ -40,7 +40,12 @@ public class Main {
 //                .handleEventsWith(new Handler3());
 
         // 2.2 并行操作
-        disruptor.handleEventsWith(new Handler1(), new Handler2(), new Handler3());
+//        disruptor.handleEventsWith(new Handler1(), new Handler2(), new Handler3());
+
+        // 2.3 菱形操作（一）
+//        disruptor.handleEventsWith(new Handler1(), new Handler2()).handleEventsWith(new Handler3());
+        // 2.4 菱形操作（二）
+        disruptor.handleEventsWith(new Handler1(), new Handler2()).then(new Handler3());
 
         // 3 启动Disruptor
         RingBuffer<Trade> ringBuffer = disruptor.start();
