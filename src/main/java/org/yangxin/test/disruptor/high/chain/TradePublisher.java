@@ -1,4 +1,4 @@
-package org.yangxin.test.disruptor.high;
+package org.yangxin.test.disruptor.high.chain;
 
 import com.lmax.disruptor.EventTranslator;
 import com.lmax.disruptor.dsl.Disruptor;

@@ -1,8 +1,8 @@
-package org.yangxin.test.disruptor.high.consumer;
+package org.yangxin.test.disruptor.high.chain.consumer;
 
 import com.lmax.disruptor.EventHandler;
 import com.lmax.disruptor.WorkHandler;
-import org.yangxin.test.disruptor.high.Trade;
+import org.yangxin.test.disruptor.high.chain.Trade;
 
 /**
  * @author yangxin

@@ -1,13 +1,12 @@
-package org.yangxin.test.disruptor.high;
+package org.yangxin.test.disruptor.high.chain;
 
 import com.lmax.disruptor.BusySpinWaitStrategy;
-import com.lmax.disruptor.EventFactory;
 import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
-import org.yangxin.test.disruptor.high.consumer.Handler1;
-import org.yangxin.test.disruptor.high.consumer.Handler2;
-import org.yangxin.test.disruptor.high.consumer.Handler3;
+import org.yangxin.test.disruptor.high.chain.consumer.Handler1;
+import org.yangxin.test.disruptor.high.chain.consumer.Handler2;
+import org.yangxin.test.disruptor.high.chain.consumer.Handler3;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;

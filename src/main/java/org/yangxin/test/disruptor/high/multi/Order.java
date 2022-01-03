@@ -1,8 +1,6 @@
-package org.yangxin.test.disruptor.high;
+package org.yangxin.test.disruptor.high.multi;
 
 import lombok.Data;
-
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Disruptor中的Event
@@ -11,13 +9,11 @@ import java.util.concurrent.atomic.AtomicInteger;
  * 2022/1/3 13:40
  */
 @Data
-public class Trade {
+public class Order {
 
     private String id;
 
     private String name;
 
     private double price;
-
-    private AtomicInteger count = new AtomicInteger(0);
 }
