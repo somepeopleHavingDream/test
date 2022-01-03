@@ -63,7 +63,7 @@ public class Main {
         latch.countDown();
 
         Thread.sleep(10000);
-        System.out.println("第三个消费者处理的任务总数：" + consumers[2].getCount());
+        System.out.println("任务总数：" + consumers[2].getCount());
     }
 
     private static class EventExceptionHandler implements ExceptionHandler<Order> {
