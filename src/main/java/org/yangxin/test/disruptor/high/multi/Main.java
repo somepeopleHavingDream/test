@@ -3,16 +3,18 @@ package org.yangxin.test.disruptor.high.multi;
 import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.ProducerType;
 
+import java.util.UUID;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executors;
 
 /**
  * @author yangxin
  * 2022/1/3 15:38
  */
-@SuppressWarnings("AlibabaThreadPoolCreation")
+@SuppressWarnings({"AlibabaThreadPoolCreation", "AlibabaUndefineMagicConstant", "AlibabaAvoidManuallyCreateThread"})
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 1 创建RingBuffer
         RingBuffer<Order> ringBuffer = RingBuffer.create(ProducerType.MULTI,
                 Order::new,
@@ -39,6 +41,29 @@ public class Main {
 
         // 6 启动workerPool
         workerPool.start(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()));
+
+        CountDownLatch latch = new CountDownLatch(1);
+        for (int i = 0; i < 100; i++) {
+            Producer producer = new Producer(ringBuffer);
+            new Thread(() -> {
+                try {
+                    latch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                for (int j = 0; j < 100; j++) {
+                    producer.sendData(UUID.randomUUID().toString());
+                }
+            }).start();
+        }
+
+        Thread.sleep(2000);
+        System.out.println("线程创建完毕，开始生产数据");
+        latch.countDown();
+
+        Thread.sleep(10000);
+        System.out.println("第三个消费者处理的任务总数：" + consumers[2].getCount());
     }
 
     private static class EventExceptionHandler implements ExceptionHandler<Order> {
