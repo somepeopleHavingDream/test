@@ -3,10 +3,13 @@ package org.yangxin.test.disruptor.high.multi;
 import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.ProducerType;
 
+import java.util.concurrent.Executors;
+
 /**
  * @author yangxin
  * 2022/1/3 15:38
  */
+@SuppressWarnings("AlibabaThreadPoolCreation")
 public class Main {
 
     public static void main(String[] args) {
@@ -30,6 +33,12 @@ public class Main {
                 sequenceBarrier,
                 new EventExceptionHandler(),
                 consumers);
+
+        // 5 设置多个消费者的sequence序号，用于单独统计消费进度，并且设置到ringBuffer中
+        ringBuffer.addGatingSequences(workerPool.getWorkerSequences());
+
+        // 6 启动workerPool
+        workerPool.start(Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()));
     }
 
     private static class EventExceptionHandler implements ExceptionHandler<Order> {
