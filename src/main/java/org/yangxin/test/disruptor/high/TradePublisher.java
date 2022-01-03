@@ -15,7 +15,7 @@ public class TradePublisher implements Runnable {
     private final Disruptor<Trade> disruptor;
     private final CountDownLatch latch;
 
-    private static final int PUBLISH_COUNT = 10;
+    private static final int PUBLISH_COUNT = 1;
 
     public TradePublisher(CountDownLatch latch, Disruptor<Trade> disruptor) {
         this.disruptor = disruptor;
