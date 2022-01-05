@@ -4,11 +4,18 @@ package org.yangxin.test.classinjdk.basictype;
  * @author yangxin
  * 2021/9/27 16:05
  */
+@SuppressWarnings("CommentedOutCode")
 public class IntegerTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
 //        test2();
+        test3();
+    }
+
+    private static void test3() {
+        System.out.println(Integer.bitCount(1024 * 1024));
+        System.out.println(Integer.bitCount(6));
     }
 
     /**
