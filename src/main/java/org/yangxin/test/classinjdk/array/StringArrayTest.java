@@ -8,7 +8,13 @@ package org.yangxin.test.classinjdk.array;
 public class StringArrayTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        int[] array = new int[0];
+        System.out.println(array.length);
     }
 
     private static void test1() {
