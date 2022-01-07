@@ -13,12 +13,30 @@ import java.util.stream.Stream;
  * @author yangxin
  * 2021/8/28 上午11:58
  */
-@SuppressWarnings({"Java8CollectionRemoveIf", "AlibabaUndefineMagicConstant"})
+@SuppressWarnings({"Java8CollectionRemoveIf", "AlibabaUndefineMagicConstant", "CommentedOutCode"})
 public class ArrayListTest {
 
     public static void main(String[] args) {
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    private static void test3() {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            list.add(i + "");
+        }
+
+        Iterator<String> iterator = list.iterator();
+        int i = 0;
+        while (iterator.hasNext()) {
+            if (i == 3) {
+                list.remove(3);
+            }
+            System.out.println(iterator.next());
+            i++;
+        }
     }
 
     private static void test2() {
