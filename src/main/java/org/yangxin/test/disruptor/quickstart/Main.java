@@ -9,6 +9,7 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yangxin
@@ -17,7 +18,7 @@ import java.util.concurrent.ThreadFactory;
 @SuppressWarnings({"AlibabaThreadPoolCreation", "AlibabaRemoveCommentedCode", "CommentedOutCode", "deprecation", "AlibabaUndefineMagicConstant"})
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // 参数准备工作
         OrderEventFactory orderEventFactory = new OrderEventFactory();
         int ringBufferSize = 1024 * 1024;
@@ -57,6 +58,8 @@ public class Main {
             byteBuffer.putLong(0, i);
             producer.sendData(byteBuffer);
         }
+
+        TimeUnit.SECONDS.sleep(2);
 
         disruptor.shutdown();
         executorService.shutdown();
