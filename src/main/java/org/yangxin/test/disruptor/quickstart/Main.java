@@ -21,7 +21,8 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         // 参数准备工作
         OrderEventFactory orderEventFactory = new OrderEventFactory();
-        int ringBufferSize = 1024 * 1024;
+        int ringBufferSize = 4;
+//        int ringBufferSize = 1024 * 1024;
         ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 //        ThreadFactory threadFactory = r -> {
 //            Thread thread = new Thread(r);
@@ -54,7 +55,8 @@ public class Main {
         OrderEventProducer producer = new OrderEventProducer(ringBuffer);
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(8);
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 5; i++) {
+//        for (int i = 0; i < 100; i++) {
             byteBuffer.putLong(0, i);
             producer.sendData(byteBuffer);
         }
