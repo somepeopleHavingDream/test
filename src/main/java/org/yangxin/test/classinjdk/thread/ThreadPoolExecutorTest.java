@@ -8,7 +8,8 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 12/27/20 11:13 PM
  */
-public class ThreadTest implements Runnable {
+@SuppressWarnings("AlibabaThreadShouldSetName")
+public class ThreadPoolExecutorTest implements Runnable {
 
     public static void main(String[] args) throws InterruptedException {
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(4,
@@ -17,7 +18,7 @@ public class ThreadTest implements Runnable {
                 TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>());
         for (int i = 0; i < 5; i++) {
-            threadPoolExecutor.execute(new ThreadTest());
+            threadPoolExecutor.execute(new ThreadPoolExecutorTest());
         }
 
         TimeUnit.SECONDS.sleep(5);
