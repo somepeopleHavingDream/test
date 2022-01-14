@@ -18,6 +18,15 @@ public class PatternTest {
 //        test6();
 //        test7();
 //        test8();
+        test9();
+    }
+
+    private static void test9() {
+        Pattern pattern = Pattern.compile("\\$\\{(?<target>\\w+)}");
+        Matcher matcher = pattern.matcher("${APP_1068}");
+        while (matcher.find()) {
+            System.out.println(matcher.group("target"));
+        }
     }
 
     /**

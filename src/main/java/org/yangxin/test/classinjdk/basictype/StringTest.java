@@ -15,7 +15,7 @@ import java.util.List;
  * @author yangxin
  * 2019/10/31 11:36
  */
-@SuppressWarnings("CommentedOutCode")
+@SuppressWarnings({"CommentedOutCode", "ConstantConditions"})
 public class StringTest {
 
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
@@ -24,7 +24,13 @@ public class StringTest {
 //        test7();
 //        test8();
 //        test9();
-        test10();
+//        test10();
+        test11();
+    }
+
+    private static void test11() {
+        String str = "老师";
+        System.out.println(str.substring(0, str.length() - 2));
     }
 
     private static void test10() {
