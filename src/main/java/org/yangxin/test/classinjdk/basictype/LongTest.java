@@ -12,7 +12,7 @@ public class LongTest {
     }
 
     private static void test2() {
-        System.out.println(10000000303L % 30);
+        System.out.println(10000002515L % 30);
     }
 
     private static void test1() {
