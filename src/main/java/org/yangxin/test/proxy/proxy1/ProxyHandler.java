@@ -1,4 +1,4 @@
-package org.yangxin.test.proxy;
+package org.yangxin.test.proxy.proxy1;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
  */
 public class ProxyHandler implements InvocationHandler {
 
-    private Object object;
+    private final Object object;
 
     public ProxyHandler(Object object) {
         this.object = object;
