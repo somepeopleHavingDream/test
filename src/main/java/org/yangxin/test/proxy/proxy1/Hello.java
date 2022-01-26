@@ -1,4 +1,4 @@
-package org.yangxin.test.proxy;
+package org.yangxin.test.proxy.proxy1;
 
 /**
  * @author yangxin
