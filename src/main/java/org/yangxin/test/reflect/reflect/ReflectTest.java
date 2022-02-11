@@ -1,17 +1,40 @@
 package org.yangxin.test.reflect.reflect;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
 /**
  * @author yangxin
  * 2020/06/28 11:23
  */
-@SuppressWarnings({"ConstantConditions", "InstantiationOfUtilityClass"})
-public class ReflectTest {
+@SuppressWarnings({"ConstantConditions", "CommentedOutCode"})
+public class ReflectTest implements IReflect {
 
     public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
-        test1();
+//        test1();
 //        test2();
+        test3();
     }
 
+    private static void test3() {
+        Class<ReflectTest> reflectTestClass = ReflectTest.class;
+        Method[] methods = reflectTestClass.getDeclaredMethods();
+//        for (Method method : methods) {
+//            System.out.println(method.getName());
+//        }
+
+        System.out.println(Arrays.stream(methods)
+                .anyMatch(method -> StringUtils.equals(method.getName(), "a")));
+    }
+
+    @Override
+    public void a() {
+        IReflect.super.a();
+    }
+
+    @Deprecated
     private static void test2() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
         Class<?> reflectTargetClass = contextClassLoader.loadClass("org.yangxin.test.reflect.reflect.ReflectTest");
