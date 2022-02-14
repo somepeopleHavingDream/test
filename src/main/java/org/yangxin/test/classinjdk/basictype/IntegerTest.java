@@ -4,13 +4,24 @@ package org.yangxin.test.classinjdk.basictype;
  * @author yangxin
  * 2021/9/27 16:05
  */
-@SuppressWarnings("CommentedOutCode")
+@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment"})
 public class IntegerTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        Integer a = new Integer(4);
+        test5(a);
+        System.out.println(a);
+    }
+
+    private static void test5(Integer a) {
+        a = 5;
     }
 
     private static void test3() {

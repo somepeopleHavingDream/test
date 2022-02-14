@@ -15,7 +15,7 @@ import java.util.List;
  * @author yangxin
  * 2019/10/31 11:36
  */
-@SuppressWarnings({"CommentedOutCode", "ConstantConditions"})
+@SuppressWarnings({"CommentedOutCode", "ConstantConditions", "StringOperationCanBeSimplified"})
 public class StringTest {
 
     public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
@@ -25,7 +25,13 @@ public class StringTest {
 //        test8();
 //        test9();
 //        test10();
-        test11();
+//        test11();
+        test12();
+    }
+
+    private static void test12() {
+        String s = new String("你");
+        System.out.println(s);
     }
 
     private static void test11() {
