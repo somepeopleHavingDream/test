@@ -9,7 +9,13 @@ import java.util.Arrays;
 public class ArraysTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        int[] num = {1, 2, 3, 4, 5, 6};
+        System.out.println(Arrays.toString(Arrays.copyOfRange(num, 0, 1)));
     }
 
     private static void test1() {
