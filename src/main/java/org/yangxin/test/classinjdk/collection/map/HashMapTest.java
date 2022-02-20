@@ -13,7 +13,24 @@ public class HashMapTest {
 
     public static void main(String[] args) {
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    private static void test3() {
+        // 创建一个Map
+        Map<String, Integer> prices = new HashMap<>();
+        prices.put("Shoes", 200);
+        prices.put("Bag", 300);
+        prices.put("Pant", 150);
+        System.out.println(prices);
+
+        // 计算Shirt的值
+        Integer shirtPrice = prices.computeIfAbsent("Shirt", key -> 280);
+        System.out.println(shirtPrice);
+
+        // 输出更新后的HashMap
+        System.out.println(prices);
     }
 
     private static void test2() {
