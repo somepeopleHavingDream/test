@@ -1,6 +1,7 @@
 package org.yangxin.test.classinjdk.basictype;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.NumberFormat;
 
 /**
@@ -9,6 +10,7 @@ import java.text.NumberFormat;
  * @author yangxin
  * 2020/03/05 17:13
  */
+@SuppressWarnings("UnpredictableBigDecimalConstructorCall")
 public class BigDecimalTest {
 
     public static void main(String[] args) {
@@ -16,8 +18,27 @@ public class BigDecimalTest {
 //        format();
 //        equalsAndCompareTo();
 
-        long a = 43949990;
-        System.out.println(a);
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        BigDecimal a = new BigDecimal(200);
+        BigDecimal b = new BigDecimal(0);
+        System.out.println(a.divide(b, 2, RoundingMode.HALF_EVEN));
+    }
+
+    private static void test1() {
+        System.out.println(0.2 + 0.1);
+        System.out.println(0.3 - 0.1);
+        System.out.println(0.2 * 0.1);
+        System.out.println(0.3 / 0.1);
+
+        BigDecimal intStr = new BigDecimal("22");
+        BigDecimal doubleStr = new BigDecimal(1.111111111);
+
+        System.out.println(intStr);
+        System.out.println(doubleStr);
     }
 
     private static void construct() {
