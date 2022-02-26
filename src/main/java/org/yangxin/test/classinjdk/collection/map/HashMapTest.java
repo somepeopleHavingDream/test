@@ -14,7 +14,17 @@ public class HashMapTest {
     public static void main(String[] args) {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("name", 1);
+        map.merge("name", 1, Integer::sum);
+        map.merge("count", 1, Integer::sum);
+
+        System.out.println(map);
     }
 
     private static void test3() {
