@@ -10,7 +10,7 @@ import java.text.NumberFormat;
  * @author yangxin
  * 2020/03/05 17:13
  */
-@SuppressWarnings("UnpredictableBigDecimalConstructorCall")
+@SuppressWarnings({"UnpredictableBigDecimalConstructorCall", "AlibabaBigDecimalAvoidDoubleConstructor", "CommentedOutCode"})
 public class BigDecimalTest {
 
     public static void main(String[] args) {
@@ -19,7 +19,12 @@ public class BigDecimalTest {
 //        equalsAndCompareTo();
 
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    private static void test3() {
+        System.out.println(BigDecimal.ZERO.compareTo(null));
     }
 
     private static void test2() {
