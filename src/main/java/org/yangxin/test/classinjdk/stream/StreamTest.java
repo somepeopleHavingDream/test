@@ -1,5 +1,6 @@
 package org.yangxin.test.classinjdk.stream;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.stream.Stream;
  * @author yangxin
  * 2021/10/27 9:55
  */
-@SuppressWarnings({"SimplifyStreamApiCallChains", "CommentedOutCode", "AlibabaUndefineMagicConstant"})
+@SuppressWarnings({"SimplifyStreamApiCallChains", "CommentedOutCode", "AlibabaUndefineMagicConstant", "MismatchedQueryAndUpdateOfCollection", "RedundantOperationOnEmptyContainer"})
 public class StreamTest {
 
     public static void main(String[] args) {
@@ -22,7 +23,13 @@ public class StreamTest {
 //        test5();
 //        test6();
 //        test7();
-        test8();
+//        test8();
+        test9();
+    }
+
+    private static void test9() {
+        List<Integer> list = new ArrayList<>();
+        System.out.println(list.stream().collect(Collectors.toMap(e -> "1", e -> "1")));
     }
 
     /**
