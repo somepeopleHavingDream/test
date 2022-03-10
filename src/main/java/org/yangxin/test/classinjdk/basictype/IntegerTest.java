@@ -1,17 +1,26 @@
 package org.yangxin.test.classinjdk.basictype;
 
+import java.util.Objects;
+
 /**
  * @author yangxin
  * 2021/9/27 16:05
  */
-@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment"})
+@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions"})
 public class IntegerTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test6();
+    }
+
+    private static void test6() {
+        Integer a = null;
+//        System.out.println(a == 1);
+        System.out.println(Objects.equals(a, 1));
     }
 
     private static void test4() {
