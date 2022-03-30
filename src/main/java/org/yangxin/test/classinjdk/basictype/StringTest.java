@@ -26,7 +26,14 @@ public class StringTest {
 //        test9();
 //        test10();
 //        test11();
-        test12();
+//        test12();
+        test13();
+    }
+
+    private static void test13() {
+        String s = "YJ20220301165644505000048";
+        List<String> list = Arrays.asList(s.split(","));
+        System.out.println(list.get(0));
     }
 
     private static void test12() {
