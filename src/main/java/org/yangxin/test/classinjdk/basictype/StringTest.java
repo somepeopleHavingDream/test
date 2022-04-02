@@ -24,10 +24,10 @@ public class StringTest {
 //        test7();
 //        test8();
 //        test9();
-//        test10();
+        test10();
 //        test11();
 //        test12();
-        test13();
+//        test13();
     }
 
     private static void test13() {
@@ -47,7 +47,8 @@ public class StringTest {
     }
 
     private static void test10() {
-        System.out.printf("%s${C00030}%s，${C00031}%n", "张三", "，请尽快查阅");
+//        System.out.printf("%s${C00030}%s，${C00031}%n", "张三", "，请尽快查阅");
+        System.out.printf("%s：已处理，%s", "张三", "内容内容");
     }
 
     private static void test9() {
