@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author yangxin
  * 2021/9/27 16:05
  */
-@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions"})
+@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode"})
 public class IntegerTest {
 
     public static void main(String[] args) {
@@ -14,7 +14,15 @@ public class IntegerTest {
 //        test2();
 //        test3();
 //        test4();
-        test6();
+//        test6();
+        test7();
+    }
+
+    private static void test7() {
+        int a = 1;
+        char b = (char) (a + '0');
+        System.out.println(b);
+        System.out.println(b - '0');
     }
 
     private static void test6() {
