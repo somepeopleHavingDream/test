@@ -6,6 +6,7 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,10 +25,20 @@ public class StringTest {
 //        test7();
 //        test8();
 //        test9();
-        test10();
+//        test10();
 //        test11();
 //        test12();
 //        test13();
+        test14();
+    }
+
+    private static void test14() {
+        String s = "1\n2\n3\n";
+        List<String> list = new ArrayList<>(Arrays.asList(s.split("\n")));
+        list.remove(list.size() - 2);
+        s = org.apache.commons.lang3.StringUtils.join(list, "\n");
+        System.out.println(s);
+        System.out.println(list);
     }
 
     private static void test13() {
