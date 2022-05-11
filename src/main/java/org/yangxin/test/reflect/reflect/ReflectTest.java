@@ -2,6 +2,7 @@ package org.yangxin.test.reflect.reflect;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -9,13 +10,27 @@ import java.util.Arrays;
  * @author yangxin
  * 2020/06/28 11:23
  */
-@SuppressWarnings({"ConstantConditions", "CommentedOutCode"})
+@SuppressWarnings({"ConstantConditions", "CommentedOutCode", "AlibabaRemoveCommentedCode"})
 public class ReflectTest implements IReflect {
 
-    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+    public ReflectTest(Integer param) {
+    }
+
+    public ReflectTest() {}
+
+    private ReflectTest(String param) {
+    }
+
+    public static void main(String[] args) throws ClassNotFoundException, IllegalAccessException, InstantiationException, NoSuchMethodException {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() throws NoSuchMethodException {
+        Constructor<ReflectTest> constructor = ReflectTest.class.getDeclaredConstructor();
+        System.out.println(constructor);
     }
 
     private static void test3() {
