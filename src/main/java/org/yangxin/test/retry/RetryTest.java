@@ -6,6 +6,7 @@ package org.yangxin.test.retry;
  * @author yangxin
  * 2020/05/25 16:49
  */
+@SuppressWarnings("AlibabaUndefineMagicConstant")
 public class RetryTest {
 
     public static void main(String[] args) {
