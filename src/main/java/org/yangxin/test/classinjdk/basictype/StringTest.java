@@ -1,6 +1,5 @@
 package org.yangxin.test.classinjdk.basictype;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.commons.codec.binary.Hex;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
@@ -19,7 +18,7 @@ import java.util.List;
 @SuppressWarnings({"CommentedOutCode", "ConstantConditions", "StringOperationCanBeSimplified", "AlibabaRemoveCommentedCode"})
 public class StringTest {
 
-    public static void main(String[] args) throws JsonProcessingException, UnsupportedEncodingException {
+    public static void main(String[] args) throws UnsupportedEncodingException {
 //        test3();
 //        test4();
 //        test7();
