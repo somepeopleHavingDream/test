@@ -1,7 +1,7 @@
 package org.yangxin.test.spring.conditiononmissingbean;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,7 +17,8 @@ public class AutoConfig {
     }
 
     @Bean
-    @ConditionalOnMissingBean(A.class)
+//    @ConditionalOnMissingBean(A.class)
+    @Primary
     public A a2() {
         return new A();
     }
