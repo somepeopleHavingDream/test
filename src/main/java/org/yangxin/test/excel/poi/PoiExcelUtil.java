@@ -1,10 +1,9 @@
-package org.yangxin.test.poi;
+package org.yangxin.test.excel.poi;
 
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -15,7 +14,7 @@ import java.util.List;
  * @author yangxin
  * 2019/11/07 10:06
  */
-public class ExcelUtil {
+public class PoiExcelUtil {
 
     public static void writeExcel(XSSFWorkbook workbook,
                                   List<String[]> resourceList,
@@ -109,7 +108,7 @@ public class ExcelUtil {
         XSSFWorkbook workbook = new XSSFWorkbook();
 
         // 生成一个考勤统计sheet
-        ExcelUtil.writeExcel(workbook, statisticList, new String[]{"人员名称",
+        PoiExcelUtil.writeExcel(workbook, statisticList, new String[]{"人员名称",
                         "人员ID",
                         "所属单位",
                         "当月工作日数量",
@@ -120,7 +119,7 @@ public class ExcelUtil {
                         "缺卡次数"},
                 "考勤统计报表", 0, 8);
         // 生成一个考勤详细记录sheet
-        ExcelUtil.writeExcel(workbook, recordList, new String[]{"人员名称",
+        PoiExcelUtil.writeExcel(workbook, recordList, new String[]{"人员名称",
                 "人员ID",
                 "所属单位",
                 "考勤设备",
