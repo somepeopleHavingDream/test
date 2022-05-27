@@ -2,10 +2,9 @@ package org.yangxin.test.redis.action;
 
 import redis.clients.jedis.Jedis;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 /**
  * hash login: -> 每个token对应了哪个用户
@@ -16,11 +15,12 @@ import java.util.UUID;
  * zset delay: -> 每一行的时延
  * zset schedule: -> 每一行的时间
  * string inv:rowId -> 商品的具体信息
+ * string cache:requestHashcode -> 页面内容
  *
  * @author yangxin
  * 2022/5/26 17:30
  */
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({"SpellCheckingInspection", "AlibabaUndefineMagicConstant"})
 public class Chapter02 {
 
     public static void main(String[] args) throws InterruptedException {
@@ -28,19 +28,98 @@ public class Chapter02 {
     }
 
     public void run()
-            throws InterruptedException
-    {
+            throws InterruptedException {
         Jedis conn = new Jedis(ConfigConstant.HOST, ConfigConstant.PORT);
         conn.auth(ConfigConstant.PASSWORD);
         conn.select(15);
 
         testLoginCookies(conn);
         testShopppingCartCookies(conn);
+        testCacheRequest(conn);
+    }
+
+    public void testCacheRequest(Jedis conn) {
+        System.out.println("\n----- testCacheRequest -----");
+        String token = UUID.randomUUID().toString();
+
+        Callback callback = request -> "content for " + request;
+
+        updateToken(conn, token, "username", "itemX");
+        String url = "http://test.com/?item=itemX";
+        System.out.println("We are going to cache a simple request against " + url);
+        String result = cacheRequest(conn, url, callback);
+        System.out.println("We got initial content:\n" + result);
+        System.out.println();
+
+        assert result != null;
+
+        System.out.println("To test that we've cached the request, we'll pass a bad callback");
+        String result2 = cacheRequest(conn, url, null);
+        System.out.println("We ended up getting the same response!\n" + result2);
+
+        assert result.equals(result2);
+
+        assert !canCache(conn, "http://test.com/");
+        assert !canCache(conn, "http://test.com/?item=itemX&_=1234536");
+    }
+
+    public String cacheRequest(Jedis conn, String request, Callback callback) {
+        // 对于不能被缓存的请求，直接调用回调函数
+        if (!canCache(conn, request)) {
+            return callback != null ? callback.call(request) : null;
+        }
+
+        // 将请求转换成一个简单的字符串键，方便之后进行查找
+        String pageKey = "cache:" + hashRequest(request);
+        String content = conn.get(pageKey);
+
+        if (content == null && callback != null) {
+            // 如果页面还没有被缓存，那么生成页面
+            content = callback.call(request);
+            // 将新生成的页面放到缓存里
+            conn.setex(pageKey, 300, content);
+        }
+
+        // 返回页面
+        return content;
+    }
+
+    public boolean canCache(Jedis conn, String request) {
+        try {
+            URL url = new URL(request);
+            HashMap<String, String> params = new LinkedHashMap<>();
+            if (url.getQuery() != null) {
+                for (String param : url.getQuery().split("&")) {
+                    String[] pair = param.split("=", 2);
+                    params.put(pair[0], pair.length == 2 ? pair[1] : null);
+                }
+            }
+
+            String itemId = extractItemId(params);
+            if (itemId == null || isDynamic(params)) {
+                return false;
+            }
+            Long rank = conn.zrank("viewed:", itemId);
+            return rank != null && rank < 10000;
+        } catch (MalformedURLException mue) {
+            return false;
+        }
+    }
+
+    public boolean isDynamic(Map<String, String> params) {
+        return params.containsKey("_");
+    }
+
+    public String extractItemId(Map<String, String> params) {
+        return params.get("item");
+    }
+
+    public String hashRequest(String request) {
+        return String.valueOf(request.hashCode());
     }
 
     public void testShopppingCartCookies(Jedis conn)
-            throws InterruptedException
-    {
+            throws InterruptedException {
         System.out.println("\n----- testShopppingCartCookies -----");
         String token = UUID.randomUUID().toString();
 
@@ -48,9 +127,9 @@ public class Chapter02 {
         updateToken(conn, token, "username", "itemX");
         System.out.println("And add an item to the shopping cart");
         addToCart(conn, token, "itemY", 3);
-        Map<String,String> r = conn.hgetAll("cart:" + token);
+        Map<String, String> r = conn.hgetAll("cart:" + token);
         System.out.println("Our shopping cart currently has:");
-        for (Map.Entry<String,String> entry : r.entrySet()){
+        for (Map.Entry<String, String> entry : r.entrySet()) {
             System.out.println("  " + entry.getKey() + ": " + entry.getValue());
         }
         System.out.println();
@@ -63,13 +142,13 @@ public class Chapter02 {
         Thread.sleep(1000);
         thread.quit();
         Thread.sleep(2000);
-        if (thread.isAlive()){
+        if (thread.isAlive()) {
             throw new RuntimeException("The clean sessions thread is still alive?!?");
         }
 
         r = conn.hgetAll("cart:" + token);
         System.out.println("Our shopping cart now contains:");
-        for (Map.Entry<String,String> entry : r.entrySet()){
+        for (Map.Entry<String, String> entry : r.entrySet()) {
             System.out.println("  " + entry.getKey() + ": " + entry.getValue());
         }
         assert r.size() == 0;
@@ -86,8 +165,7 @@ public class Chapter02 {
     }
 
     public void testLoginCookies(Jedis conn)
-            throws InterruptedException
-    {
+            throws InterruptedException {
         System.out.println("\n----- testLoginCookies -----");
         String token = UUID.randomUUID().toString();
 
@@ -110,7 +188,7 @@ public class Chapter02 {
         Thread.sleep(1000);
         thread.quit();
         Thread.sleep(2000);
-        if (thread.isAlive()){
+        if (thread.isAlive()) {
             throw new RuntimeException("The clean sessions thread is still alive?!?");
         }
 
@@ -142,8 +220,7 @@ public class Chapter02 {
 
     @SuppressWarnings({"BusyWait", "DuplicatedCode"})
     public static class CleanSessionsThread
-            extends Thread
-    {
+            extends Thread {
         private final Jedis conn;
         private final int limit;
         private boolean quit;
@@ -165,10 +242,10 @@ public class Chapter02 {
                 // 找出目前已有令牌的数量
                 long size = conn.zcard("recent:");
                 // 令牌数量未超过限制，休眠并在之后重新检查
-                if (size <= limit){
+                if (size <= limit) {
                     try {
                         sleep(1000);
-                    }catch(InterruptedException ie){
+                    } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                     }
                     continue;
@@ -195,8 +272,7 @@ public class Chapter02 {
 
     @SuppressWarnings({"DuplicatedCode", "BusyWait"})
     public static class CleanFullSessionsThread
-            extends Thread
-    {
+            extends Thread {
         private final Jedis conn;
         private final int limit;
         private boolean quit;
@@ -216,10 +292,10 @@ public class Chapter02 {
         public void run() {
             while (!quit) {
                 long size = conn.zcard("recent:");
-                if (size <= limit){
+                if (size <= limit) {
                     try {
                         sleep(1000);
-                    }catch(InterruptedException ie){
+                    } catch (InterruptedException ie) {
                         Thread.currentThread().interrupt();
                     }
                     continue;
@@ -241,5 +317,9 @@ public class Chapter02 {
                 conn.zrem("recent:", sessions);
             }
         }
+    }
+
+    public interface Callback {
+        String call(String request);
     }
 }
