@@ -3,6 +3,7 @@ package org.yangxin.test.redis.action;
 import redis.clients.jedis.Jedis;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
  * @author yangxin
  * 2022/5/26 17:30
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class Chapter02 {
 
     public static void main(String[] args) throws InterruptedException {
@@ -33,6 +35,54 @@ public class Chapter02 {
         conn.select(15);
 
         testLoginCookies(conn);
+        testShopppingCartCookies(conn);
+    }
+
+    public void testShopppingCartCookies(Jedis conn)
+            throws InterruptedException
+    {
+        System.out.println("\n----- testShopppingCartCookies -----");
+        String token = UUID.randomUUID().toString();
+
+        System.out.println("We'll refresh our session...");
+        updateToken(conn, token, "username", "itemX");
+        System.out.println("And add an item to the shopping cart");
+        addToCart(conn, token, "itemY", 3);
+        Map<String,String> r = conn.hgetAll("cart:" + token);
+        System.out.println("Our shopping cart currently has:");
+        for (Map.Entry<String,String> entry : r.entrySet()){
+            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
+        }
+        System.out.println();
+
+        assert r.size() >= 1;
+
+        System.out.println("Let's clean out our sessions and carts");
+        CleanFullSessionsThread thread = new CleanFullSessionsThread(0);
+        thread.start();
+        Thread.sleep(1000);
+        thread.quit();
+        Thread.sleep(2000);
+        if (thread.isAlive()){
+            throw new RuntimeException("The clean sessions thread is still alive?!?");
+        }
+
+        r = conn.hgetAll("cart:" + token);
+        System.out.println("Our shopping cart now contains:");
+        for (Map.Entry<String,String> entry : r.entrySet()){
+            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
+        }
+        assert r.size() == 0;
+    }
+
+    public void addToCart(Jedis conn, String session, String item, int count) {
+        if (count <= 0) {
+            // 从购物车里面移除指定的商品
+            conn.hdel("cart:" + session, item);
+        } else {
+            // 将指定的商品添加到购物车
+            conn.hset("cart:" + session, item, String.valueOf(count));
+        }
     }
 
     public void testLoginCookies(Jedis conn)
@@ -90,7 +140,7 @@ public class Chapter02 {
         return conn.hget("login:", token);
     }
 
-    @SuppressWarnings("BusyWait")
+    @SuppressWarnings({"BusyWait", "DuplicatedCode"})
     public static class CleanSessionsThread
             extends Thread
     {
@@ -139,6 +189,56 @@ public class Chapter02 {
                 conn.del(sessionKeys.toArray(new String[0]));
                 conn.hdel("login:", tokens);
                 conn.zrem("recent:", tokens);
+            }
+        }
+    }
+
+    @SuppressWarnings({"DuplicatedCode", "BusyWait"})
+    public static class CleanFullSessionsThread
+            extends Thread
+    {
+        private final Jedis conn;
+        private final int limit;
+        private boolean quit;
+
+        public CleanFullSessionsThread(int limit) {
+            this.conn = new Jedis(ConfigConstant.HOST, ConfigConstant.PORT);
+            conn.auth(ConfigConstant.PASSWORD);
+            conn.select(15);
+            this.limit = limit;
+        }
+
+        public void quit() {
+            quit = true;
+        }
+
+        @Override
+        public void run() {
+            while (!quit) {
+                long size = conn.zcard("recent:");
+                if (size <= limit){
+                    try {
+                        sleep(1000);
+                    }catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    continue;
+                }
+
+                long endIndex = Math.min(size - limit, 100);
+                Set<String> sessionSet = conn.zrange("recent:", 0, endIndex - 1);
+                String[] sessions = sessionSet.toArray(new String[0]);
+
+                ArrayList<String> sessionKeys = new ArrayList<>();
+                for (String sess : sessions) {
+                    sessionKeys.add("viewed:" + sess);
+                    // 新增加的这行代码用于删除旧会话对应用户的购物车
+                    sessionKeys.add("cart:" + sess);
+                }
+
+                conn.del(sessionKeys.toArray(new String[0]));
+                conn.hdel("login:", sessions);
+                conn.zrem("recent:", sessions);
             }
         }
     }
