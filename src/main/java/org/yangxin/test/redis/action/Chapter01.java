@@ -17,7 +17,7 @@ import java.util.*;
  * @author yangxin
  * 2022/5/24 17:36
  */
-@SuppressWarnings({"AlibabaUndefineMagicConstant", "SameParameterValue"})
+@SuppressWarnings({"AlibabaUndefineMagicConstant", "SameParameterValue", "HttpUrlsUsage"})
 public class Chapter01 {
 
     private static final Integer ONE_WEEK_IN_SECONDS = 7 * 86400;

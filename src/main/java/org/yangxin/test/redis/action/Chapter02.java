@@ -2,7 +2,9 @@ package org.yangxin.test.redis.action;
 
 import redis.clients.jedis.Jedis;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.UUID;
 
 /**
  * hash login: -> 每个token对应了哪个用户
@@ -10,6 +12,9 @@ import java.util.*;
  * zset viewd:token -> 该用户浏览某件商品的最近时间点
  * zset viewd: -> 每件商品的个数
  * hash cart:session -> 记录该用户购物车中每件商品的数量
+ * zset delay: -> 每一行的时延
+ * zset schedule: -> 每一行的时间
+ * string inv:rowId -> 商品的具体信息
  *
  * @author yangxin
  * 2022/5/26 17:30
@@ -20,62 +25,20 @@ public class Chapter02 {
         new Chapter02().run();
     }
 
-    private void run() throws InterruptedException {
+    public void run()
+            throws InterruptedException
+    {
         Jedis conn = new Jedis(ConfigConstant.HOST, ConfigConstant.PORT);
         conn.auth(ConfigConstant.PASSWORD);
         conn.select(15);
 
         testLoginCookies(conn);
-        testShoppingCartCookies(conn);
     }
 
-    private void testShoppingCartCookies(Jedis conn) throws InterruptedException {
-        System.out.println("testShoppingCartCookies");
-        String token = UUID.randomUUID().toString();
-
-        System.out.println("We'll refresh our session...");
-        updateToken(conn, token, "username", "itemX");
-        System.out.println("And add an item to the shopping cart");
-        addToCart(conn, token, "itemY", 3);
-        Map<String, String> r = conn.hgetAll("cart:" + token);
-        System.out.println("Our shopping cart currently has:");
-        for (Map.Entry<String, String> entry : r.entrySet()) {
-            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
-        }
-        System.out.println();
-
-        assert r.size() >= 1;
-
-        System.out.println("Let's clean out our sessions and carts");
-        CleanFullSessionsThread thread = new CleanFullSessionsThread(0);
-        thread.start();
-        Thread.sleep(1000);
-        thread.quit();
-        Thread.sleep(2000);
-        if (thread.isAlive()) {
-            throw new RuntimeException("The clean sessions thread isi still alive?!?");
-        }
-
-        r = conn.hgetAll("cart:" + token);
-        System.out.println("Our shopping cart now contains:");
-        for (Map.Entry<String, String> entry : r.entrySet()) {
-            System.out.println("  " + entry.getKey() + ": " + entry.getValue());
-        }
-        assert r.size() == 0;
-    }
-
-    private void addToCart(Jedis conn, String session, String item, int count) {
-        if (count <= 0) {
-            // 从购物车里面移除指定的商品
-            conn.hdel("cart:" + session, item);
-        } else {
-            // 将指定的商品添加到购物车
-            conn.hset("cart:" + session, item, String.valueOf(count));
-        }
-    }
-
-    private void testLoginCookies(Jedis conn) {
-        System.out.println("\ntestLoginCookies");
+    public void testLoginCookies(Jedis conn)
+            throws InterruptedException
+    {
+        System.out.println("\n----- testLoginCookies -----");
         String token = UUID.randomUUID().toString();
 
         updateToken(conn, token, "username", "itemX");
@@ -92,17 +55,21 @@ public class Chapter02 {
         System.out.println("Let's drop the maximum number of cookies to 0 to clean them out");
         System.out.println("We will start a thread to do the cleaning, while we stop it later");
 
+        CleanSessionsThread thread = new CleanSessionsThread(0);
+        thread.start();
+        Thread.sleep(1000);
+        thread.quit();
+        Thread.sleep(2000);
+        if (thread.isAlive()){
+            throw new RuntimeException("The clean sessions thread is still alive?!?");
+        }
+
         long s = conn.hlen("login:");
         System.out.println("The current number of sessions still available is: " + s);
         assert s == 0;
     }
 
-    private String checkToken(Jedis conn, String token) {
-        // 尝试获取并返回令牌对应的用户
-        return conn.hget("login:", token);
-    }
-
-    private void updateToken(Jedis conn, String token, String user, String item) {
+    public void updateToken(Jedis conn, String token, String user, String item) {
         // 获取当前时间戳
         long timestamp = System.currentTimeMillis() / 1000;
         // 维持令牌与已登录用户之间的映射
@@ -111,24 +78,31 @@ public class Chapter02 {
         conn.zadd("recent:", timestamp, token);
         if (item != null) {
             // 记录用户浏览过的商品
-            conn.zadd("viewd:" + token, timestamp, item);
-            // 移除旧的记录，只保留用户最近浏览过的25个商品
-            conn.zremrangeByRank("viewd:" + token, 0, -26);
-            conn.zincrby("viewd:", -1, item);
+            conn.zadd("viewed:" + token, timestamp, item);
+            // 移除旧的记录，只保留用户最近浏览的25个商品
+            conn.zremrangeByRank("viewed:" + token, 0, -26);
+            conn.zincrby("viewed:", -1, item);
         }
     }
 
-    @SuppressWarnings("BusyWait")
-    private static class CleanFullSessionsThread extends Thread {
+    public String checkToken(Jedis conn, String token) {
+        // 尝试获取并返回令牌对应的用户
+        return conn.hget("login:", token);
+    }
 
-        private Jedis conn;
-        private int limit;
+    @SuppressWarnings("BusyWait")
+    public static class CleanSessionsThread
+            extends Thread
+    {
+        private final Jedis conn;
+        private final int limit;
         private boolean quit;
 
-        public CleanFullSessionsThread(int limit) {
-            Jedis conn = new Jedis(ConfigConstant.HOST, ConfigConstant.PORT);
+        public CleanSessionsThread(int limit) {
+            this.conn = new Jedis(ConfigConstant.HOST, ConfigConstant.PORT);
             conn.auth(ConfigConstant.PASSWORD);
             conn.select(15);
+            this.limit = limit;
         }
 
         public void quit() {
@@ -138,30 +112,33 @@ public class Chapter02 {
         @Override
         public void run() {
             while (!quit) {
+                // 找出目前已有令牌的数量
                 long size = conn.zcard("recent:");
-                if (size <= limit) {
+                // 令牌数量未超过限制，休眠并在之后重新检查
+                if (size <= limit){
                     try {
                         sleep(1000);
-                    } catch (InterruptedException e) {
+                    }catch(InterruptedException ie){
                         Thread.currentThread().interrupt();
                     }
                     continue;
                 }
 
+                // 获得需要移除的令牌Id
                 long endIndex = Math.min(size - limit, 100);
-                Set<String> sessionSet = conn.zrange("recent:", 0, endIndex - 1);
-                String[] sessions = sessionSet.toArray(new String[0]);
+                Set<String> tokenSet = conn.zrange("recent:", 0, endIndex - 1);
+                String[] tokens = tokenSet.toArray(new String[0]);
 
-                List<String> sessionKeys = new ArrayList<>();
-                for (String session : sessions) {
-                    sessionKeys.add("viewd:" + session);
-                    // 新增加的这行代码用于删除旧会话对应用户的购物车
-                    sessionKeys.add("cart:" + session);
+                // 为那些将要被删除的令牌构建键名
+                ArrayList<String> sessionKeys = new ArrayList<>();
+                for (String token : tokens) {
+                    sessionKeys.add("viewed:" + token);
                 }
 
+                // 移除最旧的那些令牌
                 conn.del(sessionKeys.toArray(new String[0]));
-                conn.hdel("login:", sessions);
-                conn.zrem("recent:", sessions);
+                conn.hdel("login:", tokens);
+                conn.zrem("recent:", tokens);
             }
         }
     }
