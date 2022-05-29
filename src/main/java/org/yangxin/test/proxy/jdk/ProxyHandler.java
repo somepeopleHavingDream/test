@@ -1,4 +1,4 @@
-package org.yangxin.test.proxy.proxy1;
+package org.yangxin.test.proxy.jdk;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
  * @author yangxin
  * 2021/9/18 15:48
  */
+@SuppressWarnings("SuspiciousInvocationHandlerImplementation")
 public class ProxyHandler implements InvocationHandler {
 
     private final Object object;

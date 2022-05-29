@@ -1,4 +1,4 @@
-package org.yangxin.test.proxy.proxy2;
+package org.yangxin.test.proxy.cglib;
 
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;

@@ -1,4 +1,4 @@
-package org.yangxin.test.proxy.proxy1;
+package org.yangxin.test.proxy.jdk;
 
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
@@ -11,7 +11,7 @@ public class Test {
 
     public static void main(String[] args) {
         test1();
-//        test2();
+        test2();
     }
 
     private static void test2() {

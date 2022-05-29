@@ -1,4 +1,4 @@
-package org.yangxin.test.proxy.proxy2;
+package org.yangxin.test.proxy.cglib;
 
 /**
  * 用户管理接口实现类
