@@ -1,6 +1,8 @@
 package org.yangxin.test.redis.action;
 
+import com.google.gson.Gson;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Tuple;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -20,7 +22,7 @@ import java.util.*;
  * @author yangxin
  * 2022/5/26 17:30
  */
-@SuppressWarnings({"SpellCheckingInspection", "AlibabaUndefineMagicConstant"})
+@SuppressWarnings("IntegerDivisionInFloatingPointContext")
 public class Chapter02 {
 
     public static void main(String[] args) throws InterruptedException {
@@ -35,7 +37,63 @@ public class Chapter02 {
 
         testLoginCookies(conn);
         testShopppingCartCookies(conn);
+        testCacheRows(conn);
         testCacheRequest(conn);
+    }
+
+    public void testCacheRows(Jedis conn)
+            throws InterruptedException
+    {
+        System.out.println("\n----- testCacheRows -----");
+        System.out.println("First, let's schedule caching of itemX every 5 seconds");
+        scheduleRowCache(conn, "itemX", 5);
+        System.out.println("Our schedule looks like:");
+        Set<Tuple> s = conn.zrangeWithScores("schedule:", 0, -1);
+        for (Tuple tuple : s){
+            System.out.println("  " + tuple.getElement() + ", " + tuple.getScore());
+        }
+        assert s.size() != 0;
+
+        System.out.println("We'll start a caching thread that will cache the data...");
+
+        CacheRowsThread thread = new CacheRowsThread();
+        thread.start();
+
+        Thread.sleep(1000);
+        System.out.println("Our cached data looks like:");
+        String r = conn.get("inv:itemX");
+        System.out.println(r);
+        assert r != null;
+        System.out.println();
+
+        System.out.println("We'll check again in 5 seconds...");
+        Thread.sleep(5000);
+        System.out.println("Notice that the data has changed...");
+        String r2 = conn.get("inv:itemX");
+        System.out.println(r2);
+        System.out.println();
+        assert r2 != null;
+        assert !r.equals(r2);
+
+        System.out.println("Let's force un-caching");
+        scheduleRowCache(conn, "itemX", -1);
+        Thread.sleep(1000);
+        r = conn.get("inv:itemX");
+        System.out.println("The cache was cleared? " + (r == null));
+        assert r == null;
+
+        thread.quit();
+        Thread.sleep(2000);
+        if (thread.isAlive()){
+            throw new RuntimeException("The database caching thread is still alive?!?");
+        }
+    }
+
+    public void scheduleRowCache(Jedis conn, String rowId, int delay) {
+        // 先设置数据行的延迟值
+        conn.zadd("delay:", delay, rowId);
+        // 立即对需要缓存的数据行进行调度
+        conn.zadd("schedule:", System.currentTimeMillis() / 1000, rowId);
     }
 
     public void testCacheRequest(Jedis conn) {
@@ -319,7 +377,78 @@ public class Chapter02 {
         }
     }
 
+    @SuppressWarnings("BusyWait")
+    public static class CacheRowsThread
+            extends Thread
+    {
+        private final Jedis conn;
+        private boolean quit;
+
+        public CacheRowsThread() {
+            this.conn = new Jedis(ConfigConstant.HOST, ConfigConstant.PORT);
+            conn.auth(ConfigConstant.PASSWORD);
+            conn.select(15);
+        }
+
+        public void quit() {
+            quit = true;
+        }
+
+        @Override
+        public void run() {
+            Gson gson = new Gson();
+            while (!quit){
+                // 尝试获取下一个需要被缓存的数据行以及该行的调度时间戳，命令会返回一个包含零个或一个元祖（tuple）的列表
+                Set<Tuple> range = conn.zrangeWithScores("schedule:", 0, 0);
+                Tuple next = range.size() > 0 ? range.iterator().next() : null;
+                long now = System.currentTimeMillis() / 1000;
+                if (next == null || next.getScore() > now){
+                    try {
+                        // 暂时没有行需要被缓存，休眠50毫秒后重试
+                        sleep(50);
+                    }catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    continue;
+                }
+
+                String rowId = next.getElement();
+                // 提前获取下一次调度的延迟时间
+                double delay = conn.zscore("delay:", rowId);
+                if (delay <= 0) {
+                    // 不必再缓存这个行，将它从缓存中移除
+                    conn.zrem("delay:", rowId);
+                    conn.zrem("schedule:", rowId);
+                    conn.del("inv:" + rowId);
+                    continue;
+                }
+
+                // 读取数据行
+                Inventory row = Inventory.get(rowId);
+                // 更新调度时间并设置缓存值
+                conn.zadd("schedule:", now + delay, rowId);
+                conn.set("inv:" + rowId, gson.toJson(row));
+            }
+        }
+    }
+
     public interface Callback {
         String call(String request);
+    }
+
+    public static class Inventory {
+        private String id;
+        private String data;
+        private long time;
+
+        private Inventory (String id) {
+            this.id = id;
+            this.data = "data to cache...";
+            this.time = System.currentTimeMillis() / 1000;
+        }
+
+        public static Inventory get(String id) {
+            return new Inventory(id);
+        }
     }
 }
