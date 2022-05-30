@@ -9,15 +9,15 @@ public interface ConfigConstant {
     /**
      * 主机
      */
-    String HOST = "";
+    String HOST = "redis-dev.ipipa.cn";
 
     /**
      * 端口
      */
-    Integer PORT = -1;
+    Integer PORT = 6381;
 
     /**
      * 密码
      */
-    String PASSWORD = "";
+    String PASSWORD = "WAeVUnyEHhlZ6EAX";
 }

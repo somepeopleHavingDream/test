@@ -1,4 +1,4 @@
-package org.yangxin.test.excel.easyexcel;
+package org.yangxin.test.excel.easyexcel.read;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.ExcelReader;
@@ -14,7 +14,7 @@ import java.io.File;
  * 2022/5/24 15:26
  */
 @SuppressWarnings({"CommentedOutCode", "SpellCheckingInspection", "AlibabaRemoveCommentedCode"})
-public class EasyExcelTest {
+public class ReadTest {
 
     /**
      * 文件路径

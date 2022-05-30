@@ -1,4 +1,4 @@
-package org.yangxin.test.excel.easyexcel;
+package org.yangxin.test.excel.easyexcel.read;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.format.DateTimeFormat;
