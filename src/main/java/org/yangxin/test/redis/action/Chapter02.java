@@ -12,7 +12,7 @@ import java.util.*;
  * hash login: -> 每个token对应了哪个用户
  * zset recent: -> 每个token的最近时间
  * zset viewd:token -> 该用户浏览某件商品的最近时间点
- * zset viewd: -> 每件商品的个数
+ * zset viewd: -> 每件商品的浏览次数
  * hash cart:session -> 记录该用户购物车中每件商品的数量
  * zset delay: -> 每一行的时延
  * zset schedule: -> 每一行的时间
@@ -153,11 +153,15 @@ public class Chapter02 {
                 }
             }
 
+            // 尝试从页面里面取出商品Id
             String itemId = extractItemId(params);
+            // 检查这个页面能否被缓存以及这个页面是否为商品页面
             if (itemId == null || isDynamic(params)) {
                 return false;
             }
+            // 取得商品的浏览次数排名
             Long rank = conn.zrank("viewed:", itemId);
+            // 根据商品的浏览次数排名来判断是否需要缓存这个页面
             return rank != null && rank < 10000;
         } catch (MalformedURLException mue) {
             return false;
