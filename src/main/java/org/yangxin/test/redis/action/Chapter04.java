@@ -18,7 +18,7 @@ import java.util.Set;
  * @author yangxin
  * 2022/6/5 16:31
  */
-@SuppressWarnings("AlibabaAvoidDoubleOrFloatEqualCompare")
+@SuppressWarnings({"AlibabaAvoidDoubleOrFloatEqualCompare", "DuplicatedCode"})
 public class Chapter04 {
 
     public static void main(String[] args) {
