@@ -16,7 +16,7 @@
     <description>Demo project for test</description>
 
     <properties>
-        <jackson.version>2.13.2.1</jackson.version>
+        <jackson.version>2.13.3</jackson.version>
     </properties>
 
     <dependencies>

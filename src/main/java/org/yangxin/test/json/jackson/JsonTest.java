@@ -12,6 +12,7 @@ import java.util.List;
  * @author yangxin
  * 2021/9/7 11:54
  */
+@SuppressWarnings("unused")
 public class JsonTest {
 
     public static void main(String[] args) throws JsonProcessingException {
