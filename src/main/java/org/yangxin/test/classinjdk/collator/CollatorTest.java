@@ -1,4 +1,4 @@
-package org.yangxin.test.classinjdk.Collator;
+package org.yangxin.test.classinjdk.collator;
 
 import java.text.Collator;
 import java.util.*;
