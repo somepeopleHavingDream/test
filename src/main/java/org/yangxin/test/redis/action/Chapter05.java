@@ -1,5 +1,6 @@
 package org.yangxin.test.redis.action;
 
+import org.javatuples.Pair;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.Pipeline;
 import redis.clients.jedis.Transaction;
@@ -7,20 +8,19 @@ import redis.clients.jedis.Tuple;
 
 import java.text.Collator;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * list recent:test:info -> 命名空间为test且日志级别为info的最近的日志
  * zset common:test:info -> 命名空间为test且日志级别为info的最频繁的日志
  * string common:test:info:start -> 命名空间为test且日志级别为info的最开始的日志的时间
+ * zset known: -> 展示了一些目前正在使用的计数器
+ * hash count:5:hits -> 此计数器以每5秒为一个时间片记录着网站的点击量
  *
  * @author yangxin
  * 2022/6/5 22:32
  */
-@SuppressWarnings({"AlibabaUndefineMagicConstant", "AlibabaAvoidCallStaticSimpleDateFormat"})
+@SuppressWarnings({"AlibabaUndefineMagicConstant", "AlibabaAvoidCallStaticSimpleDateFormat", "unused", "AlibabaAvoidMissUseOfMathRandom", "SpellCheckingInspection"})
 public class Chapter05 {
 
     /*
@@ -39,7 +39,8 @@ public class Chapter05 {
             new SimpleDateFormat("EEE MMM dd HH:00:00 yyyy");
     private static final SimpleDateFormat ISO_FORMAT =
             new SimpleDateFormat("yyyy-MM-dd'T'HH:00:00");
-    static{
+
+    static {
         ISO_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
     }
 
@@ -54,20 +55,106 @@ public class Chapter05 {
 
         testLogRecent(conn);
         testLogCommon(conn);
+        testCounters(conn);
+    }
+
+    public void testCounters(Jedis conn)
+            throws InterruptedException {
+        System.out.println("\n----- testCounters -----");
+        System.out.println("Let's update some counters for now and a little in the future");
+        long now = System.currentTimeMillis() / 1000;
+        for (int i = 0; i < 10; i++) {
+            int count = (int) (Math.random() * 5) + 1;
+            updateCounter(conn, "test", count, now + i);
+        }
+
+        List<Pair<Integer, Integer>> counter = getCounter(conn, "test", 1);
+        System.out.println("We have some per-second counters: " + counter.size());
+        System.out.println("These counters include:");
+        for (Pair<Integer, Integer> count : counter) {
+            System.out.println("  " + count);
+        }
+        assert counter.size() >= 10;
+
+        counter = getCounter(conn, "test", 5);
+        System.out.println("We have some per-5-second counters: " + counter.size());
+        System.out.println("These counters include:");
+        for (Pair<Integer, Integer> count : counter) {
+            System.out.println("  " + count);
+        }
+        assert counter.size() >= 2;
+        System.out.println();
+
+        System.out.println("Let's clean out some counters by setting our sample count to 0");
+        CleanCountersThread thread = new CleanCountersThread(0, 2 * 86400000);
+        thread.start();
+        Thread.sleep(1000);
+        thread.quit();
+        thread.interrupt();
+        counter = getCounter(conn, "test", 86400);
+        System.out.println("Did we clean out all of the counters? " + (counter.size() == 0));
+        assert counter.size() == 0;
+    }
+
+    public List<Pair<Integer, Integer>> getCounter(
+            Jedis conn, String name, int precision) {
+        // 取得存储计数器数据的键的名字
+        String hash = String.valueOf(precision) + ':' + name;
+        // 从Redis里面取出计数器数据
+        Map<String, String> data = conn.hgetAll("count:" + hash);
+        // 将计数器数据转换成指定的格式
+        ArrayList<Pair<Integer, Integer>> results =
+                new ArrayList<>();
+        for (Map.Entry<String, String> entry : data.entrySet()) {
+            results.add(new Pair<>(
+                    Integer.parseInt(entry.getKey()),
+                    Integer.parseInt(entry.getValue())));
+        }
+        // 对数据进行排序，把旧的数据样本排在前面
+        Collections.sort(results);
+        return results;
+    }
+
+    public void updateCounter(Jedis conn, String name, int count) {
+        updateCounter(conn, name, count, System.currentTimeMillis() / 1000);
+    }
+
+    /**
+     * 以秒为单位的计算器精度，分别为1秒、5秒、1分钟、5分钟、1小时、5小时、1天——用户可以按需调整这些精度
+     */
+    public static final int[] PRECISION = new int[]{1, 5, 60, 300, 3600, 18000, 86400};
+
+    public void updateCounter(Jedis conn, String name, int count, long now) {
+        // 通过取得当前时间来判断应该对哪个时间片执行自增操作
+        // 为了保证之后的清理工作可以正确地执行，这里需要创建一个事务型流水线
+        Transaction trans = conn.multi();
+
+        // 为我们记录的每种精度都创建一个计数器
+        for (int prec : PRECISION) {
+            // 取得当前时间片的开始时间
+            long pnow = (now / prec) * prec;
+            // 负责创建存储计数信息的散列
+            String hash = String.valueOf(prec) + ':' + name;
+            // 将计数器的引用信息添加到有序集合里面，并将其分值设置为0，以便在之后执行清理操作
+            trans.zadd("known:", 0, hash);
+            // 对给定名字和精度的计算器进行更新
+            trans.hincrBy("count:" + hash, String.valueOf(pnow), count);
+        }
+        trans.exec();
     }
 
     public void testLogCommon(Jedis conn) {
         System.out.println("\n----- testLogCommon -----");
         System.out.println("Let's write some items to the common log");
         for (int count = 1; count < 6; count++) {
-            for (int i = 0; i < count; i ++) {
+            for (int i = 0; i < count; i++) {
                 logCommon(conn, "test", "message-" + count);
             }
         }
         Set<Tuple> common = conn.zrevrangeWithScores("common:test:info", 0, -1);
         System.out.println("The current number of common messages is: " + common.size());
         System.out.println("Those common messages are:");
-        for (Tuple tuple : common){
+        for (Tuple tuple : common) {
             System.out.println("  " + tuple.getElement() + ", " + tuple.getScore());
         }
         assert common.size() >= 5;
@@ -85,7 +172,7 @@ public class Chapter05 {
         // 因为程序每小时需要轮换一次日志，所以它使用一个键来记录当前所处的小时数
         String startKey = commonDest + ":start";
         long end = System.currentTimeMillis() + timeout;
-        while (System.currentTimeMillis() < end){
+        while (System.currentTimeMillis() < end) {
             // 对记录当前小时数的键进行监视，确保轮换操作可以正确地执行
             conn.watch(startKey);
             // 取得当前时间，取得当前所处的小时数
@@ -95,7 +182,7 @@ public class Chapter05 {
             // 创建一个事务
             Transaction trans = conn.multi();
             // 如果这个常见日志消息列表记录的是上一个小时的日志
-            if (existing != null && COLLATOR.compare(existing, hourStart) < 0){
+            if (existing != null && COLLATOR.compare(existing, hourStart) < 0) {
                 // 那么将这些旧的常见日志消息归档
                 trans.rename(commonDest, commonDest + ":last");
                 trans.rename(startKey, commonDest + ":pstart");
@@ -112,7 +199,7 @@ public class Chapter05 {
             List<Object> results = trans.exec();
             // null response indicates that the transaction was aborted due to
             // the watched key changing.
-            if (results == null){
+            if (results == null) {
                 // 如果程序因为其他客户端正在执行归档操作而出现监视错误，那么进行重试
                 continue;
             }
@@ -131,7 +218,7 @@ public class Chapter05 {
                 "The current recent message log has this many messages: " +
                         recent.size());
         System.out.println("Those messages include:");
-        for (String message : recent){
+        for (String message : recent) {
             System.out.println(message);
         }
         assert recent.size() >= 5;
@@ -154,5 +241,118 @@ public class Chapter05 {
         pipe.ltrim(destination, 0, 99);
         // 执行两个命令
         pipe.sync();
+    }
+
+    @SuppressWarnings({"UnusedAssignment", "IntegerDivisionInFloatingPointContext", "BusyWait"})
+    public static class CleanCountersThread
+            extends Thread {
+        private final Jedis conn;
+        private int sampleCount = 100;
+        private boolean quit;
+        private final long timeOffset; // used to mimic a time in the future.
+
+        public CleanCountersThread(int sampleCount, long timeOffset) {
+            this.conn = new Jedis("localhost");
+            this.conn.select(15);
+            this.sampleCount = sampleCount;
+            this.timeOffset = timeOffset;
+        }
+
+        public void quit() {
+            quit = true;
+        }
+
+        @Override
+        public void run() {
+            // 为了平等地处理更新频率各不相同的多个计数器，程序需要记录清理操作执行的次数
+            int passes = 0;
+            // 持续地对计数器进行清理，直到退出为止
+            while (!quit) {
+                // 记录清理操作开始执行的时间，这个值将被用于计算清理操作的执行时长
+                long start = System.currentTimeMillis() + timeOffset;
+                // 渐进地遍历所有已知的计数器
+                int index = 0;
+                while (index < conn.zcard("known:")) {
+                    // 取得被检查计数器的数据
+                    Set<String> hashSet = conn.zrange("known:", index, index);
+                    index++;
+                    if (hashSet.size() == 0) {
+                        break;
+                    }
+                    String hash = hashSet.iterator().next();
+                    // 取得计数器的精度
+                    int prec = Integer.parseInt(hash.substring(0, hash.indexOf(':')));
+                    /*
+                        因为清理程序每60秒就会循环一次，
+                        所以这里需要根据计数器的更新频率来判断是否真的有必要对计数器进行清理。
+                        如果这个计数器在这次循环里不需要进行清理，
+                        那么检查下一个计数器。
+                        （举个例子，
+                        如果清理程序只循环了3次，
+                        而计数器的更新频率为每5分钟一次，
+                        那么程序暂时还不需要对这个计数器进行清理。）
+                     */
+                    int bprec = (int) Math.floor(prec / 60);
+                    if (bprec == 0) {
+                        bprec = 1;
+                    }
+                    if ((passes % bprec) != 0) {
+                        continue;
+                    }
+
+                    String hkey = "count:" + hash;
+                    // 根据给定的精度以及需要保留的样本算了，计算出我们需要保留什么时间之前的样本。
+                    String cutoff = String.valueOf(
+                            ((System.currentTimeMillis() + timeOffset) / 1000) - (long) sampleCount * prec);
+                    // 获取样本的开始时间，并将其从字符串转换为整数。
+                    ArrayList<String> samples = new ArrayList<>(conn.hkeys(hkey));
+                    Collections.sort(samples);
+                    // 计算出需要移除的样本数量。
+                    int remove = bisectRight(samples, cutoff);
+
+                    // 按需移除计数样本
+                    if (remove != 0) {
+                        conn.hdel(hkey, samples.subList(0, remove).toArray(new String[0]));
+                        // 这个散列可能已经被清空
+                        if (remove == samples.size()) {
+                            // 在尝试修改计数器散列之前，对其进行监视
+                            conn.watch(hkey);
+                            /*
+                                验证计数器散列是否为空，
+                                如果是的话，
+                                那么从记录已知计数器的有序集合里面移除它。
+                             */
+                            if (conn.hlen(hkey) == 0) {
+                                Transaction trans = conn.multi();
+                                trans.zrem("known:", hash);
+                                trans.exec();
+                                // 在删除了一个计数器的情况下，下次循环可以使用与本次循环相同的索引
+                                index--;
+                            } else {
+                                // 计数器散列并不为空，继续让它留在已知计数器的有序集合里面。
+                                conn.unwatch();
+                            }
+                        }
+                    }
+                }
+
+                // 为了让清理操作的执行频率与计数器更新的频率保持一致，对记录循环次数的变量以及记录执行时长的变量进行更新
+                passes++;
+                long duration = Math.min(
+                        (System.currentTimeMillis() + timeOffset) - start + 1000, 60000);
+                try {
+                    // 如果这次循环未耗尽60秒，那么在余下的时间内进行休眠；如果60秒已经耗尽，那么休眠1秒以便稍作休息。
+                    sleep(Math.max(60000 - duration, 1000));
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
+            }
+        }
+
+        // mimic python's bisect.bisect_right
+        public int bisectRight(List<String> values, String key) {
+            int index = Collections.binarySearch(values, key);
+            return index < 0 ? Math.abs(index) - 1 : index + 1;
+        }
     }
 }
