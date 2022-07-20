@@ -1,10 +1,7 @@
 package org.yangxin.test.redis.action;
 
 import org.javatuples.Pair;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.Pipeline;
-import redis.clients.jedis.Transaction;
-import redis.clients.jedis.Tuple;
+import redis.clients.jedis.*;
 
 import java.text.Collator;
 import java.text.SimpleDateFormat;
@@ -16,11 +13,12 @@ import java.util.*;
  * string common:test:info:start -> 命名空间为test且日志级别为info的最开始的日志的时间
  * zset known: -> 展示了一些目前正在使用的计数器
  * hash count:5:hits -> 此计数器以每5秒为一个时间片记录着网站的点击量
+ * stats:ProfilePage:AccessTime -> 个人简介页面的访问时间统计
  *
  * @author yangxin
  * 2022/6/5 22:32
  */
-@SuppressWarnings({"AlibabaUndefineMagicConstant", "AlibabaAvoidCallStaticSimpleDateFormat", "unused", "AlibabaAvoidMissUseOfMathRandom", "SpellCheckingInspection"})
+@SuppressWarnings({"AlibabaUndefineMagicConstant", "AlibabaAvoidCallStaticSimpleDateFormat", "unused", "AlibabaAvoidMissUseOfMathRandom", "SpellCheckingInspection", "AlibabaCollectionInitShouldAssignCapacity"})
 public class Chapter05 {
 
     /*
@@ -56,6 +54,93 @@ public class Chapter05 {
         testLogRecent(conn);
         testLogCommon(conn);
         testCounters(conn);
+        testStats(conn);
+    }
+
+    public void testStats(Jedis conn) {
+        System.out.println("\n----- testStats -----");
+        System.out.println("Let's add some data for our statistics!");
+        List<Object> r = null;
+        for (int i = 0; i < 5; i++){
+            double value = (Math.random() * 11) + 5;
+            r = updateStats(conn, "temp", "example", value);
+        }
+        System.out.println("We have some aggregate statistics: " + r);
+        Map<String,Double> stats = getStats(conn, "temp", "example");
+        System.out.println("Which we can also fetch manually:");
+        System.out.println(stats);
+        assert stats.get("count") >= 5;
+    }
+
+    public List<Object> updateStats(Jedis conn, String context, String type, double value){
+        int timeout = 5000;
+        // 负责存储统计数据的键
+        String destination = "stats:" + context + ':' + type;
+        // 像common_log()函数一样，处理当前这一个小时的数据和上一个小时的数据
+        String startKey = destination + ":start";
+        long end = System.currentTimeMillis() + timeout;
+        while (System.currentTimeMillis() < end){
+            conn.watch(startKey);
+            String hourStart = ISO_FORMAT.format(new Date());
+
+            String existing = conn.get(startKey);
+            Transaction trans = conn.multi();
+            if (existing != null && COLLATOR.compare(existing, hourStart) < 0){
+                trans.rename(destination, destination + ":last");
+                trans.rename(startKey, destination + ":pstart");
+                trans.set(startKey, hourStart);
+            }
+
+            String tkey1 = UUID.randomUUID().toString();
+            String tkey2 = UUID.randomUUID().toString();
+            // 将值添加到临时键里面
+            trans.zadd(tkey1, value, "min");
+            trans.zadd(tkey2, value, "max");
+
+            // 使用聚合函数MIN和MAX，对存储统计数据的键以及两个临时键进行并集计算
+            trans.zunionstore(
+                    destination,
+                    new ZParams().aggregate(ZParams.Aggregate.MIN),
+                    destination, tkey1);
+            trans.zunionstore(
+                    destination,
+                    new ZParams().aggregate(ZParams.Aggregate.MAX),
+                    destination, tkey2);
+
+            // 删除临时键
+            trans.del(tkey1, tkey2);
+            // 对有序集合中的样本数量、值的和、值的平方之和3个成员进行更新
+            trans.zincrby(destination, 1, "count");
+            trans.zincrby(destination, value, "sum");
+            trans.zincrby(destination, value * value, "sumsq");
+
+            List<Object> results = trans.exec();
+            if (results == null){
+                continue;
+            }
+            // 返回基本的计数信息，以便函数调用者在有需要时做进一步的处理。
+            return results.subList(results.size() - 3, results.size());
+        }
+        return null;
+    }
+
+    public Map<String,Double> getStats(Jedis conn, String context, String type){
+        // 程序将从这个键里面取出统计数据
+        String key = "stats:" + context + ':' + type;
+        // 获取基本的统计数据，并将它们都放到一个字典里面。
+        Map<String,Double> stats = new HashMap<>();
+        Set<Tuple> data = conn.zrangeWithScores(key, 0, -1);
+        for (Tuple tuple : data){
+            stats.put(tuple.getElement(), tuple.getScore());
+        }
+        // 计算平均值
+        stats.put("average", stats.get("sum") / stats.get("count"));
+        // 计算标准差的第一个步骤
+        double numerator = stats.get("sumsq") - Math.pow(stats.get("sum"), 2) / stats.get("count");
+        double count = stats.get("count");
+        // 完成标准差的计算工作
+        stats.put("stddev", Math.pow(numerator / (count > 1 ? count - 1 : 1), .5));
+        return stats;
     }
 
     public void testCounters(Jedis conn)
