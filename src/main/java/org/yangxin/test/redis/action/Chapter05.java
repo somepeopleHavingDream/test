@@ -13,7 +13,8 @@ import java.util.*;
  * string common:test:info:start -> 命名空间为test且日志级别为info的最开始的日志的时间
  * zset known: -> 展示了一些目前正在使用的计数器
  * hash count:5:hits -> 此计数器以每5秒为一个时间片记录着网站的点击量
- * stats:ProfilePage:AccessTime -> 个人简介页面的访问时间统计
+ * zset stats:ProfilePage:AccessTime -> 个人简介页面的访问时间统计
+ * zset slowest:AccessTime -> 页面的平均访问时长
  *
  * @author yangxin
  * 2022/6/5 22:32
@@ -55,6 +56,28 @@ public class Chapter05 {
         testLogCommon(conn);
         testCounters(conn);
         testStats(conn);
+        testAccessTime(conn);
+    }
+
+    public void testAccessTime(Jedis conn)
+            throws InterruptedException
+    {
+        System.out.println("\n----- testAccessTime -----");
+        System.out.println("Let's calculate some access times...");
+        AccessTimer timer = new AccessTimer(conn);
+        for (int i = 0; i < 10; i++){
+            // 记录代码块执行前的时间
+            timer.start();
+            Thread.sleep((int)((.5 + Math.random()) * 1000));
+            timer.stop("req-" + i);
+        }
+        System.out.println("The slowest access times are:");
+        Set<Tuple> atimes = conn.zrevrangeWithScores("slowest:AccessTime", 0, -1);
+        for (Tuple tuple : atimes){
+            System.out.println("  " + tuple.getElement() + ", " + tuple.getScore());
+        }
+        assert atimes.size() >= 10;
+        System.out.println();
     }
 
     public void testStats(Jedis conn) {
@@ -438,6 +461,36 @@ public class Chapter05 {
         public int bisectRight(List<String> values, String key) {
             int index = Collections.binarySearch(values, key);
             return index < 0 ? Math.abs(index) - 1 : index + 1;
+        }
+    }
+
+    public class AccessTimer {
+        private final Jedis conn;
+        private long start;
+
+        public AccessTimer(Jedis conn){
+            this.conn = conn;
+        }
+
+        public void start(){
+            // 记录代码块执行器的时间
+            start = System.currentTimeMillis();
+        }
+
+        public void stop(String context){
+            // 计算代码块的执行时长
+            long delta = System.currentTimeMillis() - start;
+            // 更新这一上下文的统计数据
+            List<Object> stats = updateStats(conn, context, "AccessTime", delta / 1000.0);
+            // 计算页面的平均访问时长
+            double average = (Double)stats.get(1) / (Double)stats.get(0);
+
+            Transaction trans = conn.multi();
+            // 将页面的平均访问时长添加到记录最长访问时间的有序集合里
+            trans.zadd("slowest:AccessTime", average, context);
+            // AccessTime有序集合只会保留最慢的100条记录。
+            trans.zremrangeByRank("slowest:AccessTime", 0, -101);
+            trans.exec();
         }
     }
 }
