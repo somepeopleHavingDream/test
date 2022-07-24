@@ -1,5 +1,7 @@
 package org.yangxin.test.redis.action;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import org.javatuples.Pair;
 import redis.clients.jedis.*;
 
@@ -16,6 +18,7 @@ import java.util.*;
  * zset stats:ProfilePage:AccessTime -> 个人简介页面的访问时间统计
  * zset slowest:AccessTime -> 页面的平均访问时长
  * string is-under-maintenance -> 服务器是否正在维护
+ * string config:redis:statistics -> 连接存储统计数据的redis服务器所需要的信息
  *
  * @author yangxin
  * 2022/6/5 22:32
@@ -59,11 +62,86 @@ public class Chapter05 {
         testStats(conn);
         testAccessTime(conn);
         testIsUnderMaintenance(conn);
+        testConfig(conn);
+    }
+
+    public void testConfig(Jedis conn) {
+        System.out.println("\n----- testConfig -----");
+        System.out.println("Let's set a config and then get a connection from that config...");
+        Map<String, Object> config = new HashMap<>();
+        config.put("db", 15);
+        setConfig(conn, "redis", "test", config);
+
+        Jedis conn2 = redisConnection("test");
+        System.out.println(
+                "We can run commands from the configured connection: " + (conn2.info() != null));
+    }
+
+    public static final Map<String, Jedis> REDIS_CONNECTIONS =
+            new HashMap<>();
+
+    private static final Map<String, Map<String, Object>> CONFIGS =
+            new HashMap<>();
+    private static final Map<String, Long> CHECKED = new HashMap<>();
+
+    public Jedis redisConnection(String component) {
+        Jedis configConn = REDIS_CONNECTIONS.get("config");
+        if (configConn == null) {
+            configConn = new Jedis("localhost");
+            configConn.select(15);
+            REDIS_CONNECTIONS.put("config", configConn);
+        }
+
+        String key = "config:redis:" + component;
+        Map<String, Object> oldConfig = CONFIGS.get(key);
+        Map<String, Object> config = getConfig(configConn, "redis", component);
+
+        if (!config.equals(oldConfig)) {
+            Jedis conn = new Jedis("localhost");
+            if (config.containsKey("db")) {
+                conn.select(((Double) config.get("db")).intValue());
+            }
+            REDIS_CONNECTIONS.put(key, conn);
+        }
+
+        return REDIS_CONNECTIONS.get(key);
+    }
+
+    public Map<String, Object> getConfig(Jedis conn, String type, String component) {
+        int wait = 1000;
+        String key = "config:" + type + ':' + component;
+
+        // 检查是否需要对这个组件的配置信息进行更新
+        Long lastChecked = CHECKED.get(key);
+        if (lastChecked == null || lastChecked < System.currentTimeMillis() - wait) {
+            // 有需要对配置进行更新，记录最后一次检查这个连接的时间
+            CHECKED.put(key, System.currentTimeMillis());
+
+            String value = conn.get(key);
+            Map<String, Object> config;
+            if (value != null) {
+                Gson gson = new Gson();
+                config = gson.fromJson(
+                        value, new TypeToken<Map<String, Object>>() {
+                        }.getType());
+            } else {
+                config = new HashMap<>();
+            }
+
+            CONFIGS.put(key, config);
+        }
+
+        return CONFIGS.get(key);
+    }
+
+    public void setConfig(
+            Jedis conn, String type, String component, Map<String, Object> config) {
+        Gson gson = new Gson();
+        conn.set("config:" + type + ':' + component, gson.toJson(config));
     }
 
     public void testIsUnderMaintenance(Jedis conn)
-            throws InterruptedException
-    {
+            throws InterruptedException {
         System.out.println("\n----- testIsUnderMaintenance -----");
         System.out.println("Are we under maintenance (we shouldn't be)? " + isUnderMaintenance(conn));
         conn.set("is-under-maintenance", "yes");
@@ -82,9 +160,10 @@ public class Chapter05 {
 
     private long lastChecked;
     private boolean underMaintenance;
+
     public boolean isUnderMaintenance(Jedis conn) {
         // 距离上次检查是否已经超过1秒？
-        if (lastChecked < System.currentTimeMillis() - 1000){
+        if (lastChecked < System.currentTimeMillis() - 1000) {
             // 更新最后检查时间
             lastChecked = System.currentTimeMillis();
             // 检查系统是否正在进行维护
@@ -97,20 +176,19 @@ public class Chapter05 {
     }
 
     public void testAccessTime(Jedis conn)
-            throws InterruptedException
-    {
+            throws InterruptedException {
         System.out.println("\n----- testAccessTime -----");
         System.out.println("Let's calculate some access times...");
         AccessTimer timer = new AccessTimer(conn);
-        for (int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             // 记录代码块执行前的时间
             timer.start();
-            Thread.sleep((int)((.5 + Math.random()) * 1000));
+            Thread.sleep((int) ((.5 + Math.random()) * 1000));
             timer.stop("req-" + i);
         }
         System.out.println("The slowest access times are:");
         Set<Tuple> atimes = conn.zrevrangeWithScores("slowest:AccessTime", 0, -1);
-        for (Tuple tuple : atimes){
+        for (Tuple tuple : atimes) {
             System.out.println("  " + tuple.getElement() + ", " + tuple.getScore());
         }
         assert atimes.size() >= 10;
@@ -121,31 +199,31 @@ public class Chapter05 {
         System.out.println("\n----- testStats -----");
         System.out.println("Let's add some data for our statistics!");
         List<Object> r = null;
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 5; i++) {
             double value = (Math.random() * 11) + 5;
             r = updateStats(conn, "temp", "example", value);
         }
         System.out.println("We have some aggregate statistics: " + r);
-        Map<String,Double> stats = getStats(conn, "temp", "example");
+        Map<String, Double> stats = getStats(conn, "temp", "example");
         System.out.println("Which we can also fetch manually:");
         System.out.println(stats);
         assert stats.get("count") >= 5;
     }
 
-    public List<Object> updateStats(Jedis conn, String context, String type, double value){
+    public List<Object> updateStats(Jedis conn, String context, String type, double value) {
         int timeout = 5000;
         // 负责存储统计数据的键
         String destination = "stats:" + context + ':' + type;
         // 像common_log()函数一样，处理当前这一个小时的数据和上一个小时的数据
         String startKey = destination + ":start";
         long end = System.currentTimeMillis() + timeout;
-        while (System.currentTimeMillis() < end){
+        while (System.currentTimeMillis() < end) {
             conn.watch(startKey);
             String hourStart = ISO_FORMAT.format(new Date());
 
             String existing = conn.get(startKey);
             Transaction trans = conn.multi();
-            if (existing != null && COLLATOR.compare(existing, hourStart) < 0){
+            if (existing != null && COLLATOR.compare(existing, hourStart) < 0) {
                 trans.rename(destination, destination + ":last");
                 trans.rename(startKey, destination + ":pstart");
                 trans.set(startKey, hourStart);
@@ -175,7 +253,7 @@ public class Chapter05 {
             trans.zincrby(destination, value * value, "sumsq");
 
             List<Object> results = trans.exec();
-            if (results == null){
+            if (results == null) {
                 continue;
             }
             // 返回基本的计数信息，以便函数调用者在有需要时做进一步的处理。
@@ -184,13 +262,13 @@ public class Chapter05 {
         return null;
     }
 
-    public Map<String,Double> getStats(Jedis conn, String context, String type){
+    public Map<String, Double> getStats(Jedis conn, String context, String type) {
         // 程序将从这个键里面取出统计数据
         String key = "stats:" + context + ':' + type;
         // 获取基本的统计数据，并将它们都放到一个字典里面。
-        Map<String,Double> stats = new HashMap<>();
+        Map<String, Double> stats = new HashMap<>();
         Set<Tuple> data = conn.zrangeWithScores(key, 0, -1);
-        for (Tuple tuple : data){
+        for (Tuple tuple : data) {
             stats.put(tuple.getElement(), tuple.getScore());
         }
         // 计算平均值
@@ -505,22 +583,22 @@ public class Chapter05 {
         private final Jedis conn;
         private long start;
 
-        public AccessTimer(Jedis conn){
+        public AccessTimer(Jedis conn) {
             this.conn = conn;
         }
 
-        public void start(){
+        public void start() {
             // 记录代码块执行器的时间
             start = System.currentTimeMillis();
         }
 
-        public void stop(String context){
+        public void stop(String context) {
             // 计算代码块的执行时长
             long delta = System.currentTimeMillis() - start;
             // 更新这一上下文的统计数据
             List<Object> stats = updateStats(conn, context, "AccessTime", delta / 1000.0);
             // 计算页面的平均访问时长
-            double average = (Double)stats.get(1) / (Double)stats.get(0);
+            double average = (Double) stats.get(1) / (Double) stats.get(0);
 
             Transaction trans = conn.multi();
             // 将页面的平均访问时长添加到记录最长访问时间的有序集合里
