@@ -15,11 +15,12 @@ import java.util.*;
  * hash count:5:hits -> 此计数器以每5秒为一个时间片记录着网站的点击量
  * zset stats:ProfilePage:AccessTime -> 个人简介页面的访问时间统计
  * zset slowest:AccessTime -> 页面的平均访问时长
+ * string is-under-maintenance -> 服务器是否正在维护
  *
  * @author yangxin
  * 2022/6/5 22:32
  */
-@SuppressWarnings({"AlibabaUndefineMagicConstant", "AlibabaAvoidCallStaticSimpleDateFormat", "unused", "AlibabaAvoidMissUseOfMathRandom", "SpellCheckingInspection", "AlibabaCollectionInitShouldAssignCapacity"})
+@SuppressWarnings({"AlibabaUndefineMagicConstant", "AlibabaAvoidCallStaticSimpleDateFormat", "unused", "AlibabaAvoidMissUseOfMathRandom", "SpellCheckingInspection", "AlibabaCollectionInitShouldAssignCapacity", "DuplicatedCode"})
 public class Chapter05 {
 
     /*
@@ -57,6 +58,42 @@ public class Chapter05 {
         testCounters(conn);
         testStats(conn);
         testAccessTime(conn);
+        testIsUnderMaintenance(conn);
+    }
+
+    public void testIsUnderMaintenance(Jedis conn)
+            throws InterruptedException
+    {
+        System.out.println("\n----- testIsUnderMaintenance -----");
+        System.out.println("Are we under maintenance (we shouldn't be)? " + isUnderMaintenance(conn));
+        conn.set("is-under-maintenance", "yes");
+        System.out.println("We cached this, so it should be the same: " + isUnderMaintenance(conn));
+        Thread.sleep(1000);
+        System.out.println("But after a sleep, it should change: " + isUnderMaintenance(conn));
+        System.out.println("Cleaning up...");
+        conn.del("is-under-maintenance");
+        Thread.sleep(1000);
+        System.out.println("Should be False again: " + isUnderMaintenance(conn));
+    }
+
+    /*
+        将两个变量设置为全局变量以便在之后对它们进行写入
+     */
+
+    private long lastChecked;
+    private boolean underMaintenance;
+    public boolean isUnderMaintenance(Jedis conn) {
+        // 距离上次检查是否已经超过1秒？
+        if (lastChecked < System.currentTimeMillis() - 1000){
+            // 更新最后检查时间
+            lastChecked = System.currentTimeMillis();
+            // 检查系统是否正在进行维护
+            String flag = conn.get("is-under-maintenance");
+            underMaintenance = "yes".equals(flag);
+        }
+
+        // 返回一个布尔值，用于表示系统是否正在进行维护
+        return underMaintenance;
     }
 
     public void testAccessTime(Jedis conn)
