@@ -84,6 +84,12 @@ public class Chapter05 {
             new HashMap<>();
     private static final Map<String, Long> CHECKED = new HashMap<>();
 
+    /**
+     * 将应用组件的名字传递该装饰器
+     *
+     * @param component 组件
+     * @return redis连接
+     */
     public Jedis redisConnection(String component) {
         Jedis configConn = REDIS_CONNECTIONS.get("config");
         if (configConn == null) {
