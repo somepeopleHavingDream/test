@@ -11,6 +11,10 @@ import java.util.Calendar;
 public class CalendarTest {
 
     public static void main(String[] args) {
+        test1();
+    }
+
+    private static void test1() {
         Calendar instance = Calendar.getInstance();
         System.out.println(instance.toString());
     }

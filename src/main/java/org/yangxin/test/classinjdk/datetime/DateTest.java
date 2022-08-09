@@ -4,7 +4,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Date
@@ -12,12 +14,49 @@ import java.util.Date;
  * @author yangxin
  * 2020/02/12 11:39
  */
-@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode"})
+@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode", "deprecation"})
 public class DateTest {
 
-    public static void main(String[] args) {
+    /**
+     * 每秒毫秒数
+     */
+    private static final long MILLS_PER_SECOND = 1000;
+
+    /**
+     * 每分钟毫秒数
+     */
+    private static final long MILLS_PER_MINUTE = MILLS_PER_SECOND * 60;
+
+    /**
+     * 每小时毫秒数
+     */
+    private static final long MILLS_PER_HOUR = MILLS_PER_MINUTE * 60;
+
+    /**
+     * 每天毫秒数
+     */
+    private static final long MILLS_PER_DAY = MILLS_PER_HOUR * 24;
+
+    /**
+     * 每周毫秒数
+     */
+    private static final long MILLS_PER_WEEK = MILLS_PER_DAY * 7;
+
+    public static void main(String[] args) throws InterruptedException {
 //        test1();
 //        test2();
+        test3();
+    }
+
+    private static void test3() throws InterruptedException {
+        Date d1 = new Date();
+        TimeUnit.SECONDS.sleep(5);
+        Date d2 = new Date();
+
+        System.out.println(d2.getTime() - d1.getTime() < MILLS_PER_WEEK);
+
+        Date d3 = new Date(2022, Calendar.SEPTEMBER, 16);
+        System.out.println(d3.getTime() - d2.getTime() < MILLS_PER_WEEK);
     }
 
     /**
