@@ -7,7 +7,14 @@ package org.yangxin.test.classinjdk.enums;
 public class EnumTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        for (Light constant : Light.class.getEnumConstants()) {
+            System.out.println(constant);
+        }
     }
 
     private static void test1() {
