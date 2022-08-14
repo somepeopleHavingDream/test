@@ -9,7 +9,7 @@ import org.mapstruct.factory.Mappers;
  * @author yangxin
  * 2022/3/7 14:33
  */
-@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
+@SuppressWarnings({"AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc", "unused"})
 @Mapper(componentModel = "spring")
 public interface UserConvertBasic {
 

@@ -1,10 +1,6 @@
 package org.yangxin.test.security.mooc.base64;
 
 import org.apache.commons.codec.binary.Base64;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
-import java.io.IOException;
 
 /**
  * @author yangxin
@@ -13,19 +9,6 @@ import java.io.IOException;
 public class Base64Test {
 
     private static final String SRC = "imooc security base64";
-
-    private static void jdkBase64() {
-        BASE64Encoder encoder = new BASE64Encoder();
-        String encode = encoder.encode(SRC.getBytes());
-        System.out.println("encode: " + encode);
-
-        BASE64Decoder decoder = new BASE64Decoder();
-        try {
-            System.out.println("decode: " + new String(decoder.decodeBuffer(encode)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     private static void commonsCodesBase64() {
         byte[] encodeBytes = Base64.encodeBase64(SRC.getBytes());
@@ -45,7 +28,6 @@ public class Base64Test {
 
     public static void main(String[] args) {
         // aW1vb2Mgc2VjdXJpdHkgYmFzZTY0
-        jdkBase64();
         commonsCodesBase64();
         bouncyCastleBase64();
     }
