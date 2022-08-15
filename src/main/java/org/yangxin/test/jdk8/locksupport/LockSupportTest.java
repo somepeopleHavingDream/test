@@ -27,9 +27,9 @@ public class LockSupportTest {
 
                 LockSupport.park();
                 if (Thread.currentThread().isInterrupted()) {
-                    System.out.println("被中断了……");
+                    System.out.println(Thread.currentThread().getName() + "被中断了……");
                 }
-                System.out.println("继续执行……");
+                System.out.println(Thread.currentThread().getName() + "继续执行……");
             }
         }
     }
@@ -45,6 +45,7 @@ public class LockSupportTest {
         Thread.sleep(3000);
 
         t1.interrupt();
+        // 开动线程2，线程2不会挂起
         LockSupport.unpark(t2);
 
         t1.join();
