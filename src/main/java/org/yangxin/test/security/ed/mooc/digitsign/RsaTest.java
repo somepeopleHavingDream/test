@@ -1,4 +1,4 @@
-package org.yangxin.test.security.mooc.digitsign;
+package org.yangxin.test.security.ed.mooc.digitsign;
 
 import org.apache.commons.codec.binary.Hex;
 

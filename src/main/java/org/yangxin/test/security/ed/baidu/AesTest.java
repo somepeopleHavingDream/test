@@ -1,4 +1,4 @@
-package org.yangxin.test.security.baidu;
+package org.yangxin.test.security.ed.baidu;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;

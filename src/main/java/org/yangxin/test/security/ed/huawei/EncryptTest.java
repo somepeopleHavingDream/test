@@ -1,4 +1,4 @@
-package org.yangxin.test.security.huawei;
+package org.yangxin.test.security.ed.huawei;
 
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;

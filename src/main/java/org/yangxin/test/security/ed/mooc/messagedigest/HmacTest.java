@@ -1,4 +1,4 @@
-package org.yangxin.test.security.mooc.messagedigest;
+package org.yangxin.test.security.ed.mooc.messagedigest;
 
 import org.apache.commons.codec.binary.Hex;
 

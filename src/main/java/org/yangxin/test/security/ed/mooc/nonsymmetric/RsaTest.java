@@ -1,4 +1,4 @@
-package org.yangxin.test.security.mooc.nonsymmetric;
+package org.yangxin.test.security.ed.mooc.nonsymmetric;
 
 import org.apache.commons.codec.binary.Base64;
 

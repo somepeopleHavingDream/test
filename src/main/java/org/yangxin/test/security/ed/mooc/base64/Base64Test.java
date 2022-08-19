@@ -1,4 +1,4 @@
-package org.yangxin.test.security.mooc.base64;
+package org.yangxin.test.security.ed.mooc.base64;
 
 import org.apache.commons.codec.binary.Base64;
 

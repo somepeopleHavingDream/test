@@ -1,4 +1,4 @@
-package org.yangxin.test.security.mooc.symmetric;
+package org.yangxin.test.security.ed.mooc.symmetric;
 
 import org.apache.commons.codec.binary.Hex;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;

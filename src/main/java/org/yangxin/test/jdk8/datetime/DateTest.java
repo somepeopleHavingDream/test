@@ -45,9 +45,14 @@ public class DateTest {
     public static void main(String[] args) throws InterruptedException {
 //        test1();
 //        test2();
-        test3();
+//        test3();
     }
 
+    /**
+     * 判断时间段是否在某一范围内
+     *
+     * @throws InterruptedException 被中断的异常
+     */
     private static void test3() throws InterruptedException {
         Date d1 = new Date();
         TimeUnit.SECONDS.sleep(5);
