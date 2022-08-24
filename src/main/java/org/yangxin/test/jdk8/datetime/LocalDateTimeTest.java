@@ -4,19 +4,34 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 /**
  * @author yangxin
  * 2021/4/30 9:45
  */
-@SuppressWarnings("CommentedOutCode")
+@SuppressWarnings({"CommentedOutCode", "unused"})
 public class LocalDateTimeTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
-        test4();
+//        test4();
+        test5();
+    }
+
+    /**
+     * 获得当前一天剩余的秒数
+     */
+    private static void test5() {
+        LocalDateTime tomorrowStart = LocalDateTime.now()
+                .plusDays(1)
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
+        System.out.println(ChronoUnit.SECONDS.between(LocalDateTime.now(), tomorrowStart));
     }
 
     /**
