@@ -7,10 +7,11 @@ import java.util.Arrays;
  * @author yangxin
  * 2021/9/18 15:53
  */
+@SuppressWarnings("unused")
 public class Test {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
         test2();
     }
 

@@ -16,6 +16,7 @@ public class DynamicProxyTest {
      * @author yangxin
      * 2020/07/17 15:19
      */
+    @SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
     interface IHello {
 
         void sayHello();
