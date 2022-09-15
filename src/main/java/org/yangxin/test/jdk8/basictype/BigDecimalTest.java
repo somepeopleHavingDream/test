@@ -2,7 +2,6 @@ package org.yangxin.test.jdk8.basictype;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.NumberFormat;
 
 /**
  * 大数用例
@@ -10,17 +9,20 @@ import java.text.NumberFormat;
  * @author yangxin
  * 2020/03/05 17:13
  */
-@SuppressWarnings({"UnpredictableBigDecimalConstructorCall", "AlibabaBigDecimalAvoidDoubleConstructor", "CommentedOutCode"})
+@SuppressWarnings({"UnpredictableBigDecimalConstructorCall", "AlibabaBigDecimalAvoidDoubleConstructor", "CommentedOutCode", "unused"})
 public class BigDecimalTest {
 
     public static void main(String[] args) {
-//        construct();
-//        format();
-//        equalsAndCompareTo();
-
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        // round_down=1，去掉多余的位数，不管后面数字的大小
+        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.DOWN);
+        System.out.println(decimal);
     }
 
     private static void test3() {
@@ -44,43 +46,5 @@ public class BigDecimalTest {
 
         System.out.println(intStr);
         System.out.println(doubleStr);
-    }
-
-    private static void construct() {
-        BigDecimal bigDecimal = new BigDecimal("0.1");
-        System.out.println(bigDecimal);
-    }
-
-    private static void format() {
-        // 建立货币格式化引用
-        NumberFormat currencyInstance = NumberFormat.getCurrencyInstance();
-        // 建立百分比格式化引用
-        NumberFormat percentInstance = NumberFormat.getPercentInstance();
-
-        // 贷款金额
-        BigDecimal loanAmount = new BigDecimal("15000.48");
-        // 利率
-        BigDecimal interestRate = new BigDecimal("0.008");
-        // 利息
-        BigDecimal interest = loanAmount.multiply(interestRate);
-
-        System.out.println(currencyInstance.format(loanAmount));
-        System.out.println(percentInstance.format(interestRate));
-        System.out.println(currencyInstance.format(interest));
-    }
-
-    @SuppressWarnings("UnpredictableBigDecimalConstructorCall")
-    private static void equalsAndCompareTo() {
-        BigDecimal bigDecimal = new BigDecimal(1);
-        BigDecimal bigDecimal1 = new BigDecimal(1);
-        System.out.println(bigDecimal.equals(bigDecimal1));
-
-        BigDecimal bigDecimal2 = new BigDecimal(1);
-        BigDecimal bigDecimal3 = new BigDecimal(1.0);
-        System.out.println(bigDecimal2.equals(bigDecimal3));
-
-        BigDecimal bigDecimal4 = new BigDecimal("1");
-        BigDecimal bigDecimal5 = new BigDecimal("1.0");
-        System.out.println(bigDecimal4.equals(bigDecimal5));
     }
 }
