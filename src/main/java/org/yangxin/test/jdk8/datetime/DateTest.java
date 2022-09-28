@@ -1,6 +1,7 @@
 package org.yangxin.test.jdk8.datetime;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 2020/02/12 11:39
  */
-@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode", "deprecation"})
+@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode", "deprecation", "unused"})
 public class DateTest {
 
     /**
@@ -46,6 +47,20 @@ public class DateTest {
 //        test1();
 //        test2();
 //        test3();
+        test4();
+    }
+
+    private static void test4() {
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        System.out.println(localDate);
+
+        LocalDate left = LocalDate.of(2022, 9, 1);
+        System.out.println(left);
+
+        System.out.println(localDate.isBefore(left));
+        System.out.println(left.isBefore(left));
+        System.out.println(left.isAfter(left));
     }
 
     /**
