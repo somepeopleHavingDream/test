@@ -12,8 +12,8 @@ public class ByteTest {
 
     public static void main(String[] args) {
 //        test1();
-//        test2();
-        test3();
+        test2();
+//        test3();
     }
 
     private static void test3() {
