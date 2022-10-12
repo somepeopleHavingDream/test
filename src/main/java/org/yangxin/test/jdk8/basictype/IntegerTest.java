@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author yangxin
  * 2021/9/27 16:05
  */
-@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode", "CachedNumberConstructorCall", "unused", "deprecation"})
+@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode", "unused"})
 public class IntegerTest {
 
     public static void main(String[] args) {
@@ -15,7 +15,34 @@ public class IntegerTest {
 //        test3();
 //        test4();
 //        test6();
-        test7();
+//        test7();
+        test8();
+    }
+
+    private static void test8() {
+        // 完成掩码
+        int DONE_MASK   = 0xf0000000;  // mask out non-completion bits
+        // 正常
+        int NORMAL      = 0xf0000000;  // must be negative
+        // 取消的
+        int CANCELLED   = 0xc0000000;  // must be < NORMAL
+        // 预期之外的
+        int EXCEPTIONAL = 0x80000000;  // must be < CANCELLED
+
+        // 信号的
+        int SIGNAL      = 0x00010000;  // must be >= 1 << 16
+        // 掩码的
+        int SMASK       = 0x0000ffff;  // short bits for tags
+
+        // 前四个值是负数（因为最高位是1）
+        System.out.println(DONE_MASK);
+        System.out.println(NORMAL);
+        System.out.println(CANCELLED);
+        System.out.println(EXCEPTIONAL);
+
+        // 后两个值是正数，值为65536
+        System.out.println(SIGNAL);
+        System.out.println(SMASK);
     }
 
     private static void test7() {

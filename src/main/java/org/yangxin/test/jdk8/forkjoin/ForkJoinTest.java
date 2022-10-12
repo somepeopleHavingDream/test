@@ -90,6 +90,7 @@ public class ForkJoinTest {
         long recordTime = System.currentTimeMillis();
         pool.submit(task);
 
+        // 等待任务线程加入到主线程，即等待任务结束，并打印结果
         System.out.println(task.join());
         System.out.println(System.currentTimeMillis() - recordTime);
     }
