@@ -1,8 +1,8 @@
 package org.yangxin.test.jdk8.basictype;
 
 import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.StringUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.List;
  * @author yangxin
  * 2019/10/31 11:36
  */
-@SuppressWarnings({"CommentedOutCode", "ConstantConditions", "StringOperationCanBeSimplified", "AlibabaRemoveCommentedCode"})
+@SuppressWarnings({"CommentedOutCode", "ConstantConditions", "StringOperationCanBeSimplified", "AlibabaRemoveCommentedCode", "SameParameterValue", "unused"})
 public class StringTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -29,7 +29,31 @@ public class StringTest {
 //        test12();
 //        test13();
 //        test14();
-        test15();
+//        test15();
+        test16();
+    }
+
+    private static void test16() {
+        System.out.println(isSameAvatar("http://img.xxx.com/default_love_avatar_v2.png?version=4", "http://img.xxx.com/default_love_avatar_v2.png?version\\u003d4"));
+    }
+
+    /**
+     * 是否是相同的房间头像
+     *
+     * @param newAvatar 新头像
+     * @param avatar 头像
+     * @return 是否是相同的房间头像
+     */
+    private static boolean isSameAvatar(String newAvatar, String avatar) {
+        // 如果值完全相同，则直接返回
+        if (StringUtils.equalsIgnoreCase(newAvatar, avatar)) {
+            return true;
+        }
+
+        // 不是，则摘出url部分做比对返回
+        String[] newAvatarUrl = StringUtils.split(newAvatar, "?");
+        String[] avatarUrl = StringUtils.split(avatar, "?");
+        return StringUtils.equalsIgnoreCase(newAvatarUrl[0], avatarUrl[0]);
     }
 
     private static void test15() {
@@ -136,8 +160,8 @@ public class StringTest {
     private static void test2() {
         String nameAttr = "made,in:china";
         String flag = ",:";
-        String[] nameArray = StringUtils.tokenizeToStringArray(nameAttr, flag);
-        System.out.println(Arrays.toString(nameArray));
+//        String[] nameArray = StringUtils.tokenizeToStringArray(nameAttr, flag);
+//        System.out.println(Arrays.toString(nameArray));
     }
 
     private static void test1() {
