@@ -69,6 +69,9 @@ public class LocalDateTimeTest {
         System.out.println(Timestamp.valueOf(LocalDateTime.now()));
     }
 
+    /**
+     * LocalDateTime转Date
+     */
     private static void test4() {
         LocalDateTime now = LocalDateTime.now();
         System.out.println(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
