@@ -8,10 +8,12 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
 /**
+ * fork-join实战实现数组累加
+ *
  * @author yangxin
  * 2022/9/19 18:19
  */
-public class ForkJoinTest {
+public class ForkJoinTest1 {
 
     /**
      * 数组最大长度
