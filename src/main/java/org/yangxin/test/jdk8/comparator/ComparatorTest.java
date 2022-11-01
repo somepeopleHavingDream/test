@@ -10,12 +10,12 @@ import java.util.*;
  * @author yangxin
  * 2021/10/27 14:07
  */
-@SuppressWarnings({"AlibabaRemoveCommentedCode"})
+@SuppressWarnings({"AlibabaRemoveCommentedCode", "unused"})
 public class ComparatorTest {
 
     public static void main(String[] args) {
-//        test1();
-        test2();
+        test1();
+//        test2();
 //        test3();
     }
 
@@ -80,10 +80,10 @@ public class ComparatorTest {
         employeeList.add(e2);
         employeeList.add(e3);
 
-        employeeList.sort(Comparator.comparing(Employee::getName));
+        employeeList.sort(Comparator.comparing(Employee::getAge));
         System.out.println(employeeList);
 
-        employeeList.sort(Comparator.comparing(Employee::getName).reversed());
+        employeeList.sort(Comparator.comparing(Employee::getAge).reversed());
         System.out.println(employeeList);
     }
 
