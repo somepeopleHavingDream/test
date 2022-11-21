@@ -3,6 +3,7 @@ package org.yangxin.test.json.alibaba;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.annotation.JSONField;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +19,7 @@ import java.util.List;
  * @author yangxin
  * 2021/7/6 14:50
  */
-@SuppressWarnings("CommentedOutCode")
+@SuppressWarnings({"CommentedOutCode", "unused"})
 class JsonTest {
 
     public static void main(String[] args) {
@@ -26,7 +27,15 @@ class JsonTest {
 //        test2();
 //        test3();
 //        test4();
-        test5();
+//        test5();
+        test6();
+    }
+
+    private static void test6() {
+        DeviceStreamBO streamBO = DeviceStreamBO.builder()
+                .deviceId(123456)
+                .build();
+        System.out.println(JSON.toJSONString(streamBO));
     }
 
     private static void test5() {
@@ -212,6 +221,7 @@ class DeviceStreamBO implements Serializable {
 
     private static final long serialVersionUID = -5739676644351841517L;
 
+    @JSONField(name = "device_id")
     private Integer deviceId;
 
     private String name;
