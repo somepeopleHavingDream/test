@@ -18,7 +18,13 @@ public class LocalDateTimeTest {
 //        test1();
 //        test2();
 //        test4();
-        test5();
+//        test5();
+        test6();
+    }
+
+    private static void test6() {
+        LocalDateTime expiredTime = LocalDateTime.of(2022, 12, 11, 10, 11, 58);
+        LocalDateTime now = LocalDateTime.now();
     }
 
     /**
@@ -32,6 +38,30 @@ public class LocalDateTimeTest {
                 .withSecond(0)
                 .withNano(0);
         System.out.println(ChronoUnit.SECONDS.between(LocalDateTime.now(), tomorrowStart));
+    }
+
+    /**
+     * LocalDateTime转Date
+     */
+    private static void test4() {
+        LocalDateTime now = LocalDateTime.now();
+        System.out.println(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
+    }
+
+    /**
+     * LocalDateTime转Timestamp
+     */
+    private static void test3() {
+        System.out.println(Timestamp.valueOf(LocalDateTime.now()));
+    }
+
+    /**
+     * 格式化LocalDateTime
+     */
+    private static void test2() {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+        System.out.println(dateTimeFormatter.format(localDateTime));
     }
 
     /**
@@ -51,29 +81,5 @@ public class LocalDateTimeTest {
         System.out.println(cstLocalDateTime.isEqual(startLocalDateTime)
                 || (cstLocalDateTime.isAfter(startLocalDateTime)
                 && cstLocalDateTime.isBefore(endLocalDateTime)));
-    }
-
-    /**
-     * 格式化LocalDateTime
-     */
-    private static void test2() {
-        LocalDateTime localDateTime = LocalDateTime.now();
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
-        System.out.println(dateTimeFormatter.format(localDateTime));
-    }
-
-    /**
-     * LocalDateTime转Timestamp
-     */
-    private static void test3() {
-        System.out.println(Timestamp.valueOf(LocalDateTime.now()));
-    }
-
-    /**
-     * LocalDateTime转Date
-     */
-    private static void test4() {
-        LocalDateTime now = LocalDateTime.now();
-        System.out.println(Date.from(now.atZone(ZoneId.systemDefault()).toInstant()));
     }
 }

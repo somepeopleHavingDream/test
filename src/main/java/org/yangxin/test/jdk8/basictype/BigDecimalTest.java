@@ -21,7 +21,14 @@ public class BigDecimalTest {
 
     private static void test4() {
         // round_down=1，去掉多余的位数，不管后面数字的大小
-        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.DOWN);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.UP);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.DOWN);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.CEILING);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.FLOOR);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.HALF_UP);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.HALF_DOWN);
+//        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.HALF_EVEN);
+        BigDecimal decimal = new BigDecimal("2.222222").setScale(2, RoundingMode.UNNECESSARY);
         System.out.println(decimal);
     }
 
