@@ -6,7 +6,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.8.RELEASE</version>
+        <version>2.1.17.RELEASE</version>
+<!--        <version>2.1.8.RELEASE</version>-->
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.yangxin.test</groupId>
@@ -16,7 +17,7 @@
     <description>Demo project for test</description>
 
     <properties>
-        <jackson.version>2.13.4.1</jackson.version>
+        <jackson.version>2.14.1</jackson.version>
     </properties>
 
     <dependencies>
