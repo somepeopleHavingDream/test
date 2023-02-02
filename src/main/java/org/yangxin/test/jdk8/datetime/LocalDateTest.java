@@ -14,12 +14,12 @@ import java.util.Date;
  * @author yangxin
  * 2019/11/29 14:14
  */
-@SuppressWarnings({"CommentedOutCode", "AlibabaUndefineMagicConstant", "unused"})
+@SuppressWarnings({"AlibabaUndefineMagicConstant", "unused"})
 public class LocalDateTest {
 
     public static void main(String[] args) {
 //        testTimeBetween();
-//        test3();
+        test3();
     }
 
     /**
