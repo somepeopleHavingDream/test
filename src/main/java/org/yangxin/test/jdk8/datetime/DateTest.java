@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,9 +48,22 @@ public class DateTest {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test5();
     }
 
+    private static void test5() {
+        Date date1 = new Date(1675671596000L);
+        Date date2 = new Date(1675671596000L);
+
+        System.out.println(date1);
+        System.out.println(date2);
+        System.out.println(Objects.equals(date1, date2));
+    }
+
+    /**
+     * Date转LocalDate
+     */
     private static void test4() {
         Date date = new Date();
         LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -80,7 +94,7 @@ public class DateTest {
     }
 
     /**
-     * Date转LocalDate
+     * Date转LocalDateTime
      */
     private static void test2() {
         Date date = new Date();
