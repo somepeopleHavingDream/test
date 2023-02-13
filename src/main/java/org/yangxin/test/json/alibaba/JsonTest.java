@@ -28,7 +28,12 @@ class JsonTest {
 //        test3();
 //        test4();
 //        test5();
-        test6();
+//        test6();
+        test7();
+    }
+
+    private static void test7() {
+        System.out.println(JSONObject.parseObject(null, DeviceStreamBO.class));
     }
 
     private static void test6() {
