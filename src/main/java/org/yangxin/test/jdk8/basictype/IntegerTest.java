@@ -16,7 +16,14 @@ public class IntegerTest {
 //        test4();
 //        test6();
 //        test7();
-        test8();
+//        test8();
+        test9();
+    }
+
+    private static void test9() {
+        Integer a = new Integer(2);
+        final int b = 2;
+        System.out.println(Objects.equals(a, b));
     }
 
     private static void test8() {
