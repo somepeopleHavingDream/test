@@ -8,11 +8,17 @@ import java.io.InputStreamReader;
  * @author yangxin
  * 2021/11/15 11:34
  */
+@SuppressWarnings({"CommentedOutCode", "unused"})
 public class RuntimeTest {
 
     public static void main(String[] args) throws IOException {
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    private static void test3() {
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 
     private static void test2() throws IOException {
