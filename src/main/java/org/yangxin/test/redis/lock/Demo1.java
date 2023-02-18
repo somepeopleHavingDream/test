@@ -9,7 +9,7 @@ import java.util.UUID;
  * @author yangxin
  * 2022/7/28 21:19
  */
-@SuppressWarnings({"AlibabaAvoidManuallyCreateThread", "AlibabaUndefineMagicConstant", "AlibabaRemoveCommentedCode", "SameParameterValue"})
+@SuppressWarnings({"AlibabaAvoidManuallyCreateThread", "AlibabaUndefineMagicConstant", "AlibabaRemoveCommentedCode", "SameParameterValue", "CommentedOutCode"})
 public class Demo1 {
 
     public static final String LOCK_NAME = "LOCK";
@@ -41,7 +41,7 @@ public class Demo1 {
     }
 
     /**
-     * 场景二：释放锁失败，通过自动过期来保证，但是有可能存在勿删锁的情况
+     * 场景二：释放锁失败，通过自动过期来保证，但是有可能存在误删锁的情况
      */
     private static void secondLock() {
         Jedis redis = getJedis();

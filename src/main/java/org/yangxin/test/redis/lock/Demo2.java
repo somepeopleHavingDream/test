@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 2022/7/30 11:33
  */
-@SuppressWarnings("AlibabaAvoidManuallyCreateThread")
+@SuppressWarnings({"AlibabaAvoidManuallyCreateThread", "CommentedOutCode"})
 public class Demo2 {
 
     private static final String LOCK_KEY = "COMMERCE-BUSINESS";
@@ -96,7 +96,10 @@ public class Demo2 {
     }
 
     public static void main(String[] args) {
-        new Thread(Demo2::lockMethodWithRetry).start();
-        new Thread(Demo2::lockMethodWithRetry).start();
+        new Thread(Demo2::lockMethod).start();
+        new Thread(Demo2::lockMethod).start();
+
+//        new Thread(Demo2::lockMethodWithRetry).start();
+//        new Thread(Demo2::lockMethodWithRetry).start();
     }
 }
