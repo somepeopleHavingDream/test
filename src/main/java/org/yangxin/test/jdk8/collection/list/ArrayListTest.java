@@ -3,9 +3,7 @@ package org.yangxin.test.jdk8.collection.list;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -13,13 +11,22 @@ import java.util.stream.Stream;
  * @author yangxin
  * 2021/8/28 上午11:58
  */
-@SuppressWarnings({"Java8CollectionRemoveIf", "AlibabaUndefineMagicConstant", "CommentedOutCode"})
+@SuppressWarnings({"Java8CollectionRemoveIf", "AlibabaUndefineMagicConstant", "CommentedOutCode", "unused"})
 public class ArrayListTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        List<Integer> list = Arrays.asList(1, 2);
+        Set<Integer> set = new HashSet<>(Arrays.asList(1, 2, 3, 4, 5));
+        list.forEach(set::remove);
+
+        System.out.println(set);
     }
 
     private static void test3() {
