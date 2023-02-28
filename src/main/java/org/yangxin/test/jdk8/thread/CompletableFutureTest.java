@@ -1,9 +1,8 @@
 package org.yangxin.test.jdk8.thread;
 
-import java.util.Random;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.stream.Stream;
 
 /**
  * @author yangxin
@@ -13,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class CompletableFutureTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        runAsync();
+//        runAsync();
 //        supplyAsync();
 //        whenComplete();
 //        thenApply();
@@ -27,6 +26,67 @@ public class CompletableFutureTest {
 //        runAfterEither();
 //        runAfterBoth();
 //        thenCompose();
+        allOf();
+    }
+
+    private static void allOf() {
+        // 记录开始时间
+        long start = System.currentTimeMillis();
+
+        // 定长线程池
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+
+        // 任务
+        List<Integer> integerList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<String> resultList = new ArrayList<>();
+        Map<String, String> errorList = new HashMap<>();
+
+        Stream<CompletableFuture<String>> completableFutureStream = integerList.stream()
+                .map(num -> CompletableFuture.supplyAsync(() -> getDouble(num), executorService)
+                        .handle((integer, throwable) -> {
+                            if (Objects.isNull(throwable)) {
+                                System.out.println("任务" + num + "完成！ result=" + integer + "，" + new Date());
+                                resultList.add(integer.toString());
+                            } else {
+                                System.out.println("任务" + num + "异常！ e=" + throwable + "，" + new Date());
+                                errorList.put(num.toString(), throwable.getMessage());
+                            }
+
+                            return "";
+                        }));
+
+        CompletableFuture<?>[] futureArray = completableFutureStream.toArray(CompletableFuture[]::new);
+        Void join = CompletableFuture.allOf(futureArray)
+                .whenComplete(((v, th) -> System.out.println("所有任务执行完成触发\n resultList=" + resultList
+                        + "\n errorList=" + errorList
+                        + "\n耗时=" + (System.currentTimeMillis() - start))))
+                .join();
+        executorService.shutdown();
+    }
+
+    /**
+     * 根据数字判断线程休眠的时间
+     *
+     * @param i 数字
+     * @return 线程休眠的时间
+     */
+    public static Integer getDouble(Integer i) {
+        try {
+            if (i == 1) {
+                // 任务1耗时3秒
+                TimeUnit.SECONDS.sleep(3);
+            } else if (i == 2) {
+                // 任务2耗时1秒，还出错
+                TimeUnit.SECONDS.sleep(1);
+                throw new RuntimeException("出异常了");
+            } else {
+                // 其他任务耗时1秒
+                TimeUnit.SECONDS.sleep(1);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return 2 * i;
     }
 
     /*
