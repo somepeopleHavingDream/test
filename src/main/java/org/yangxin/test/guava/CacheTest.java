@@ -1,4 +1,4 @@
-package org.yangxin.test.cache;
+package org.yangxin.test.guava;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * 2022/11/2 17:58
  */
 @SuppressWarnings({"NullableProblems", "unused"})
-public class GuavaCacheTest {
+public class CacheTest {
 
     private static final Cache<Integer, Integer> NUM_CACHE1 = CacheBuilder.newBuilder()
             .expireAfterWrite(5, TimeUnit.SECONDS)
