@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8083
 
 jasypt:
   encryptor:
@@ -11,3 +11,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     url: jdbc:mysql://localhost:3306/dianping?characterEncoding=utf-8&useSSL=false
+
+#logging:
+#  config: classpath:log4j2/log4j2.xml

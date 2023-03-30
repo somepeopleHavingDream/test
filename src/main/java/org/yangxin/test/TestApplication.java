@@ -32,6 +32,22 @@ public class TestApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(TestApplication.class, args);
+
+        // 测试事件
+        publishEvent(context);
+        // 测试log4j2日志
+        log4j2();
+    }
+
+    private static void log4j2() {
+        log.error("error");
+        log.info("info");
+        log.debug("debug");
+        log.warn("warn");
+        log.trace("trace");
+    }
+
+    private static void publishEvent(ConfigurableApplicationContext context) {
         context.publishEvent(new OrderEvent(context, new OrderEvent(context, "1")));
         context.publishEvent(new OrderEvent(context, new OrderEvent(context, "2")));
     }
