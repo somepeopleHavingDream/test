@@ -17,7 +17,7 @@ public class ThreadPoolExecutorTest implements Runnable {
                 0,
                 TimeUnit.MILLISECONDS,
                 new LinkedBlockingQueue<>());
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
             threadPoolExecutor.execute(new ThreadPoolExecutorTest());
         }
 
