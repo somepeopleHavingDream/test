@@ -72,7 +72,7 @@ public class IntegerTest {
     }
 
     private static void test5(Integer a) {
-        a = 5;
+        a = 1000000000;
     }
 
     private static void test3() {
