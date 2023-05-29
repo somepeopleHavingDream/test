@@ -30,7 +30,12 @@ public class StringTest {
 //        test13();
 //        test14();
 //        test15();
-        test16();
+//        test16();
+        test17();
+    }
+
+    private static void test17() {
+        System.out.println(null + "");
     }
 
     private static void test16() {
