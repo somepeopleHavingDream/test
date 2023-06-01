@@ -1,6 +1,7 @@
 package org.yangxin.test.apache;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 
 /**
  * @author yangxin
@@ -9,7 +10,15 @@ import org.apache.commons.lang3.tuple.Pair;
 public class PairTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        Triple<String, Integer, Double> triple = Triple.of("Hello", 1, 3.14);
+        System.out.println(triple.getLeft());
+        System.out.println(triple.getMiddle());
+        System.out.println(triple.getRight());
     }
 
     private static void test1() {
