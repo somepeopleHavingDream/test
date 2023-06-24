@@ -63,6 +63,11 @@ public class HDFSTest {
         IOUtils.copyBytes(in, System.out, 1024);
     }
 
+    /**
+     * 写文件
+     *
+     * @throws IOException IO异常
+     */
     @Test
     public void create() throws IOException {
 //        FSDataOutputStream out = fileSystem.create(new Path("/hdfsapi/test/a.txt"));
@@ -72,11 +77,26 @@ public class HDFSTest {
         out.close();
     }
 
+    /**
+     * 重命名
+     *
+     * @throws IOException IO异常
+     */
     @Test
     public void rename() throws IOException {
         Path oldPath = new Path("/hdfsapi/test/b.txt");
         Path newPath = new Path("/hdfsapi/test/c.txt");
         boolean result = fileSystem.rename(oldPath, newPath);
         System.out.println(result);
+    }
+
+    /**
+     * 拷贝本地文件到HDFS文件系统
+     */
+    @Test
+    public void copyFromLocalFile() throws IOException {
+        Path src = new Path("./README.md");
+        Path dst = new Path("/hdfsapi/test/");
+        fileSystem.copyFromLocalFile(src, dst);
     }
 }
