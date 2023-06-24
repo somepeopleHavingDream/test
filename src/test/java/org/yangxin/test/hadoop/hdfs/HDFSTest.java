@@ -115,4 +115,14 @@ public class HDFSTest {
                 () -> System.out.print("."));
         IOUtils.copyBytes(in, out, 4096);
     }
+
+    /**
+     * 拷贝HDFS文件到本地：下载
+     */
+    @Test
+    public void copyToLocalFile() throws IOException {
+        Path src = new Path("/hdfsapi/test/README.md");
+        Path dst = new Path("C:\\Users\\yangxin\\Downloads\\");
+        fileSystem.copyToLocalFile(src, dst);
+    }
 }
