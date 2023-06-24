@@ -2,6 +2,7 @@ package org.yangxin.test.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
@@ -59,5 +60,13 @@ public class HDFSTest {
     public void text() throws IOException {
         FSDataInputStream in = fileSystem.open(new Path("/cdh_version.properties"));
         IOUtils.copyBytes(in, System.out, 1024);
+    }
+
+    @Test
+    public void create() throws IOException {
+        FSDataOutputStream out = fileSystem.create(new Path("/hdfsapi/test/a.txt"));
+        out.writeUTF("hello pk");
+        out.flush();
+        out.close();
     }
 }
