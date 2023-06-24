@@ -11,8 +11,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * Unit test for simple App.
@@ -98,5 +101,18 @@ public class HDFSTest {
         Path src = new Path("./README.md");
         Path dst = new Path("/hdfsapi/test/");
         fileSystem.copyFromLocalFile(src, dst);
+    }
+
+    /**
+     * 拷贝本地大文件到HDFS文件系统，带进度
+     */
+    @Test
+    public void copyFromLocalBigFile() throws IOException {
+        InputStream in = Files.newInputStream(Paths.get(
+                "C:\\Users\\yangxin\\Downloads\\301\\hadoop-2.6.0-cdh5.15.1.tar.gz"
+        ));
+        FSDataOutputStream out = fileSystem.create(new Path("/hdfsapi/test/hadoop-2.6.0-cdh5.15.1.tar.gz"),
+                () -> System.out.print("."));
+        IOUtils.copyBytes(in, out, 4096);
     }
 }
