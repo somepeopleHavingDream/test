@@ -27,6 +27,7 @@ public class HDFSTest {
     @Before
     public void setUp() throws URISyntaxException, IOException, InterruptedException {
         Configuration configuration = new Configuration();
+        configuration.set("dfs.replication", "1");
 
         /*
             构造一个访问指定HDFS系统的客户端对象
@@ -64,8 +65,9 @@ public class HDFSTest {
 
     @Test
     public void create() throws IOException {
-        FSDataOutputStream out = fileSystem.create(new Path("/hdfsapi/test/a.txt"));
-        out.writeUTF("hello pk");
+//        FSDataOutputStream out = fileSystem.create(new Path("/hdfsapi/test/a.txt"));
+        FSDataOutputStream out = fileSystem.create(new Path("/hdfsapi/test/b.txt"));
+        out.writeUTF("hello pk b");
         out.flush();
         out.close();
     }
