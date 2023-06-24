@@ -1,8 +1,10 @@
 package org.yangxin.test.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,8 +42,22 @@ public class HDFSTest {
         fileSystem = null;
     }
 
+    /**
+     * 创建HDFS文件夹
+     *
+     * @throws IOException io异常
+     */
     @Test
     public void mkdir() throws IOException {
         fileSystem.mkdirs(new Path("/hdfsapi/test"));
+    }
+
+    /**
+     * 查看HDFS内容
+     */
+    @Test
+    public void text() throws IOException {
+        FSDataInputStream in = fileSystem.open(new Path("/cdh_version.properties"));
+        IOUtils.copyBytes(in, System.out, 1024);
     }
 }
