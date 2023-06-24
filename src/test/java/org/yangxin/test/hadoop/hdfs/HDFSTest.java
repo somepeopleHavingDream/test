@@ -71,4 +71,12 @@ public class HDFSTest {
         out.flush();
         out.close();
     }
+
+    @Test
+    public void rename() throws IOException {
+        Path oldPath = new Path("/hdfsapi/test/b.txt");
+        Path newPath = new Path("/hdfsapi/test/c.txt");
+        boolean result = fileSystem.rename(oldPath, newPath);
+        System.out.println(result);
+    }
 }
