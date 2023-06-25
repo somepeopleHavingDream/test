@@ -180,4 +180,13 @@ public class HDFSTest {
             }
         }
     }
+
+    /**
+     * 删除文件
+     */
+    @Test
+    public void delete() throws IOException {
+        boolean result = fileSystem.delete(new Path("/hdfsapi/test/hadoop-2.6.0-cdh5.15.1.tar.gz"), true);
+        System.out.println(result);
+    }
 }
