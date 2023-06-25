@@ -166,4 +166,18 @@ public class HDFSTest {
                     + path + "\t");
         }
     }
+
+    /**
+     * 查看文件块信息
+     */
+    @Test
+    public void getFileBlockLocations() throws IOException {
+        FileStatus fileStatus = fileSystem.getFileStatus(new Path("/hdfsapi/test/hadoop-2.6.0-cdh5.15.1.tar.gz"));
+        BlockLocation[] blockLocations = fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
+        for (BlockLocation blockLocation : blockLocations) {
+            for (String name : blockLocation.getNames()) {
+                System.out.println(name + ":" + blockLocation.getOffset() + ":" + blockLocation.getLength());
+            }
+        }
+    }
 }
