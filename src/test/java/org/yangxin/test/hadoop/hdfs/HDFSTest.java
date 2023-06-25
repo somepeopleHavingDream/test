@@ -144,4 +144,26 @@ public class HDFSTest {
                     + path + "\t");
         }
     }
+
+    /**
+     * 递归查看目标文件夹下的所有文件
+     */
+    @Test
+    public void listFilesRecursive() throws IOException {
+        RemoteIterator<LocatedFileStatus> remoteIterator = fileSystem.listFiles(new Path("/"), true);
+        while (remoteIterator.hasNext()) {
+            LocatedFileStatus fileStatus = remoteIterator.next();
+            String isDir = fileStatus.isDirectory() ? "文件夹" : "文件";
+            String permission = fileStatus.getPermission().toString();
+            short replication = fileStatus.getReplication();
+            long len = fileStatus.getLen();
+            String path = fileStatus.getPath().toString();
+
+            System.out.println(isDir + "\t"
+                    + permission + "\t"
+                    + replication + "\t"
+                    + len + "\t"
+                    + path + "\t");
+        }
+    }
 }
