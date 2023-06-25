@@ -1,10 +1,7 @@
 package org.yangxin.test.hadoop.hdfs;
 
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FSDataOutputStream;
-import org.apache.hadoop.fs.FileSystem;
-import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.fs.*;
 import org.apache.hadoop.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -20,6 +17,7 @@ import java.nio.file.Paths;
 /**
  * Unit test for simple App.
  */
+@SuppressWarnings("TestFailedLine")
 public class HDFSTest {
 
     public static final String HDFS_PATH = "hdfs://192.168.1.103:8020";
@@ -124,5 +122,26 @@ public class HDFSTest {
         Path src = new Path("/hdfsapi/test/README.md");
         Path dst = new Path("C:\\Users\\yangxin\\Downloads\\");
         fileSystem.copyToLocalFile(src, dst);
+    }
+
+    /**
+     * 查看目标文件夹下的所有文件
+     */
+    @Test
+    public void listFiles() throws IOException {
+        FileStatus[] fileStatusArray = fileSystem.listStatus(new Path("/hdfsapi/test/"));
+        for (FileStatus fileStatus : fileStatusArray) {
+            String isDir = fileStatus.isDirectory() ? "文件夹" : "文件";
+            String permission = fileStatus.getPermission().toString();
+            short replication = fileStatus.getReplication();
+            long len = fileStatus.getLen();
+            String path = fileStatus.getPath().toString();
+
+            System.out.println(isDir + "\t"
+                    + permission + "\t"
+                    + replication + "\t"
+                    + len + "\t"
+                    + path + "\t");
+        }
     }
 }
