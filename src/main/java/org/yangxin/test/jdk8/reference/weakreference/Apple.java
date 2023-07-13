@@ -1,4 +1,4 @@
-package org.yangxin.test.weakreference;
+package org.yangxin.test.jdk8.reference.weakreference;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

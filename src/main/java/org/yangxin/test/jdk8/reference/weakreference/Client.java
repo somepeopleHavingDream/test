@@ -1,4 +1,4 @@
-package org.yangxin.test.weakreference;
+package org.yangxin.test.jdk8.reference.weakreference;
 
 import java.lang.ref.Reference;
 import java.lang.ref.ReferenceQueue;
@@ -8,6 +8,7 @@ import java.lang.ref.WeakReference;
  * @author yangxin
  * 2020/12/12 20:40
  */
+@SuppressWarnings("unused")
 public class Client {
 
     public static void main(String[] args) {
