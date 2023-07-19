@@ -14,12 +14,24 @@ import java.util.Date;
  * @author yangxin
  * 2019/11/29 14:14
  */
-@SuppressWarnings({"AlibabaUndefineMagicConstant", "unused"})
+@SuppressWarnings({"AlibabaUndefineMagicConstant", "unused", "CommentedOutCode"})
 public class LocalDateTest {
 
     public static void main(String[] args) {
 //        testTimeBetween();
-        test3();
+//        test3();
+        test1();
+    }
+
+    private static void test1() {
+        LocalDate yesterday = LocalDate.now().minusDays(1);
+        LocalDate today = LocalDate.now();
+
+        ZonedDateTime yesterdayZonedDateTime = yesterday.atStartOfDay(ZoneId.systemDefault());
+        ZonedDateTime todayZonedDateTime = today.atStartOfDay(ZoneId.systemDefault());
+
+        System.out.println(Date.from(yesterdayZonedDateTime.toInstant()));
+        System.out.println(Date.from(todayZonedDateTime.toInstant()));
     }
 
     /**
