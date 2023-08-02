@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -12,11 +13,11 @@ import java.util.stream.Stream;
  * @author yangxin
  * 2021/10/27 9:55
  */
-@SuppressWarnings({"SimplifyStreamApiCallChains", "CommentedOutCode", "AlibabaUndefineMagicConstant", "MismatchedQueryAndUpdateOfCollection", "RedundantOperationOnEmptyContainer"})
+@SuppressWarnings({"CommentedOutCode", "AlibabaUndefineMagicConstant", "MismatchedQueryAndUpdateOfCollection", "RedundantOperationOnEmptyContainer", "unused"})
 public class StreamTest {
 
     public static void main(String[] args) {
-//        test1();
+        test1();
 //        test2();
 //        test3();
 //        test4();
@@ -24,7 +25,7 @@ public class StreamTest {
 //        test6();
 //        test7();
 //        test8();
-        test9();
+//        test9();
     }
 
     private static void test9() {
@@ -122,8 +123,9 @@ public class StreamTest {
      */
     private static void test1() {
         List<String> list = Arrays.asList("456", "123", "789");
-        list.stream()
-                .collect(Collectors.toCollection(LinkedList::new))
-                .forEach(System.out::println);
+        Stream<String> stream = list.stream();
+        Collector<String, ?, LinkedList<String>> collector = Collectors.toCollection(LinkedList::new);
+        LinkedList<String> linkedList = stream.collect(collector);
+        linkedList.forEach(System.out::println);
     }
 }
