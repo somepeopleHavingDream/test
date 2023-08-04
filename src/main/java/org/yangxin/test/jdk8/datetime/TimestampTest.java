@@ -11,13 +11,26 @@ import java.util.Date;
  * @author yangxin
  * 2019/11/19 14:38
  */
-@SuppressWarnings("CommentedOutCode")
-public class TimeStampTest {
+@SuppressWarnings({"CommentedOutCode", "unused"})
+public class TimestampTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
-        test3();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        long countdown = 2386183000L;
+        // 秒
+        System.out.println(countdown / 1000);
+        // 分钟
+        System.out.println(countdown / 1000 / 60);
+        // 小时
+        System.out.println(countdown / 1000 / 60 / 60);
+        // 天
+        System.out.println(countdown / 1000 / 60 / 60 / 24);
     }
 
     /**

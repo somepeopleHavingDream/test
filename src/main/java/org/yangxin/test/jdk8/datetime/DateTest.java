@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 2020/02/12 11:39
  */
-@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode", "deprecation", "unused"})
+@SuppressWarnings({"AlibabaUseRightCaseForDateFormat", "SuspiciousDateFormat", "CommentedOutCode", "deprecation", "unused", "ConstantValue"})
 public class DateTest {
 
     /**

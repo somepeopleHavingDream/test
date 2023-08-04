@@ -1,10 +1,12 @@
 package org.yangxin.test.jdk8.datetime;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -19,7 +21,30 @@ public class LocalDateTimeTest {
 //        test2();
 //        test4();
 //        test5();
-        test6();
+//        test6();
+//        test7();
+        test8();
+    }
+
+    private static void test8() {
+        LocalDateTime start = LocalDateTime.now();
+        LocalDateTime end = start.with(TemporalAdjusters.firstDayOfNextMonth()).withHour(0).withMinute(0).withSecond(0);
+//        LocalDateTime end = start.with(TemporalAdjusters.next(DayOfWeek.SUNDAY)).withHour(0).withMinute(0).withSecond(0);
+        long millis = Duration.between(start, end).toMillis();
+
+        System.out.println(start);
+        System.out.println(end);
+        System.out.println(millis);
+    }
+
+    private static void test7() {
+        LocalDateTime start = LocalDateTime.now(ZoneId.of("GMT+3"));
+        LocalDateTime end = start.plusDays(1).withHour(0).withMinute(0).withSecond(0);
+        long millis = Duration.between(start, end).toMillis();
+
+        System.out.println(start);
+        System.out.println(end);
+        System.out.println(millis);
     }
 
     private static void test6() {
