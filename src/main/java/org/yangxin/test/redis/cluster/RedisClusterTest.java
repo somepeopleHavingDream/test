@@ -1,7 +1,5 @@
-package org.yangxin.test.redis;
+package org.yangxin.test.redis.cluster;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import redis.clients.jedis.HostAndPort;
 import redis.clients.jedis.JedisCluster;
 import redis.clients.jedis.JedisPoolConfig;

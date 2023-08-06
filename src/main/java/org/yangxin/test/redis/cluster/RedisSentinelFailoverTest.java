@@ -1,4 +1,4 @@
-package org.yangxin.test.redis;
+package org.yangxin.test.redis.cluster;
 
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 2/6/21 11:30 PM
  */
-@SuppressWarnings({"SpellCheckingInspection", "InfiniteLoopStatement", "DuplicatedCode"})
+@SuppressWarnings({"SpellCheckingInspection", "InfiniteLoopStatement", "DuplicatedCode", "resource"})
 @Slf4j
 public class RedisSentinelFailoverTest {
 
