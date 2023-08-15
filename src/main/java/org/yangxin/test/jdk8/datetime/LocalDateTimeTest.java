@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -23,7 +24,21 @@ public class LocalDateTimeTest {
 //        test5();
 //        test6();
 //        test7();
-        test8();
+//        test8();
+        test9();
+    }
+
+    private static void test9() {
+        LocalDateTime sourceDateTime = LocalDateTime.of(2023, 8, 14, 23, 41, 0);
+        ZoneId sourceTimeZone = ZoneId.of("UTC+7");
+        ZonedDateTime sourceZonedDateTime = ZonedDateTime.of(sourceDateTime, sourceTimeZone);
+        System.out.println(sourceZonedDateTime);
+
+        ZoneId targetTimeZone = ZoneId.of("GMT+7");
+        ZonedDateTime targetZonedDateTime = sourceZonedDateTime.withZoneSameInstant(targetTimeZone);
+        LocalDateTime targetDateTime = targetZonedDateTime.toLocalDateTime();
+        System.out.println(targetDateTime);
+        System.out.println(targetDateTime.getDayOfWeek());
     }
 
     private static void test8() {
