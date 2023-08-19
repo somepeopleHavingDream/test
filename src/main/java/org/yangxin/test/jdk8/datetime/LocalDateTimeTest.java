@@ -1,5 +1,7 @@
 package org.yangxin.test.jdk8.datetime;
 
+import com.alibaba.fastjson.JSON;
+
 import java.sql.Timestamp;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -25,7 +27,22 @@ public class LocalDateTimeTest {
 //        test6();
 //        test7();
 //        test8();
-        test9();
+//        test9();
+        test10();
+    }
+
+    private static void test10() {
+        LocalDateTime after = LocalDateTime.now().plusDays(15);
+        System.out.println(after);
+
+        String jsonString = JSON.toJSONString(after);
+        System.out.println(jsonString);
+
+        LocalDateTime targetLocalDateTime = JSON.parseObject(jsonString, LocalDateTime.class);
+        System.out.println(targetLocalDateTime);
+
+        LocalDateTime before = LocalDateTime.now().minusDays(1);
+        System.out.println(JSON.toJSONString(before));
     }
 
     private static void test9() {
