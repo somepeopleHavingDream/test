@@ -24,5 +24,6 @@ public class ZoneIdTest {
         Date now = new Date();
         ZonedDateTime zonedDateTime = now.toInstant().atZone(ZoneId.of("GMT+7"));
         System.out.println(zonedDateTime.getDayOfWeek() == DayOfWeek.THURSDAY);
+        System.out.println(zonedDateTime);
     }
 }

@@ -15,7 +15,7 @@ import java.util.List;
  * @author yangxin
  * 2019/10/31 11:36
  */
-@SuppressWarnings({"CommentedOutCode", "ConstantConditions", "StringOperationCanBeSimplified", "AlibabaRemoveCommentedCode", "SameParameterValue", "unused"})
+@SuppressWarnings({"CommentedOutCode", "ConstantConditions", "StringOperationCanBeSimplified", "AlibabaRemoveCommentedCode", "SameParameterValue", "unused", "ConcatenationWithEmptyString"})
 public class StringTest {
 
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -31,7 +31,19 @@ public class StringTest {
 //        test14();
 //        test15();
 //        test16();
-        test17();
+//        test17();
+        test18();
+    }
+
+    private static void test18() {
+        String start = "2023-05-11 00:00:00";
+        String end = "2023-08-11 23:59:59";
+
+        Integer startInt = Integer.valueOf(StringUtils.substring(start, 5, 7));
+        Integer endInt = Integer.valueOf(StringUtils.substring(end, 5, 7));
+
+        System.out.println(startInt);
+        System.out.println(endInt);
     }
 
     private static void test17() {
