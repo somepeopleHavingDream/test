@@ -18,7 +18,8 @@ public class ResourcePatternResolverTest {
 
     private static void test1() throws IOException {
         ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        Resource[] resources = resolver.getResources("classpath:/*.yml");
+        Resource[] resources = resolver.getResources("classpath*:/*.yml");
+//        Resource[] resources = resolver.getResources("classpath:/*.yml");
         for (Resource resource : resources) {
             // 文件名
             System.out.println(resource.getFilename());
