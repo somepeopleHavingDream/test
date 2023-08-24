@@ -4,18 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.jasypt.encryption.StringEncryptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.core.env.Environment;
-import org.yangxin.test.spring.event.OrderEvent;
+import org.yangxin.test.spring.context.event.OrderEvent;
 
 /**
  * @author yangxin
  * 2020/04/29 10:24
  */
+@SuppressWarnings({"FieldCanBeLocal", "unused", "CommentedOutCode"})
 @SpringBootApplication
 @Slf4j
 @MapperScan("org.yangxin.test.mybatisplus")
