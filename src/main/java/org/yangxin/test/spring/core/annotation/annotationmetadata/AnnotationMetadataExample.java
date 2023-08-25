@@ -1,4 +1,4 @@
-package org.yangxin.test.spring.core.annotationmetadata;
+package org.yangxin.test.spring.core.annotation.annotationmetadata;
 
 import org.springframework.core.type.StandardAnnotationMetadata;
 
