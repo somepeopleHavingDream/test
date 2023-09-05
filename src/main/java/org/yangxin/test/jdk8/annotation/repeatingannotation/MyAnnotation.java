@@ -1,17 +1,16 @@
 package org.yangxin.test.jdk8.annotation.repeatingannotation;
 
-import java.lang.annotation.ElementType;
+import java.lang.annotation.Repeatable;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
 
 /**
  * @author yangxin
- * 2023/9/5 12:11
+ * 2023/9/5 21:43
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-public @interface Tag {
+@Repeatable(MyAnnotations.class)
+public @interface MyAnnotation {
 
     String value();
 }
