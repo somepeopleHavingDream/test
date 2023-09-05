@@ -126,6 +126,6 @@ public class StreamTest {
         Stream<String> stream = list.stream();
         Collector<String, ?, LinkedList<String>> collector = Collectors.toCollection(LinkedList::new);
         LinkedList<String> linkedList = stream.collect(collector);
-        linkedList.forEach(System.out::println);
+//        linkedList.forEach(System.out::println);
     }
 }

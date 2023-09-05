@@ -9,7 +9,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class ThreadLocalRandomTest {
 
     public static void main(String[] args) {
-//        test1();
+        test1();
     }
 
     private static void test1() {
