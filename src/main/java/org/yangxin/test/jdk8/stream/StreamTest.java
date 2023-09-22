@@ -17,10 +17,10 @@ import java.util.stream.Stream;
 public class StreamTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
 //        test2();
 //        test3();
-//        test4();
+        test4();
 //        test5();
 //        test6();
 //        test7();
@@ -89,12 +89,14 @@ public class StreamTest {
      */
     private static void test4() {
         List<String> list = Arrays.asList("456", "123", "789");
-        list.stream().sorted(((o1, o2) -> {
+        Stream<String> stream = list.stream();
+        Stream<String> sorted = stream.sorted(((o1, o2) -> {
             int a1 = Integer.parseInt(String.valueOf(o1.charAt(0)));
             int a2 = Integer.parseInt(String.valueOf(o2.charAt(0)));
 
             return Integer.compare(a1, a2);
-        })).forEach(System.out::println);
+        }));
+        sorted.forEach(System.out::println);
     }
 
     /**
@@ -102,14 +104,18 @@ public class StreamTest {
      */
     private static void test3() {
         int[][] array = {{1, 2}, {3, 4}, {5, 6}};
-        Arrays.stream(array).flatMapToInt(Arrays::stream).forEach(System.out::println);
+
+        Stream<int[]> stream = Arrays.stream(array);
+        IntStream intStream = stream.flatMapToInt(Arrays::stream);
+        intStream.forEach(System.out::println);
     }
 
     /**
      * java.util.stream.IntStream#range(int, int)
      */
     private static void test2() {
-        IntStream.range(1, 10).forEach(System.out::println);
+        IntStream intStream = IntStream.range(1, 10);
+        intStream.forEach(System.out::println);
 
         int sum = 0;
         for (int i = 0; i < 10; i++) {
