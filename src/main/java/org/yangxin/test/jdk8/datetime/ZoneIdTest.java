@@ -9,14 +9,24 @@ import java.util.Date;
  * @author yangxin
  * 2023/7/12 18:36
  */
+@SuppressWarnings("unused")
 public class ZoneIdTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
         test2();
     }
 
     private static void test2() {
+        // 明确指定时区为东八区（中国标准时间）
+        ZoneId chinaTimeZone = ZoneId.of("GMT+7");
+
+        // 获取当前时间和时区
+        ZonedDateTime currentDateTime = ZonedDateTime.now(chinaTimeZone);
+
+        // 获取当前时间的星期几
+        System.out.println(currentDateTime.getDayOfWeek());
+        System.out.println(currentDateTime);
     }
 
     private static void test1() {
