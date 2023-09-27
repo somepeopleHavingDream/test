@@ -1,15 +1,23 @@
 package org.yangxin.test.jdk8.random;
 
+import java.text.DecimalFormat;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author yangxin
  * 2022/11/8 22:59
  */
+@SuppressWarnings("unused")
 public class ThreadLocalRandomTest {
 
     public static void main(String[] args) {
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        double randomValue = ThreadLocalRandom.current().nextDouble(0, 1);
+        System.out.println(new DecimalFormat("0.0000000000000").format(randomValue));
     }
 
     private static void test1() {
