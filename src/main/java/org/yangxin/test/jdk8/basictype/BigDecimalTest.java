@@ -16,7 +16,12 @@ public class BigDecimalTest {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test5();
+    }
+
+    private static void test5() {
+        System.out.println(BigDecimal.ZERO.setScale(1, RoundingMode.DOWN));
     }
 
     private static void test4() {
