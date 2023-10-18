@@ -1,11 +1,9 @@
 package org.yangxin.test.jdk8.datetime;
 
-import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 
 /**
@@ -20,7 +18,14 @@ public class LocalDateTest {
     public static void main(String[] args) {
 //        testTimeBetween();
 //        test3();
-        test1();
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        System.out.println("This Monday's date is: " + monday);
     }
 
     private static void test1() {
