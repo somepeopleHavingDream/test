@@ -20,12 +20,12 @@ public class StreamTest {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
 //        test5();
 //        test6();
 //        test7();
 //        test8();
-//        test9();
+        test9();
     }
 
     private static void test9() {
@@ -37,7 +37,8 @@ public class StreamTest {
      * 将流收集为数组
      */
     private static void test8() {
-        String[] array = Stream.of("张三", "李四", "王五").toArray(String[]::new);
+        Stream<String> stream = Stream.of("张三", "李四", "王五");
+        String[] array = stream.toArray(String[]::new);
         System.out.println(Arrays.toString(array));
     }
 
@@ -69,19 +70,19 @@ public class StreamTest {
      * 基于stream的分页
      */
     private static void test6() {
-        IntStream.range(1, 20)
-                .skip(5 * 2)
-                .limit(5)
-                .forEach(System.out::println);
+        IntStream intStream = IntStream.range(1, 20);
+        IntStream skip = intStream.skip(5 * 2);
+        IntStream limit = skip.limit(5);
+        limit.forEach(System.out::println);
     }
 
     /**
      * java.util.stream.Stream#peek(java.util.function.Consumer)
      */
     private static void test5() {
-        Stream.of("one", "two", "three", "four")
-                .peek(System.out::println)
-                .forEach(System.out::println);
+        Stream<String> stream = Stream.of("one", "two", "three", "four");
+        Stream<String> peek = stream.peek(System.out::println);
+        peek.forEach(System.out::println);
     }
 
     /**
