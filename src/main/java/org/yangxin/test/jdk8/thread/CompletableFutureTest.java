@@ -26,7 +26,33 @@ public class CompletableFutureTest {
 //        runAfterEither();
 //        runAfterBoth();
 //        thenCompose();
-        allOf();
+//        allOf();
+        complete();
+    }
+
+    private static void complete() {
+        CompletableFuture<Integer> future = new CompletableFuture<>();
+
+        // 模拟异步计算
+        new Thread(() -> {
+            try {
+                // 模拟计算过程
+                Thread.sleep(2000);
+
+                // 手动设置结果
+                future.complete(42);
+            } catch (InterruptedException e) {
+                // 处理异常
+                future.completeExceptionally(e);
+            }
+        }).start();
+
+        // 在此处可以继续其他操作
+        System.out.println("Waiting for result..");
+
+        // 获取结果（会等待计算完成）
+        Integer result = future.join();
+        System.out.println(result);
     }
 
     private static void allOf() {
