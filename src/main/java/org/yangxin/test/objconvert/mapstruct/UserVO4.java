@@ -1,4 +1,4 @@
-package org.yangxin.test.mapstruct;
+package org.yangxin.test.objconvert.mapstruct;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,8 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 被映射类VO2：比实体类少一个字段
- * 
  * @author yangxin
  * 2022/3/7 14:30
  */
@@ -15,9 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserVO2 {
-    
-    private Integer id;
-    private String name;
+public class UserVO4 {
+
+    private String userId;
+    private String userName;
     private String createTime;
+    private String updateTime;
 }

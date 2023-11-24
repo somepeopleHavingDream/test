@@ -1,15 +1,13 @@
-package org.yangxin.test.mapstruct;
+package org.yangxin.test.objconvert.mapstruct;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 /**
- * 被映射类VO1：和实体类一模一样
- *
+ * 被映射类VO2：比实体类少一个字段
+ * 
  * @author yangxin
  * 2022/3/7 14:30
  */
@@ -17,10 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserVO1 {
-
+public class UserVO2 {
+    
     private Integer id;
     private String name;
     private String createTime;
-    private LocalDateTime updateTime;
 }

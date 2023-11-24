@@ -11,14 +11,23 @@ import java.util.Locale;
  * @author yangxin
  * 2020/03/05 17:49
  */
-@SuppressWarnings("CommentedOutCode")
+@SuppressWarnings({"CommentedOutCode", "unused"})
 public class DecimalFormatTest {
 
     public static void main(String[] args) {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test5();
+    }
+
+    private static void test5() {
+        DecimalFormat df = new DecimalFormat("######0.0");
+        double sum = 3038042.0;
+
+        System.out.println(sum / 1000.0);
+        System.out.println(df.format(sum / 1000.0));
     }
 
     /**

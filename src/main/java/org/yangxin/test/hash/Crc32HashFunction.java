@@ -37,4 +37,18 @@ public class Crc32HashFunction extends HashFunction {
         return positionList;
     }
 
+    public static int calculateCRC16(String key) {
+        CRC32 crc32 = new CRC32();
+        crc32.update(key.getBytes());
+        return (int) crc32.getValue() & 0xFFFF; // Ensure it's a 16-bit unsigned value
+    }
+
+    public static void main(String[] args) {
+        String yourKey = "fancy_batch_gift_record";
+        int hashValue = calculateCRC16(yourKey);
+        System.out.println("CRC16 Hash Value: " + hashValue);
+
+        int hashSlot = hashValue % 16384;
+        System.out.println(hashSlot);
+    }
 }

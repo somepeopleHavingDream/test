@@ -1,4 +1,4 @@
-package org.yangxin.test.mapstruct;
+package org.yangxin.test.objconvert.mapstruct;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

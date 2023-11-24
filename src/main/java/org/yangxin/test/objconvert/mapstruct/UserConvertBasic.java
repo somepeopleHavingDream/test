@@ -1,4 +1,4 @@
-package org.yangxin.test.mapstruct;
+package org.yangxin.test.objconvert.mapstruct;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

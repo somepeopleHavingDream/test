@@ -1,11 +1,15 @@
-package org.yangxin.test.mapstruct;
+package org.yangxin.test.objconvert.mapstruct;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 /**
+ * 实体类
+ *
  * @author yangxin
  * 2022/3/7 14:30
  */
@@ -13,9 +17,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserVO5 {
+public class User {
 
     private Integer id;
     private String name;
-    private String type;
+    private String createTime;
+    private LocalDateTime updateTime;
 }

@@ -19,6 +19,6 @@ public class StopWatchTest {
         stopWatch.start("删除消息相关推送开始");
         TimeUnit.SECONDS.sleep(5);
         stopWatch.stop();
-        stopWatch.prettyPrint();
+        System.out.println(stopWatch.prettyPrint());
     }
 }

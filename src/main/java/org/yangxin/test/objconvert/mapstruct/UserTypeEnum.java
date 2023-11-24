@@ -1,4 +1,4 @@
-package org.yangxin.test.mapstruct;
+package org.yangxin.test.objconvert.mapstruct;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +18,6 @@ public enum UserTypeEnum {
 
     Linux("002", "Linux运维员");
 
-    private String value;
-    private String title;
+    private final String value;
+    private final String title;
 }
