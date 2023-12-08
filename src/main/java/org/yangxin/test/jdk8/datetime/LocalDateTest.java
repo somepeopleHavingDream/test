@@ -28,17 +28,6 @@ public class LocalDateTest {
         System.out.println("This Monday's date is: " + monday);
     }
 
-    private static void test1() {
-        LocalDate yesterday = LocalDate.now().minusDays(1);
-        LocalDate today = LocalDate.now();
-
-        ZonedDateTime yesterdayZonedDateTime = yesterday.atStartOfDay(ZoneId.systemDefault());
-        ZonedDateTime todayZonedDateTime = today.atStartOfDay(ZoneId.systemDefault());
-
-        System.out.println(Date.from(yesterdayZonedDateTime.toInstant()));
-        System.out.println(Date.from(todayZonedDateTime.toInstant()));
-    }
-
     /**
      * LocalDate转Date
      */
