@@ -8,13 +8,15 @@ import java.util.stream.Stream;
  * @author yangxin
  * 2021/8/26 17:26
  */
-@SuppressWarnings({"divzero", "NumericOverflow", "AlibabaUndefineMagicConstant", "CommentedOutCode", "DuplicatedCode", "unused", "AlibabaRemoveCommentedCode"})
+@SuppressWarnings({"divzero", "NumericOverflow", "AlibabaUndefineMagicConstant", "CommentedOutCode", "DuplicatedCode", "unused", "AlibabaRemoveCommentedCode", "CallToPrintStackTrace"})
 public class CompletableFutureTest {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+//        test1();
+
 //        runAsync();
 //        supplyAsync();
-//        whenComplete();
+        whenComplete();
 //        thenApply();
 //        handle();
 //        thenAccept();
@@ -27,7 +29,7 @@ public class CompletableFutureTest {
 //        runAfterBoth();
 //        thenCompose();
 //        allOf();
-        complete();
+//        complete();
     }
 
     private static void complete() {
@@ -133,7 +135,26 @@ public class CompletableFutureTest {
             System.out.println("run end ...");
         });
 
-        future.get();
+        System.out.println(future.get());
+    }
+
+    /**
+     * 无返回值
+     */
+    private static void test1() throws ExecutionException, InterruptedException {
+        CompletableFuture<Void> future = null;
+        for (int i = 0; i < 12; i++) {
+            future = CompletableFuture.runAsync(() -> {
+                try {
+                    TimeUnit.SECONDS.sleep(Long.MAX_VALUE);
+                } catch (InterruptedException ignored) {
+                }
+
+                System.out.println("run end ...");
+            });
+        }
+
+        System.out.println(future.get());
     }
 
     /**
@@ -183,7 +204,8 @@ public class CompletableFutureTest {
             return null;
         });
 
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(Long.MAX_VALUE);
+//        TimeUnit.SECONDS.sleep(2);
     }
 
     /*
