@@ -17,7 +17,20 @@ public class IntegerTest {
 //        test6();
 //        test7();
 //        test8();
-        test9();
+//        test9();
+        test10();
+    }
+
+    private static void test10() {
+        // 创建一个 Integer 对象
+        int intValue = 42;
+
+        // 使用 Long.valueOf() 方法进行转换
+        Long longValue = Long.valueOf(intValue);
+
+        // 输出结果
+        System.out.println("Integer Value: " + intValue);
+        System.out.println("Long Value: " + longValue);
     }
 
     private static void test9() {
