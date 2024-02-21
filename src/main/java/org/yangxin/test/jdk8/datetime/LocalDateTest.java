@@ -17,15 +17,20 @@ public class LocalDateTest {
 
     public static void main(String[] args) {
 //        testTimeBetween();
-//        test3();
 //        test1();
-        test2();
+//        test2();
+//        test3();
+        test4();
     }
 
-    private static void test2() {
-        LocalDate today = LocalDate.now();
-        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        System.out.println("This Monday's date is: " + monday);
+    private static void test4() {
+        LocalDate now = LocalDate.now();
+        System.out.println(now.getMonth());
+        System.out.println(now.getMonthValue());
+        System.out.println(now.getDayOfMonth());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM");
+        System.out.println(formatter.format(now));
     }
 
     /**
@@ -40,6 +45,12 @@ public class LocalDateTest {
 
         ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
         System.out.println(Date.from(zonedDateTime.toInstant()));
+    }
+
+    private static void test2() {
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        System.out.println("This Monday's date is: " + monday);
     }
 
     /**
