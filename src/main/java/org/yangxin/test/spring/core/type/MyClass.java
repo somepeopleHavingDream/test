@@ -1,4 +1,4 @@
-package org.yangxin.test.spring.core.annotation.annotationmetadata;
+package org.yangxin.test.spring.core.type;
 
 /**
  * @author yangxin
