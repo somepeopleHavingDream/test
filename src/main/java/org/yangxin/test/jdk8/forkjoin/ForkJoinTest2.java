@@ -52,7 +52,7 @@ public class ForkJoinTest2 {
 
     public static void main(String[] args) {
         ForkJoinPool forkJoinPool = new ForkJoinPool();
-        FileTask fileTask = new FileTask(new File("F:/"));
+        FileTask fileTask = new FileTask(new File("D:/"));
         // 采用异步提交，让主线程可以做其他的事情
         forkJoinPool.execute(fileTask);
 

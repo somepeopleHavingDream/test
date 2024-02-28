@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
  * @author yangxin
  * 2022/5/11 16:07
  */
+@SuppressWarnings("CallToPrintStackTrace")
 public class RetryerTest {
 
     public static void main(String[] args) {

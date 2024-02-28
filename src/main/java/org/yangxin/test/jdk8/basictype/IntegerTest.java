@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author yangxin
  * 2021/9/27 16:05
  */
-@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode", "unused"})
+@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode", "unused", "WrapperTypeMayBePrimitive"})
 public class IntegerTest {
 
     public static void main(String[] args) {
@@ -17,7 +17,27 @@ public class IntegerTest {
 //        test6();
 //        test7();
 //        test8();
-        test9();
+//        test9();
+//        test10();
+        test11();
+    }
+
+    private static void test11() {
+        Integer intValue = 42;
+        Byte byteValue = Byte.valueOf(intValue.byteValue());
+        System.out.println(byteValue);
+    }
+
+    private static void test10() {
+        // 创建一个 Integer 对象
+        int intValue = 42;
+
+        // 使用 Long.valueOf() 方法进行转换
+        Long longValue = Long.valueOf(intValue);
+
+        // 输出结果
+        System.out.println("Integer Value: " + intValue);
+        System.out.println("Long Value: " + longValue);
     }
 
     private static void test9() {

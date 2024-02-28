@@ -17,26 +17,20 @@ public class LocalDateTest {
 
     public static void main(String[] args) {
 //        testTimeBetween();
-//        test3();
 //        test1();
-        test2();
+//        test2();
+//        test3();
+        test4();
     }
 
-    private static void test2() {
-        LocalDate today = LocalDate.now();
-        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        System.out.println("This Monday's date is: " + monday);
-    }
+    private static void test4() {
+        LocalDate now = LocalDate.now();
+        System.out.println(now.getMonth());
+        System.out.println(now.getMonthValue());
+        System.out.println(now.getDayOfMonth());
 
-    private static void test1() {
-        LocalDate yesterday = LocalDate.now().minusDays(1);
-        LocalDate today = LocalDate.now();
-
-        ZonedDateTime yesterdayZonedDateTime = yesterday.atStartOfDay(ZoneId.systemDefault());
-        ZonedDateTime todayZonedDateTime = today.atStartOfDay(ZoneId.systemDefault());
-
-        System.out.println(Date.from(yesterdayZonedDateTime.toInstant()));
-        System.out.println(Date.from(todayZonedDateTime.toInstant()));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM");
+        System.out.println(formatter.format(now));
     }
 
     /**
@@ -51,6 +45,12 @@ public class LocalDateTest {
 
         ZonedDateTime zonedDateTime = localDate.atStartOfDay(ZoneId.systemDefault());
         System.out.println(Date.from(zonedDateTime.toInstant()));
+    }
+
+    private static void test2() {
+        LocalDate today = LocalDate.now();
+        LocalDate monday = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        System.out.println("This Monday's date is: " + monday);
     }
 
     /**
