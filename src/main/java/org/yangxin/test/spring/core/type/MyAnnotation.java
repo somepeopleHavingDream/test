@@ -1,4 +1,4 @@
-package org.yangxin.test.spring.core.annotation.annotationmetadata;
+package org.yangxin.test.spring.core.type;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

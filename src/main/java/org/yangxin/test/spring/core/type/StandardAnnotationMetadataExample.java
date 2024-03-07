@@ -1,4 +1,4 @@
-package org.yangxin.test.spring.core.annotation.annotationmetadata;
+package org.yangxin.test.spring.core.type;
 
 import org.springframework.core.type.StandardAnnotationMetadata;
 
@@ -11,7 +11,7 @@ import java.util.Set;
  * @author yangxin
  * 2023/8/23 22:16
  */
-public class AnnotationMetadataExample {
+public class StandardAnnotationMetadataExample {
 
     public static void main(String[] args) {
         // 创建一个类的元数据对象
@@ -24,8 +24,8 @@ public class AnnotationMetadataExample {
         }
 
         // 判断类上是否存在特定注解
-        boolean hasAnnotation = metadata.isAnnotated(MyAnnotation.class.getName());
-        System.out.println("Has MyAnnotation? " + hasAnnotation);
+//        boolean hasAnnotation = metadata.isAnnotated(MyAnnotation.class.getName());
+//        System.out.println("Has MyAnnotation? " + hasAnnotation);
 
         // 获取特定注解的属性值
         Map<String, Object> annotationAttributes = metadata.getAnnotationAttributes(MyAnnotation.class.getName());
