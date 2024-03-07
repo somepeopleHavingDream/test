@@ -25,12 +25,14 @@ public class LocalDateTest {
 
     private static void test4() {
         LocalDate now = LocalDate.now();
-        System.out.println(now.getMonth());
-        System.out.println(now.getMonthValue());
+//        System.out.println(now.getMonth());
+//        System.out.println(now.getMonthValue());
         System.out.println(now.getDayOfMonth());
+        System.out.println(now.getDayOfWeek());
+        System.out.println(now.getDayOfYear());
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM");
-        System.out.println(formatter.format(now));
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMM");
+//        System.out.println(formatter.format(now));
     }
 
     /**
