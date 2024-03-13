@@ -8,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.yangxin.test.spring.context.event.OrderEvent;
 
 /**
  * @author yangxin
@@ -45,11 +44,6 @@ public class TestApplication {
         log.debug("debug");
         log.warn("warn");
         log.trace("trace");
-    }
-
-    private static void publishEvent(ConfigurableApplicationContext context) {
-        context.publishEvent(new OrderEvent(context, new OrderEvent(context, "1")));
-        context.publishEvent(new OrderEvent(context, new OrderEvent(context, "2")));
     }
 
 //    @Override
