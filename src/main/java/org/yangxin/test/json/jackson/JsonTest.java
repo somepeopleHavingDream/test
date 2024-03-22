@@ -1,23 +1,91 @@
 package org.yangxin.test.json.jackson;
 
+import com.fasterxml.jackson.core.JsonEncoding;
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 /**
  * @author yangxin
  * 2021/9/7 11:54
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "CommentedOutCode", "CallToPrintStackTrace"})
 public class JsonTest {
 
     public static void main(String[] args) throws JsonProcessingException {
 //        test1();
-        test2();
+//        test2();
+//        test3();
+        test4();
+    }
+
+    private static void test4() {
+        // 创建一个 JsonFactory 对象
+        JsonFactory jsonFactory = new JsonFactory();
+
+        try {
+            // 创建一个 ByteArrayOutputStream 对象，用于存储 JSON 数据
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // 使用 JsonFactory 创建一个 JsonGenerator，并指定输出流和编码方式
+            JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8);
+
+            // 创建一个 ObjectMapper 对象，用于序列化 Java 对象
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            // 创建一个要序列化的 Java 对象
+            Message message = new Message("1", "1", "1");
+
+            // 创建一个 ObjectWriter 对象，用于将 Java 对象写入到 JsonGenerator 中
+            ObjectWriter objectWriter = objectMapper.writer();
+
+            // 使用 ObjectWriter 将 Java 对象写入到 JsonGenerator 中
+            objectWriter.writeValue(jsonGenerator, message);
+
+            // 关闭 JsonGenerator
+            jsonGenerator.close();
+
+            // 将输出流中的数据转换为字符串并打印
+            String json = outputStream.toString("UTF-8");
+            System.out.println("Serialized JSON: " + json);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void test3() {
+        // 创建 JsonFactory 实例
+        JsonFactory jsonFactory = new JsonFactory();
+
+        // 创建输出流
+        try (OutputStream outputStream = System.out) {
+            // 使用 JsonFactory 的 createGenerator 方法创建 JsonGenerator 实例
+            JsonGenerator jsonGenerator = jsonFactory.createGenerator(outputStream, JsonEncoding.UTF8);
+
+            // 写入 JSON 内容
+            jsonGenerator.writeStartObject();
+            jsonGenerator.writeStringField("name", "John");
+            jsonGenerator.writeNumberField("age", 30);
+            jsonGenerator.writeEndObject();
+
+            // 关闭 JsonGenerator
+            jsonGenerator.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void test2() throws JsonProcessingException {
@@ -101,6 +169,8 @@ public class JsonTest {
     }
 
     @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
     private static class Message {
 
         private String msgId;
