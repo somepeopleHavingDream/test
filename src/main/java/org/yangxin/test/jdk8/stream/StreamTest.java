@@ -1,9 +1,9 @@
 package org.yangxin.test.jdk8.stream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -25,16 +25,24 @@ public class StreamTest {
 //        test6();
 //        test7();
 //        test8();
-        test9();
-    }
-
-    private static void test9() {
-        List<Integer> list = new ArrayList<>();
-        System.out.println(list.stream().collect(Collectors.toMap(e -> "1", e -> "1")));
+//        test9();
+        test10();
     }
 
     /**
-     * 将流收集为数组
+     * java.util.stream.Stream#generate(java.util.function.Supplier)
+     */
+    private static void test10() {
+        // 使用 generate 方法创建一个无限的自然数序列
+        AtomicInteger count = new AtomicInteger();
+        Stream<Integer> naturalNumbers = Stream.generate(count::getAndIncrement);
+
+        // 打印前10个自然数
+        naturalNumbers.limit(10).forEach(System.out::println);
+    }
+
+    /**
+     * java.util.stream.Stream#toArray(java.util.function.IntFunction)
      */
     private static void test8() {
         Stream<String> stream = Stream.of("张三", "李四", "王五");
@@ -43,31 +51,8 @@ public class StreamTest {
     }
 
     /**
-     * 总共取7个数，先取奇数，再取偶数
-     */
-    private static void test7() {
-        List<Integer> list = Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10).collect(Collectors.toList());
-        
-        // 先收集奇数
-        List<Integer> resultList = list.stream()
-                .filter(i -> (i & 1) == 1)
-                .limit(7)
-                .collect(Collectors.toList());
-        // 如果可以的话，收集偶数
-        int remain = resultList.size();
-        if (remain < 7) {
-            List<Integer> evenList = list.stream()
-                    .filter(i -> (i & 1) == 0)
-                    .limit(7 - remain)
-                    .collect(Collectors.toList());
-            resultList.addAll(evenList);
-        }
-
-        System.out.println(resultList);
-    }
-
-    /**
-     * 基于stream的分页
+     * java.util.stream.IntStream#skip(long)
+     * java.util.stream.IntStream#limit(long)
      */
     private static void test6() {
         IntStream intStream = IntStream.range(1, 20);
