@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  * @author yangxin
  * 2021/10/27 9:55
  */
-@SuppressWarnings({"CommentedOutCode", "AlibabaUndefineMagicConstant", "MismatchedQueryAndUpdateOfCollection", "RedundantOperationOnEmptyContainer", "unused"})
+@SuppressWarnings({"CommentedOutCode", "AlibabaUndefineMagicConstant", "MismatchedQueryAndUpdateOfCollection", "unused"})
 public class StreamTest {
 
     public static void main(String[] args) {
