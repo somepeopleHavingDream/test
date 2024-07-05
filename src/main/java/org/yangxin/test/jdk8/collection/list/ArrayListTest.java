@@ -18,7 +18,23 @@ public class ArrayListTest {
 //        test1();
 //        test2();
 //        test3();
-        test4();
+//        test4();
+        test5();
+    }
+
+    private static void test5() {
+        List<String> list = new ArrayList<>();
+        list.add("com.cloud.dev2024.100");
+        list.add("7680coin");
+        list.add("0.99_7680");
+        list.add("4.99_38400");
+        list.add("19.99_153600");
+        list.add("49.99_384000");
+        list.add("99.99_768000");
+        list.add("149.99_1152000");
+        list.add("499.99_3840000");
+
+        System.out.println(list.contains("4.99_38400"));
     }
 
     private static void test4() {
