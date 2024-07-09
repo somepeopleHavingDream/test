@@ -21,7 +21,7 @@ public class ThreadLocalRandomTest {
     }
 
     private static void test1() {
-        // ThreadLocalRandom能够解决多个线程发生的竞争问题
+        // ThreadLocalRandom 能够解决多个线程发生的竞争问题
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
         // 随机生成0~50的随机数，不包括50

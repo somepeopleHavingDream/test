@@ -11,6 +11,19 @@ public class RandomTest {
 
     public static void main(String[] args) {
 //        test1();
+        test2();
+    }
+
+    private static void test2() {
+        Random random = new Random();
+
+        int randomInt = random.nextInt();
+        double randomDouble = random.nextDouble();
+        boolean randomBoolean = random.nextBoolean();
+
+        System.out.println("Random int: " + randomInt);
+        System.out.println("Random double: " + randomDouble);
+        System.out.println("Random boolean: " + randomBoolean);
     }
 
     private static void test1() {
