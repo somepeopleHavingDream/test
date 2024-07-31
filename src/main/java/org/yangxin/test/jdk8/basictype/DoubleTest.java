@@ -6,10 +6,21 @@ package org.yangxin.test.jdk8.basictype;
  * @author yangxin
  * 2020/05/08 14:59
  */
+@SuppressWarnings("unused")
 public class DoubleTest {
 
     public static void main(String[] args) {
 //        test1();
+        test2();
+    }
+
+    @SuppressWarnings("WrapperTypeMayBePrimitive")
+    private static void test2() {
+        Double doubleValue = 1234.56;
+        Long longValue = doubleValue.longValue();
+        // Output: 1234
+        System.out.println(longValue);
+
     }
 
     private static void test1() {
