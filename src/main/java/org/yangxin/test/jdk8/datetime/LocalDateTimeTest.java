@@ -3,10 +3,7 @@ package org.yangxin.test.jdk8.datetime;
 import com.alibaba.fastjson.JSON;
 
 import java.sql.Timestamp;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
@@ -28,7 +25,14 @@ public class LocalDateTimeTest {
 //        test7();
 //        test8();
 //        test9();
-        test10();
+//        test10();
+        test11();
+    }
+
+    private static void test11() {
+        LocalDateTime localDateTime = LocalDateTime.now().minusDays(3);
+        System.out.println(Date.from(localDateTime.with(LocalTime.MIN).atZone(ZoneId.systemDefault()).toInstant()));
+        System.out.println(Date.from(localDateTime.with(LocalTime.MAX).atZone(ZoneId.systemDefault()).toInstant()));
     }
 
     private static void test10() {
