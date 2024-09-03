@@ -4,7 +4,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
@@ -15,12 +17,39 @@ import java.util.Locale;
  * @author yangxin
  * 2021/5/27 11:35
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "CommentedOutCode"})
 public class DateStringTest {
 
     public static void main(String[] args) throws ParseException {
 //        test1();
-        test5();
+//        test5();
+        test6();
+    }
+
+    private static void test6() {
+        // 输入的时间和时区
+        String time = "2024-08-29 00:00:00";
+        String timezone = "GMT+3";
+        int hoursToAdd = 5; // 需要添加的小时数
+
+        // 定义日期格式
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        // 将输入时间解析为LocalDateTime
+        LocalDateTime localDateTime = LocalDateTime.parse(time, formatter);
+
+        // 将LocalDateTime转换为ZonedDateTime
+        ZonedDateTime zonedDateTime = localDateTime.atZone(ZoneId.of(timezone));
+
+        // 添加指定的小时数
+        ZonedDateTime updatedTime = zonedDateTime.plusHours(hoursToAdd);
+
+        // 输出结果
+        System.out.println("原时间: " + zonedDateTime);
+        System.out.println("添加 " + hoursToAdd + " 小时后的时间: " + updatedTime);
+
+        System.out.println(Date.from(updatedTime.toInstant()));
+
     }
 
     /**
