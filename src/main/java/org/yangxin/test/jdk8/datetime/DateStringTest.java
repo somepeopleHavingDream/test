@@ -3,11 +3,9 @@ package org.yangxin.test.jdk8.datetime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,7 +21,26 @@ public class DateStringTest {
     public static void main(String[] args) throws ParseException {
 //        test1();
 //        test5();
-        test6();
+//        test6();
+        test7();
+    }
+
+    private static void test7() {
+        // 输入的月份和时区
+        String month = "2024-09";
+        ZoneId zoneId = ZoneId.of("GMT+3");
+
+        // 解析月份为 LocalDate，并设置为月初
+        LocalDate firstDayOfMonth = LocalDate.parse(month + "-01", DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        ZonedDateTime firstDayZoned = firstDayOfMonth.atStartOfDay(zoneId);
+
+        // 计算该月的最后一天
+        LocalDate lastDayOfMonth = firstDayOfMonth.with(TemporalAdjusters.lastDayOfMonth());
+        ZonedDateTime lastDayZoned = lastDayOfMonth.atTime(LocalTime.MAX).atZone(zoneId);
+
+        // 输出结果
+        System.out.println("First day in " + zoneId + ": " + firstDayZoned);
+        System.out.println("Last day in " + zoneId + ": " + lastDayZoned);
     }
 
     private static void test6() {

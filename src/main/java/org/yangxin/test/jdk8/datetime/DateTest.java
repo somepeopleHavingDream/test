@@ -1,9 +1,7 @@
 package org.yangxin.test.jdk8.datetime;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,7 +47,26 @@ public class DateTest {
 //        test2();
 //        test3();
 //        test4();
-        test5();
+//        test5();
+        test6();
+    }
+
+    private static void test6() {
+        // 创建一个 Date 对象
+        Date date = new Date();
+
+        // 将 Date 转换为 Instant
+        Instant instant = date.toInstant();
+
+        // 指定要转换到的时区
+        ZoneId zoneId = ZoneId.of("GMT+3");
+
+        // 将 Instant 转换为 ZonedDateTime
+        ZonedDateTime zonedDateTime = ZonedDateTime.ofInstant(instant, zoneId);
+
+        // 输出结果
+        System.out.println("Date: " + date);
+        System.out.println("ZonedDateTime: " + zonedDateTime);
     }
 
     private static void test5() {
