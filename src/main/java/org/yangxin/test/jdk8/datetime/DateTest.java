@@ -51,6 +51,9 @@ public class DateTest {
         test6();
     }
 
+    /**
+     * Date 转 ZonedDateTime
+     */
     private static void test6() {
         // 创建一个 Date 对象
         Date date = new Date();
@@ -69,6 +72,9 @@ public class DateTest {
         System.out.println("ZonedDateTime: " + zonedDateTime);
     }
 
+    /**
+     * 比较两个日期
+     */
     private static void test5() {
         Date date1 = new Date(1675671596000L);
         Date date2 = new Date(1675671596000L);
@@ -79,7 +85,7 @@ public class DateTest {
     }
 
     /**
-     * Date转LocalDate
+     * Date 转 LocalDate
      */
     private static void test4() {
         Date date = new Date();
