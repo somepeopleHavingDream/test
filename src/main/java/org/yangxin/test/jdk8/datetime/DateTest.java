@@ -117,7 +117,7 @@ public class DateTest {
     }
 
     /**
-     * Date转LocalDateTime
+     * Date 转 LocalDateTime
      */
     private static void test2() {
         Date date = new Date();
@@ -128,7 +128,7 @@ public class DateTest {
     }
 
     /**
-     * 格式化Date
+     * 格式化 Date
      */
     private static void test1() {
         Date date = new Date();
