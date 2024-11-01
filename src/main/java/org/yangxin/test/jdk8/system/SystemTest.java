@@ -1,6 +1,6 @@
 package org.yangxin.test.jdk8.system;
 
-import java.nio.charset.Charset;
+import java.util.Date;
 
 /**
  * Java获取系统中默认的编码
@@ -8,13 +8,19 @@ import java.nio.charset.Charset;
  * @author yangxin
  * 2020/09/29 09:17
  */
+@SuppressWarnings("unused")
 public class SystemTest {
 
     public static void main(String[] args) {
-        // 获取系统默认编码
-        System.out.println(System.getProperty("file.encoding"));
-        // 获取系统默认的字符编码
-        System.out.println(Charset.defaultCharset());
+//        test1();
+        test2();
+    }
+
+    private static void test2() {
+        System.out.println(new Date(System.currentTimeMillis() - 4 * 60 * 60 * 1000L));
+    }
+
+    private static void test1() {
         // 获取系统默认语言
         System.out.println(System.getProperty("user.language"));
         // 操作系统
