@@ -8,7 +8,7 @@ import java.lang.ref.WeakReference;
  * @author yangxin
  * 2020/12/12 20:40
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "CallToPrintStackTrace"})
 public class Client {
 
     public static void main(String[] args) {
@@ -58,12 +58,12 @@ public class Client {
     private static void client1Main() {
         Salad salad = new Salad(new Apple("红富士"));
 
-        // 通过WeakReference的get()方法获取Apple
+        // 通过 WeakReference 的 get()方法获取 Apple
         System.out.println("Apple: " + salad.get());
 
         System.gc();
         try {
-            // 休眠一下，在运行的时候加载虚拟机参数-XX:+PrintGCDetails，输出gc信息，确定gc发生了
+            // 休眠一下，在运行的时候加载虚拟机参数 -XX:+PrintGCDetails，输出 gc 信息，确定 gc 发生了
             Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
