@@ -6,7 +6,7 @@ import java.util.Objects;
  * @author yangxin
  * 2021/9/27 16:05
  */
-@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode", "unused", "WrapperTypeMayBePrimitive"})
+@SuppressWarnings({"CommentedOutCode", "UnnecessaryBoxing", "ParameterCanBeLocal", "UnusedAssignment", "ConstantConditions", "AlibabaRemoveCommentedCode", "unused", "WrapperTypeMayBePrimitive", "NumberEquality"})
 public class IntegerTest {
 
     public static void main(String[] args) {
@@ -19,7 +19,18 @@ public class IntegerTest {
 //        test8();
 //        test9();
 //        test10();
-        test11();
+//        test11();
+        test12();
+    }
+
+    private static void test12() {
+        Integer i1 = 100;
+        Integer i2 = 100;
+        Integer i3 = 200;
+        Integer i4 = 200;
+
+        System.out.println(i1 == i2);
+        System.out.println(i3 == i4);
     }
 
     private static void test11() {
@@ -48,18 +59,18 @@ public class IntegerTest {
 
     private static void test8() {
         // 完成掩码
-        int DONE_MASK   = 0xf0000000;  // mask out non-completion bits
+        int DONE_MASK = 0xf0000000;  // mask out non-completion bits
         // 正常
-        int NORMAL      = 0xf0000000;  // must be negative
+        int NORMAL = 0xf0000000;  // must be negative
         // 取消的
-        int CANCELLED   = 0xc0000000;  // must be < NORMAL
+        int CANCELLED = 0xc0000000;  // must be < NORMAL
         // 预期之外的
         int EXCEPTIONAL = 0x80000000;  // must be < CANCELLED
 
         // 信号的
-        int SIGNAL      = 0x00010000;  // must be >= 1 << 16
+        int SIGNAL = 0x00010000;  // must be >= 1 << 16
         // 掩码的
-        int SMASK       = 0x0000ffff;  // short bits for tags
+        int SMASK = 0x0000ffff;  // short bits for tags
 
         // 前四个值是负数（因为最高位是1）
         System.out.println(DONE_MASK);
