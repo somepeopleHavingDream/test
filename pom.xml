@@ -341,6 +341,16 @@
             <artifactId>protobuf-java</artifactId>
             <version>3.22.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>caffeine</artifactId>
+            <version>2.9.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+            <version>3.9.7</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>test</finalName>

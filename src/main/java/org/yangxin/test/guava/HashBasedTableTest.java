@@ -16,19 +16,7 @@ public class HashBasedTableTest {
     }
 
     private static void test1() {
-        Table<String, String, String> employeeTable = HashBasedTable.create();
-
-        employeeTable.put("IBM", "101", "Mahesh");
-        employeeTable.put("IBM", "102", "Ramesh");
-        employeeTable.put("IBM", "103", "Suresh");
-
-        employeeTable.put("Microsoft", "111","Sohan");
-        employeeTable.put("Microsoft", "112","Mohan");
-        employeeTable.put("Microsoft", "113","Rohan");
-
-        employeeTable.put("TCS", "121","Ram");
-        employeeTable.put("TCS", "122","Shyam");
-        employeeTable.put("TCS", "123","Sunil");
+        Table<String, String, String> employeeTable = buildTable();
 
         Map<String, String> ibmEmployees = employeeTable.row("IBM");
         for (Map.Entry<String, String> entry : ibmEmployees.entrySet()) {
@@ -43,5 +31,23 @@ public class HashBasedTableTest {
         for (Map.Entry<String, String> entry : employerMap.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
+    }
+
+    private static Table<String, String, String> buildTable() {
+        Table<String, String, String> employeeTable = HashBasedTable.create();
+
+        employeeTable.put("IBM", "101", "Mahesh");
+        employeeTable.put("IBM", "102", "Ramesh");
+        employeeTable.put("IBM", "103", "Suresh");
+
+        employeeTable.put("Microsoft", "111","Sohan");
+        employeeTable.put("Microsoft", "112","Mohan");
+        employeeTable.put("Microsoft", "113","Rohan");
+
+        employeeTable.put("TCS", "121","Ram");
+        employeeTable.put("TCS", "122","Shyam");
+        employeeTable.put("TCS", "123","Sunil");
+
+        return employeeTable;
     }
 }

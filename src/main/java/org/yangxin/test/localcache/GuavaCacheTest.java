@@ -1,9 +1,6 @@
-package org.yangxin.test.guava;
+package org.yangxin.test.localcache;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import com.google.common.cache.*;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -13,7 +10,7 @@ import java.util.concurrent.TimeUnit;
  * 2022/11/2 17:58
  */
 @SuppressWarnings({"NullableProblems", "unused"})
-public class CacheTest {
+public class GuavaCacheTest {
 
     private static final Cache<Integer, Integer> NUM_CACHE1 = CacheBuilder.newBuilder()
             .expireAfterWrite(5, TimeUnit.SECONDS)
@@ -22,6 +19,7 @@ public class CacheTest {
     private static final LoadingCache<Integer, Integer> NUM_CACHE2 = CacheBuilder.newBuilder()
             .expireAfterWrite(5L, TimeUnit.SECONDS)
             .maximumSize(5000L)
+            .recordStats()
             .build(new CacheLoader<Integer, Integer>() {
                 @Override
                 public Integer load(Integer key) {
@@ -36,7 +34,7 @@ public class CacheTest {
     }
 
     /**
-     * 使用自定义ClassLoader加载数据，置入内存中
+     * 使用自定义 ClassLoader 加载数据，置入内存中
      *
      * @throws ExecutionException 执行异常
      * @throws InterruptedException 中断异常
@@ -50,10 +48,16 @@ public class CacheTest {
 
         NUM_CACHE2.put(1, 6);
         System.out.println(NUM_CACHE2.get(1));
+
+        // 获取统计信息
+        CacheStats stats = NUM_CACHE2.stats();
+        System.out.println("Hit Rate: " + stats.hitRate());
+        System.out.println("Miss Rate: " + stats.missRate());
+        System.out.println("Eviction Count: " + stats.evictionCount());
     }
 
     /**
-     * Cache，显式put操作置入内存
+     * Cache，显式 put 操作置入内存
      *
      * @throws InterruptedException 被中断异常
      */
