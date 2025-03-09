@@ -1,4 +1,4 @@
-package org.yangxin.test.rpc.server;
+package org.yangxin.test.rpc.diy.server;
 
 import java.io.IOException;
 
@@ -22,23 +22,4 @@ public interface Server {
      * @param impl impl
      */
     void register(Class<?> serviceInterface, Class<?> impl);
-
-    /**
-     * 服务是否正在运行
-     *
-     * @return 服务是否正在运行
-     */
-    boolean isRunning();
-
-    /**
-     * 获得端口
-     *
-     * @return 端口
-     */
-    int getPort();
-
-    /**
-     * 停止服务
-     */
-    void stop();
 }

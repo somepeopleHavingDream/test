@@ -1,7 +1,5 @@
-package org.yangxin.test.rpc.server;
+package org.yangxin.test.rpc.diy.server;
 
-
-import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,17 +11,23 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author yangxin
  * 2021/2/17 下午9:48
  */
 @SuppressWarnings("InfiniteLoopStatement")
-@Slf4j
 public class ServiceCenter implements Server {
 
-    private static final ExecutorService executorService = new ThreadPoolExecutor(Runtime.getRuntime().availableProcessors(),
+    /**
+     * 任务处理线程池
+     */
+    private static final ExecutorService executorService = new ThreadPoolExecutor(
+            Runtime.getRuntime().availableProcessors(),
             Runtime.getRuntime().availableProcessors(),
             0L,
             TimeUnit.MILLISECONDS,
@@ -33,11 +37,10 @@ public class ServiceCenter implements Server {
                 thread.setName("service-center-thread");
 
                 return thread;
-            });
+            }
+    );
 
     private static final Map<String, Class<?>> SERVICE_REGISTRY = new HashMap<>();
-
-    private static Boolean isRunning = false;
 
     private static Integer port;
 
@@ -49,7 +52,7 @@ public class ServiceCenter implements Server {
     public void start() throws IOException {
         ServerSocket serverSocket = new ServerSocket();
         serverSocket.bind(new InetSocketAddress(port));
-        log.info("Server start.");
+        System.out.println("Server start.");
 
         try {
             while (true) {
@@ -65,22 +68,7 @@ public class ServiceCenter implements Server {
         SERVICE_REGISTRY.put(serviceInterface.getName(), impl);
     }
 
-    @Override
-    public boolean isRunning() {
-        return isRunning;
-    }
-
-    @Override
-    public int getPort() {
-        return port;
-    }
-
-    @Override
-    public void stop() {
-        isRunning = false;
-        executorService.shutdown();
-    }
-
+    @SuppressWarnings("CallToPrintStackTrace")
     private static class ServiceTask implements Runnable {
 
         private final Socket client;
@@ -111,7 +99,8 @@ public class ServiceCenter implements Server {
 
                 objectOutputStream = new ObjectOutputStream(client.getOutputStream());
                 objectOutputStream.writeObject(result);
-            } catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException | InstantiationException | InvocationTargetException e) {
+            } catch (IOException | ClassNotFoundException | NoSuchMethodException | IllegalAccessException |
+                     InstantiationException | InvocationTargetException e) {
                 e.printStackTrace();
             } finally {
                 if (objectOutputStream != null) {

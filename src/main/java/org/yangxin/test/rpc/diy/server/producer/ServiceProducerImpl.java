@@ -1,4 +1,4 @@
-package org.yangxin.test.rpc.server.producer;
+package org.yangxin.test.rpc.diy.server.producer;
 
 /**
  * @author yangxin
