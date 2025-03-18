@@ -1,4 +1,4 @@
-package org.yangxin.test.jdk8.collection.queue.priorityqueue;
+package org.yangxin.test.jdk8.collection.queue;
 
 import java.util.PriorityQueue;
 import java.util.Queue;
