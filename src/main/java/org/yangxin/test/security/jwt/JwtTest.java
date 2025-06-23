@@ -21,7 +21,7 @@ import java.util.Collections;
 public class JwtTest {
 
     public static void main(String[] args) {
-//        test1();
+        test1();
         test2();
     }
 
@@ -33,7 +33,7 @@ public class JwtTest {
         // 创建解析对象，使用的算法和secret要与创建token时保持一致
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256("!34ADAS")).build();
         // 解析指定的token
-        DecodedJWT decodedJwt = verifier.verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Inlhbmd4aW4iLCJleHAiOjE2NjEzMDYzMzIsInVzZXJJZCI6MjF9.3FcXLLn8_m3V-_itmZujtlUogmMw4ybJrmzbPluX68s");
+        DecodedJWT decodedJwt = verifier.verify("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Inlhbmd4aW4iLCJleHAiOjE3NTA2NTk2OTMsInVzZXJJZCI6MjF9.c4obLnQWaRrQYTPGQTL4k5sBA0AAxSMlktToW8bqq6w");
 
         // 获取解析后的token中的payload信息
         Claim userId = decodedJwt.getClaim("userId");
@@ -56,7 +56,7 @@ public class JwtTest {
                 // payload
                 .withClaim("userId", 21)
                 .withClaim("userName", "yangxin")
-                .withExpiresAt(LocalDateTime.now().plusSeconds(30).toInstant(ZoneOffset.ofHours(8)))
+                .withExpiresAt(LocalDateTime.now().plusSeconds(300).toInstant(ZoneOffset.ofHours(8)))
                 .sign(Algorithm.HMAC256("!34ADAS"));
         System.out.println(token);
     }
