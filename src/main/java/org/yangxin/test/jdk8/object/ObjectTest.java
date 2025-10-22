@@ -1,45 +1,38 @@
 package org.yangxin.test.jdk8.object;
 
-import java.util.Objects;
-
 /**
  * @author yangxin
  * 2021/4/19 15:51
  */
 public class ObjectTest {
-
-    /**
-     * 打卡设备Sn码
-     */
-    private String deviceSn;
-
-    /**
-     * 打卡时间戳
-     */
-    private String clockTimestamp;
-
-    @Override
-    public int hashCode() {
-        int result = 17;
-        result = result * 31 + deviceSn.hashCode();
-        result = result * 31 + clockTimestamp.hashCode();
-
-        return result;
+    public static void main(String[] args) {
+        test1();
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof ObjectTest)) {
-            return false;
+    private static void test1() {
+        int count0 = 0;
+        int count1 = 0;
+        int loop = 60_000_000;
+        for (int i = 0; i < loop; i++) {
+            int value = (i + "").hashCode() % 2;
+            if (value == 0) {
+                count0++;
+            } else if (value == 1) {
+                count1++;
+            }
         }
 
-        ObjectTest objectTest = (ObjectTest) obj;
-        if (this == objectTest) {
-            return true;
+        int anotherCount0 = 0;
+        int anotherCount1 = 0;
+        for (int i = 0; i < loop; i++) {
+            int value = (i + "" + System.currentTimeMillis()).hashCode() % 2;
+            if (value == 0) {
+                anotherCount0++;
+            } else if (value == 1) {
+                anotherCount1++;
+            }
         }
 
-        // 如果（打卡设备Sn码，打卡时间戳）相同，我们认为这是同一条考勤记录
-        return Objects.equals(deviceSn, objectTest.deviceSn)
-                && Objects.equals(clockTimestamp, objectTest.clockTimestamp);
+        System.out.println(count0 + " " + count1 + " " + anotherCount0 + " " + anotherCount1);
     }
 }
