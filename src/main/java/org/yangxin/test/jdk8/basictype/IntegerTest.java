@@ -1,6 +1,7 @@
 package org.yangxin.test.jdk8.basictype;
 
 import java.util.Objects;
+import java.util.stream.Stream;
 
 /**
  * @author yangxin
@@ -22,7 +23,20 @@ public class IntegerTest {
 //        test10();
 //        test11();
 //        test12();
-        test13();
+//        test13();
+//        test14();
+        test15();
+    }
+
+    private static void test15() {
+        Stream.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+                .map(String::valueOf)
+                .forEach(System.out::println);
+    }
+
+    public static void test14() {
+        Integer a = null;
+        System.out.println(a > 0);
     }
 
     private static void test13() {
