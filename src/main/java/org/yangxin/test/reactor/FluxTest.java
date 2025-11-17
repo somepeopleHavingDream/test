@@ -1,12 +1,27 @@
 package org.yangxin.test.reactor;
 
+import lombok.SneakyThrows;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-public class ReactorTest {
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+@SuppressWarnings("CommentedOutCode")
+public class FluxTest {
     public static void main(String[] args) {
         test1();
-        test2();
-        test3();
+//        test2();
+//        test3();
+//        test4();
+    }
+
+    private static void test4() {
+        List<String> list = Arrays.asList("A", "B", "C");
+        Flux<String> flux = Flux.fromIterable(list);
+        flux.subscribe(System.out::println);
     }
 
     /**
@@ -21,10 +36,15 @@ public class ReactorTest {
     /**
      * 包装多个值
      */
+    @SneakyThrows
     private static void test2() {
         // 依次发射 1, 2, 3
         Flux<Integer> numbers = Flux.just(1, 2, 3);
-        numbers.subscribe(n -> System.out.println("Received: " + n));
+        numbers.flatMap(i -> Mono.just(i * 10)
+//        numbers.flatMapSequential(i -> Mono.just(i * 10)
+                        .delayElement(Duration.ofMillis(200 - i * 50)))
+                .subscribe(System.out::println);
+        TimeUnit.SECONDS.sleep(5);
     }
 
     /**
