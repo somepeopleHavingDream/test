@@ -16,7 +16,20 @@ public class ByteBufferTest {
 
     public static void main(String[] args) throws CharacterCodingException {
 //        test1();
-        test2();
+//        test2();
+        test3();
+    }
+
+    private static void test3() {
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+
+        buffer.position(2);
+        buffer.limit(5);
+
+        int position = buffer.position();
+        int limit = buffer.limit();
+        int capacity = buffer.capacity();
+        System.out.println("position:" + position + " limit:" + limit + " capacity:" + capacity);
     }
 
     private static void test2() throws CharacterCodingException {
