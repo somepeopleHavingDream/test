@@ -13,9 +13,19 @@ import java.util.concurrent.TimeUnit;
 public class FluxTest {
     public static void main(String[] args) {
 //        test1();
-        test2();
+//        test2();
 //        test3();
 //        test4();
+        test5();
+    }
+
+    private static void test5() {
+        Flux<Integer> source = Flux.just(1, 2, 3)
+                .concatWith(Flux.error(new RuntimeException("boom")));
+
+        source.materialize()
+                .subscribe(System.out::println);
+
     }
 
     private static void test4() {
