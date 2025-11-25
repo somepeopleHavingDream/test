@@ -16,7 +16,19 @@ public class FluxTest {
 //        test2();
 //        test3();
 //        test4();
-        test5();
+//        test5();
+        test6();
+    }
+
+    @SneakyThrows
+    private static void test6() {
+        Flux.just(1, 2, 3)
+                .concatMap(i ->
+                        Mono.just(i)
+                                .delayElement(Duration.ofMillis(100))  // 异步
+                )
+                .subscribe(System.out::println);
+        TimeUnit.SECONDS.sleep(5);
     }
 
     private static void test5() {
