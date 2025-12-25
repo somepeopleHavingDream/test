@@ -17,7 +17,22 @@ public class FluxTest {
 //        test3();
 //        test4();
 //        test5();
-        test6();
+//        test6();
+//        test7();
+        test8();
+    }
+
+    private static void test8() {
+        Flux<Integer> flux = Flux.just(1, 2, 3);
+        Mono<Integer> mono = flux.next();
+        mono.subscribe(System.out::println);
+
+    }
+
+    private static void test7() {
+        Mono.just(1)
+                .doOnNext(v -> System.out.println("doOnNext: " + v))
+                .subscribe();
     }
 
     @SneakyThrows
