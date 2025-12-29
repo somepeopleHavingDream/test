@@ -3,6 +3,7 @@ package org.yangxin.test.reactor;
 import lombok.SneakyThrows;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -20,6 +21,14 @@ public class FluxTest {
 //        test6();
 //        test7();
         test8();
+//        test9();
+    }
+
+    private static void test9() {
+        Flux.just(1, 2, 3)
+                .doOnNext(i -> System.out.println(Thread.currentThread().getName() + "-" + i))
+                .subscribeOn(Schedulers.elastic())
+                .blockLast();
     }
 
     private static void test8() {
@@ -51,6 +60,7 @@ public class FluxTest {
                 .concatWith(Flux.error(new RuntimeException("boom")));
 
         source.materialize()
+                .collectList()
                 .subscribe(System.out::println);
 
     }
