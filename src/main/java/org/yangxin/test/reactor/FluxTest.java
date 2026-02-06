@@ -3,7 +3,6 @@ package org.yangxin.test.reactor;
 import lombok.SneakyThrows;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -20,15 +19,19 @@ public class FluxTest {
 //        test5();
 //        test6();
 //        test7();
-        test8();
+//        test8();
 //        test9();
+        test10();
     }
 
-    private static void test9() {
-        Flux.just(1, 2, 3)
-                .doOnNext(i -> System.out.println(Thread.currentThread().getName() + "-" + i))
-                .subscribeOn(Schedulers.elastic())
-                .blockLast();
+    private static void test10() {
+        Mono.deferContextual(context ->
+                        Mono.just(context.get("k"))
+                )
+                .contextWrite(ctx -> ctx.put("k", "v"))
+                .doOnNext(val -> System.out.println("Context中的k = " + val))
+                .subscribe();
+
     }
 
     private static void test8() {
